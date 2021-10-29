@@ -1,0 +1,12 @@
+{
+  "version": 2,
+  "dgSpecHash": "qBll7xrZEp7yEocP2BvfJGp0ZjiY7f8h6CTL3dqWp28pp9Oz+p7nFCRr2MX0YoaPNFTbGcc17au1ZiqzhWglGQ==",
+  "success": true,
+  "projectFilePath": "D:\\Projects\\Startup\\Startup\\Startup\\Infrastructure\\Infrastructure.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\Rulja\\.nuget\\packages\\microsoft.extensions.configuration.abstractions\\5.0.0\\microsoft.extensions.configuration.abstractions.5.0.0.nupkg.sha512",
+    "C:\\Users\\Rulja\\.nuget\\packages\\microsoft.extensions.dependencyinjection.abstractions\\5.0.0\\microsoft.extensions.dependencyinjection.abstractions.5.0.0.nupkg.sha512",
+    "C:\\Users\\Rulja\\.nuget\\packages\\microsoft.extensions.primitives\\5.0.0\\microsoft.extensions.primitives.5.0.0.nupkg.sha512"
+  ],
+  "logs": []
+}

@@ -1,0 +1,12 @@
+{
+  "version": 2,
+  "dgSpecHash": "i0Ao2uHYVulkedkgF+aMrPFoKl97Hc6Px9xQ6Ep/ZdYCh/XZPiByF0wph5s6e51dYQ8CS1/cKeB8+1tShQtXkQ==",
+  "success": true,
+  "projectFilePath": "D:\\Projects\\Startup\\Startup\\Startup\\Persistence\\Persistence.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\Rulja\\.nuget\\packages\\microsoft.extensions.configuration.abstractions\\5.0.0\\microsoft.extensions.configuration.abstractions.5.0.0.nupkg.sha512",
+    "C:\\Users\\Rulja\\.nuget\\packages\\microsoft.extensions.dependencyinjection.abstractions\\5.0.0\\microsoft.extensions.dependencyinjection.abstractions.5.0.0.nupkg.sha512",
+    "C:\\Users\\Rulja\\.nuget\\packages\\microsoft.extensions.primitives\\5.0.0\\microsoft.extensions.primitives.5.0.0.nupkg.sha512"
+  ],
+  "logs": []
+}
