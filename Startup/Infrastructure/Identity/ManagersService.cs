@@ -5,6 +5,7 @@ using Infrastructure.Identity.Extensions;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System.Threading.Tasks;
+using System.Transactions;
 
 namespace Infrastructure.Identity
 {
@@ -32,12 +33,20 @@ namespace Infrastructure.Identity
 
         public async Task<Result> CreateUserAsync(AppUser user, string password, string role)
         {
-            IdentityResult result = await _userManager.CreateAsync(user, password);
+            IdentityResult result = new IdentityResult();
 
-            if (!result.Succeeded)
-                return result.ToApplicationResult();
+            using (TransactionScope scope = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
+            {
+                result = await _userManager.CreateAsync(user, password);
 
-            result = await _userManager.AddToRoleAsync(user, role);
+                if (result.Succeeded)
+                    result = await _userManager.AddToRoleAsync(user, role);
+
+                if (result.Succeeded)
+                    scope.Complete();
+                else
+                    scope.Dispose();
+            }
 
             return result.ToApplicationResult();
         }
