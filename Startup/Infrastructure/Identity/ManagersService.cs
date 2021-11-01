@@ -30,11 +30,28 @@ namespace Infrastructure.Identity
             return result.ToApplicationResult();
         }
 
+        public async Task<Result> CreateUserAsync(AppUser user, string password, string role)
+        {
+            IdentityResult result = await _userManager.CreateAsync(user, password);
+
+            if (!result.Succeeded)
+                return result.ToApplicationResult();
+
+            result = await _userManager.AddToRoleAsync(user, role);
+
+            return result.ToApplicationResult();
+        }
+
+        public async Task<AppUser> FindByUserNameAsync(string username) =>
+            await _userManager.FindByNameAsync(username);
 
         public async Task<bool> IsThereAnyRoleAsync() =>
             await _roleManager.Roles.AnyAsync();
 
         public async Task<bool> IsThereAnyUserAsync() =>
             await _userManager.Users.AnyAsync();
+
+        private async Task<IdentityResult> DeleteUserAsync(AppUser user) =>
+            await _userManager.DeleteAsync(user);
     }
 }

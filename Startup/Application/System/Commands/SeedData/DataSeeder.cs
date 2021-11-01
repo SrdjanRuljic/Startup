@@ -17,6 +17,8 @@ namespace Application.System.Commands.SeedData
         {
             if (!await _managersService.IsThereAnyRoleAsync())
                 await SeedRolesAsync();
+            if (!await _managersService.IsThereAnyUserAsync())
+                await SeedUsersAsync();
             else
                 return;
         }
@@ -24,6 +26,11 @@ namespace Application.System.Commands.SeedData
         public async Task SeedRolesAsync()
         {
             await DefaultRoles.SeedAsync(_managersService);
+        }
+
+        public async Task SeedUsersAsync()
+        {
+            await DefaultUsers.Admin.SeedAsync(_managersService);
         }
     }
 }
