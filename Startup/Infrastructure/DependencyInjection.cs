@@ -1,4 +1,5 @@
-﻿using Domain.Entities.Identity;
+﻿using Application.Common.Interfaces;
+using Domain.Entities.Identity;
 using Infrastructure.Identity;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -12,6 +13,8 @@ namespace Infrastructure
         public static IServiceCollection AddInfrastructure(this IServiceCollection services,
                                                                 IConfiguration configuration)
         {
+            services.AddTransient<IManagersService, ManagersService>();
+
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(configuration.GetConnectionString("StartupDb")));
 
