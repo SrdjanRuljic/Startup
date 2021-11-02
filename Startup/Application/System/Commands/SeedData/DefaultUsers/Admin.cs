@@ -11,6 +11,8 @@ namespace Application.System.Commands.SeedData.DefaultUsers
             //Seed Default User
             AppUser admin = new AppUser
             {
+                Email = "admin@gmail.com",
+                EmailConfirmed = true,
                 UserName = "admin",
                 FirstName = "Admin",
                 LastName = "Admin",
