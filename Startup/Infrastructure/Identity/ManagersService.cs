@@ -4,6 +4,8 @@ using Domain.Entities.Identity;
 using Infrastructure.Identity.Extensions;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Transactions;
 
@@ -13,12 +15,27 @@ namespace Infrastructure.Identity
     {
         private readonly RoleManager<IdentityRole> _roleManager;
         private readonly UserManager<AppUser> _userManager;
+        private readonly SignInManager<AppUser> _signInManager;
 
         public ManagersService(RoleManager<IdentityRole> roleManager,
-                               UserManager<AppUser> userManager)
+                               UserManager<AppUser> userManager,
+                               SignInManager<AppUser> signInManager)
         {
             _roleManager = roleManager;
             _userManager = userManager;
+            _signInManager = signInManager;
+        }
+
+        public async Task<AppUser> AuthenticateAsync(string username, string password)
+        {
+            AppUser user = new AppUser();
+
+            SignInResult result = await _signInManager.PasswordSignInAsync(username, password, false, lockoutOnFailure: false);
+
+            if (result.Succeeded)
+                user = await _userManager.FindByNameAsync(username);
+
+            return user;
         }
 
         public async Task<Result> CreateRoleAsync(string roleName)
@@ -53,6 +70,13 @@ namespace Infrastructure.Identity
 
         public async Task<AppUser> FindByUserNameAsync(string username) =>
             await _userManager.FindByNameAsync(username);
+
+        public async Task<string[]> GetRoleAsync(AppUser user)
+        {
+            IList<string> list = await _userManager.GetRolesAsync(user);
+
+            return list.ToArray();
+        }
 
         public async Task<bool> IsThereAnyRoleAsync() =>
             await _roleManager.Roles.AnyAsync();
