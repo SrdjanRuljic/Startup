@@ -19,9 +19,7 @@ namespace Application.System.Commands.SeedData.DefaultUsers
             AppUser user = await managersServices.FindByUserNameAsync(admin.UserName);
 
             if (user == null)
-                await managersServices.CreateUserAsync(admin,
-                                                       "Administrator_123!",
-                                                       Domain.Enums.Roles.Admin.ToString());
+                await managersServices.CreateUserAsync(admin, "Administrator_123!", Domain.Enums.Roles.Admin.ToString());
         }
     }
 }
