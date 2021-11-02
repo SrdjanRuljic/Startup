@@ -28,14 +28,14 @@ namespace Infrastructure.Identity
 
         public async Task<AppUser> AuthenticateAsync(string username, string password)
         {
-            AppUser user = new AppUser();
+            AppUser user = await _userManager.FindByNameAsync(username);
 
-            SignInResult result = await _signInManager.PasswordSignInAsync(username, password, false, lockoutOnFailure: false);
+            if (user == null)
+                return null;
 
-            if (result.Succeeded)
-                user = await _userManager.FindByNameAsync(username);
+            SignInResult result = await _signInManager.PasswordSignInAsync(user.UserName, password, false, lockoutOnFailure: false);
 
-            return user;
+            return result.Succeeded ? user : null;
         }
 
         public async Task<Result> CreateRoleAsync(string roleName)
