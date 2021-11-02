@@ -27,8 +27,8 @@ namespace Infrastructure.Auth
             {
                 List<Claim> claims = new List<Claim>();
 
-                new Claim(JwtRegisteredClaimNames.Sub, username);
-                new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString());
+                claims.Add(new Claim(JwtRegisteredClaimNames.Sub, username));
+                claims.Add(new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()));
 
                 foreach (var item in roles)
                 {
