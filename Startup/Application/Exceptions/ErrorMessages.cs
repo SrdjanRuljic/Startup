@@ -6,6 +6,7 @@
         private static string unauthorised;
         private static string dataNotFound;
         private static string incorectUsernameOrPassword;
+        private static string userExists;
 
         public static string InernalServerError
         {
@@ -24,7 +25,12 @@
 
         public static string DataNotFound
         {
-            get { return dataNotFound = "The requested data was not found."; }
+            get { return dataNotFound = "The requested data was not found. "; }
+        }
+
+        public static string UserExists
+        {
+            get { return userExists = "A user with given username already exists, please enter another username. "; }
         }
     }
 }
