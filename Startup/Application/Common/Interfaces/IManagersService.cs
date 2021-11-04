@@ -13,5 +13,6 @@ namespace Application.Common.Interfaces
         Task<string[]> GetRoleAsync(AppUser user);
         Task<bool> IsThereAnyRoleAsync();
         Task<bool> IsThereAnyUserAsync();
+        Task<bool> UserExist(string userName, string email);
     }
 }

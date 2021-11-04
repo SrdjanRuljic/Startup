@@ -38,16 +38,17 @@ namespace Application.Auth.Register
             if (String.IsNullOrEmpty(request.LastName) || String.IsNullOrWhiteSpace(request.LastName))
                 request.LastName = null;
 
-            AppUser user = await _managersService.FindByUserNameAsync(request.Username);
+            bool userExist = await _managersService.UserExist(request.Username, request.Email);
 
-            if (user != null)
+            if (userExist)
                 throw new HttpStatusCodeException(HttpStatusCode.BadRequest, ErrorMessages.UserExists);
 
-            user = new AppUser
+            AppUser user = new AppUser
             {
                 FirstName = request.FirstName,
                 LastName = request.LastName,
-                UserName = request.Username
+                UserName = request.Username,
+                Email = request.Email
             };
 
             Result result = await _managersService.CreateUserAsync(user, request.Password, Domain.Enums.Roles.Basic.ToString());

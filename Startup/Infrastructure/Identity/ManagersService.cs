@@ -84,6 +84,9 @@ namespace Infrastructure.Identity
         public async Task<bool> IsThereAnyUserAsync() =>
             await _userManager.Users.AnyAsync();
 
+        public async Task<bool> UserExist(string userName, string email) =>
+            await _userManager.Users.AnyAsync(x => x.UserName.Equals(userName) || x.Email.Equals(email));
+
         private async Task<IdentityResult> DeleteUserAsync(AppUser user) =>
             await _userManager.DeleteAsync(user);
     }

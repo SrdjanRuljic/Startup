@@ -10,7 +10,6 @@ namespace Application.Auth.Register
         {
             validationMessage = null;
             bool isValid = true;
-            string passwordPattern = @"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[#$^+=!*()@%&]).{6,}$";
 
             if (model == null)
             {
@@ -42,13 +41,42 @@ namespace Application.Auth.Register
                 isValid = false;
             }
 
-            if (!Regex.IsMatch(model.Password, passwordPattern))
+            if (!model.Password.IsValidPassword())
             {
                 validationMessage += "The password must contain uppercase and lowercase letters, numbers, and special characters. ";
                 isValid = false;
             }
 
+            if (String.IsNullOrWhiteSpace(model.Email))
+            {
+                validationMessage += "Email is required. ";
+                isValid = false;
+            }
+
+            if (!model.Email.IsValidEmail())
+            {
+                validationMessage += "Email is not valid. ";
+                isValid = false;
+            }
+
             return isValid;
+        }
+
+        private static bool IsValidPassword(this string password)
+        {
+            string pattern = @"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[#$^+=!*()@%&]).{6,}$";
+
+            return Regex.IsMatch(password, pattern);
+        }
+
+        private static bool IsValidEmail(this string email)
+        {
+            string pattern = @"^(?!\.)(""([^""\r\\]|\\[""\r\\])*""|" +
+                             @"([-a-z0-9!#$%&'*+/=?^_`{|}~]|(?<!\.)\.)*)(?<!\.)" +
+                             @"@[a-z0-9][\w\.-]*[a-z0-9]\.[a-z][a-z\.]*[a-z]$";
+            Regex regex = new Regex(pattern, RegexOptions.IgnoreCase);
+
+            return regex.IsMatch(email);
         }
     }
 }
