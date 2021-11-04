@@ -2,7 +2,7 @@
 
 namespace Application.Auth.Register
 {
-    public class RegisterCommand : IRequest<object>
+    public class RegisterCommand : IRequest
     {
         public string FirstName { get; set; }
         public string LastName { get; set; }

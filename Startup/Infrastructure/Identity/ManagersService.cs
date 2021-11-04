@@ -26,9 +26,9 @@ namespace Infrastructure.Identity
             _signInManager = signInManager;
         }
 
-        public async Task<AppUser> AuthenticateAsync(string username, string password)
+        public async Task<AppUser> AuthenticateAsync(string userName, string password)
         {
-            AppUser user = await _userManager.FindByNameAsync(username);
+            AppUser user = await _userManager.FindByNameAsync(userName);
 
             if (user == null)
                 return null;
@@ -36,6 +36,13 @@ namespace Infrastructure.Identity
             SignInResult result = await _signInManager.PasswordSignInAsync(user.UserName, password, false, false);
 
             return result.Succeeded ? user : null;
+        }
+
+        public async Task<Result> ConfirmEmailAsync(AppUser user, string token)
+        {
+            IdentityResult result = await _userManager.ConfirmEmailAsync(user, token);
+
+            return result.ToApplicationResult();
         }
 
         public async Task<Result> CreateRoleAsync(string roleName)
@@ -68,8 +75,11 @@ namespace Infrastructure.Identity
             return result.ToApplicationResult();
         }
 
-        public async Task<AppUser> FindByUserNameAsync(string username) =>
-            await _userManager.FindByNameAsync(username);
+        public async Task<AppUser> FindByUserNameAsync(string userName) =>
+            await _userManager.FindByNameAsync(userName);
+
+        public async Task<string> GenerateEmailConfirmationTokenAsync(AppUser user) =>
+            await _userManager.GenerateEmailConfirmationTokenAsync(user);
 
         public async Task<string[]> GetRoleAsync(AppUser user)
         {

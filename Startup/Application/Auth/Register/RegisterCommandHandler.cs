@@ -11,19 +11,22 @@ using System.Threading.Tasks;
 
 namespace Application.Auth.Register
 {
-    public class RegisterCommandHandler : IRequestHandler<RegisterCommand, object>
+    public class RegisterCommandHandler : IRequestHandler<RegisterCommand>
     {
         private readonly IManagersService _managersService;
         private readonly IJwtFactory _jwtFactory;
+        private readonly IEmailSenderService _emailSenderService;
 
         public RegisterCommandHandler(IManagersService managersService,
-                                      IJwtFactory jwtFactory)
+                                      IJwtFactory jwtFactory,
+                                      IEmailSenderService emailSenderService)
         {
             _managersService = managersService;
             _jwtFactory = jwtFactory;
+            _emailSenderService = emailSenderService;
         }
 
-        public async Task<object> Handle(RegisterCommand request, CancellationToken cancellationToken)
+        public async Task<Unit> Handle(RegisterCommand request, CancellationToken cancellationToken)
         {
             string errorMessage = null;
 
@@ -56,11 +59,19 @@ namespace Application.Auth.Register
             if (!result.Succeeded)
                 throw new HttpStatusCodeException(HttpStatusCode.BadRequest, string.Concat(result.Errors));
 
-            string[] roles = await _managersService.GetRoleAsync(user);
+            //string[] roles = await _managersService.GetRoleAsync(user);
 
-            object token = TokenHelper.GenerateJwt(user.UserName, roles, _jwtFactory);
+            //object token = TokenHelper.GenerateJwt(user.UserName, roles, _jwtFactory);
 
-            return token;
+            string token = await _managersService.GenerateEmailConfirmationTokenAsync(user);
+
+            //var confirmationLink = Url.Action(nameof(ConfirmEmail), "Account", new { token, email = user.Email }, Request.Scheme);
+
+            Message message = new Message(new string[] { user.Email }, "Confirmation email link", "");
+
+            await _emailSenderService.SendEmailAsync(message);
+
+            return Unit.Value;
         }
     }
 }

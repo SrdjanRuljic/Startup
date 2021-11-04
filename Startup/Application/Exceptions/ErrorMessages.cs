@@ -7,6 +7,7 @@
         private static string dataNotFound;
         private static string incorectUsernameOrPassword;
         private static string userExists;
+        private static string emailNotSend;
 
         public static string InernalServerError
         {
@@ -31,6 +32,11 @@
         public static string UserExists
         {
             get { return userExists = "A user with given username already exists, please enter another username. "; }
+        }
+
+        public static string EmailNotSend
+        {
+            get { return emailNotSend = "An error occurred while seending mail. "; }
         }
     }
 }

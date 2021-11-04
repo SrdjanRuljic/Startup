@@ -27,5 +27,15 @@ namespace WebAPI.Controllers
 
             return Ok(token);
         }
+
+        [HttpPost]
+        [Route("confirm-email")]
+        [AllowAnonymous]
+        public async Task<IActionResult> ConfirmEmail(RegisterCommand command)
+        {
+            object token = await Mediator.Send(command);
+
+            return Ok(token);
+        }
     }
 }
