@@ -33,7 +33,7 @@ namespace Infrastructure.Identity
             if (user == null)
                 return null;
 
-            SignInResult result = await _signInManager.PasswordSignInAsync(user.UserName, password, false, lockoutOnFailure: false);
+            SignInResult result = await _signInManager.PasswordSignInAsync(user.UserName, password, false, false);
 
             return result.Succeeded ? user : null;
         }
