@@ -2,6 +2,7 @@
 using Application.Common.Models;
 using Application.Exceptions;
 using MailKit.Net.Smtp;
+using MailKit.Security;
 using Microsoft.Extensions.Logging;
 using MimeKit;
 using System;
@@ -31,7 +32,7 @@ namespace Persistence.EmailSender
         private MimeMessage CreateEmailMessage(Message message)
         {
             MimeMessage emailMessage = new MimeMessage();
-            emailMessage.From.Add(new MailboxAddress(_emailConfiguration.From));
+            emailMessage.From.Add(MailboxAddress.Parse(_emailConfiguration.From));
             emailMessage.To.AddRange(message.To);
             emailMessage.Subject = message.Subject;
 
@@ -52,12 +53,8 @@ namespace Persistence.EmailSender
             {
                 try
                 {
-                    await client.ConnectAsync(_emailConfiguration.SmtpServer, _emailConfiguration.Port, true);
-
-                    client.AuthenticationMechanisms.Remove("XOAUTH2");
-
+                    await client.ConnectAsync(_emailConfiguration.SmtpServer, _emailConfiguration.Port, SecureSocketOptions.Auto);
                     await client.AuthenticateAsync(_emailConfiguration.UserName, _emailConfiguration.Password);
-
                     await client.SendAsync(mimeMessage);
                 }
                 catch (Exception ex)

@@ -67,7 +67,7 @@ namespace Application.Auth.Register
 
             //var confirmationLink = Url.Action(nameof(ConfirmEmail), "Account", new { token, email = user.Email }, Request.Scheme);
 
-            Message message = new Message(new string[] { user.Email }, "Confirmation email link", "");
+            Message message = new Message(new string[] { user.Email }, "Email confirmation", "");
 
             await _emailSenderService.SendEmailAsync(message);
 
