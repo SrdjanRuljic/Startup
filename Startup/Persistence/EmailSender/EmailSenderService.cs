@@ -38,8 +38,7 @@ namespace Persistence.EmailSender
 
             BodyBuilder bodyBuilder = new BodyBuilder
             {
-                HtmlBody = string.Format("<h2 style='color:red;'>{0}</h2>",
-                message.Link)
+                HtmlBody = string.Format("Please confirm your account by <a href = '{0}'>clicking here</a>", message.Link)
             };
 
             emailMessage.Body = bodyBuilder.ToMessageBody();
