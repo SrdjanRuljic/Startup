@@ -1,4 +1,5 @@
-﻿using Application.Auth.Queries.Login;
+﻿using Application.Auth.ConfirmEmail;
+using Application.Auth.Queries.Login;
 using Application.Auth.Register;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -23,19 +24,23 @@ namespace WebAPI.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> Register(RegisterCommand command)
         {
-            object token = await Mediator.Send(command);
+            await Mediator.Send(command);
 
-            return Ok(token);
+            return Ok();
         }
 
-        [HttpPost]
+        [HttpGet]
         [Route("confirm-email")]
         [AllowAnonymous]
-        public async Task<IActionResult> ConfirmEmail(RegisterCommand command)
+        public async Task<IActionResult> ConfirmEmail([FromQuery] string username, [FromQuery] string token)
         {
-            object token = await Mediator.Send(command);
+            await Mediator.Send(new ConfirmEmailCommand()
+            {
+                Token = token,
+                UserName = username
+            });
 
-            return Ok(token);
+            return Ok();
         }
     }
 }

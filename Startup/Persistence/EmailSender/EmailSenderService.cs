@@ -39,7 +39,7 @@ namespace Persistence.EmailSender
             BodyBuilder bodyBuilder = new BodyBuilder
             {
                 HtmlBody = string.Format("<h2 style='color:red;'>{0}</h2>",
-                message.Content)
+                message.Link)
             };
 
             emailMessage.Body = bodyBuilder.ToMessageBody();
