@@ -1,13 +1,12 @@
-﻿using Application.Common.Interfaces;
+﻿using Application.Common.Behaviours;
+using Application.Common.Interfaces;
 using Application.Common.Models;
 using Application.Exceptions;
 using Domain.Entities.Identity;
 using Domain.Exceptions;
 using MediatR;
-using Microsoft.AspNetCore.WebUtilities;
 using System;
 using System.Net;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -62,15 +61,9 @@ namespace Application.Auth.Register
                 throw new HttpStatusCodeException(HttpStatusCode.BadRequest, string.Concat(result.Errors));
 
             string token = await _managersService.GenerateEmailConfirmationTokenAsync(user);
-            //token = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(token));
+            string link = LinkMaker.CreateConfirmLink(user.UserName, token);
 
-            Uri uri = new Uri("https://localhost:44363/api/Auth/confirm-email/");
-            string link = QueryHelpers.AddQueryString(uri.ToString(), "username", user.UserName);
-            link = QueryHelpers.AddQueryString(link.ToString(), "token", token);
-
-            Message message = new Message(new string[] { user.Email },
-                                          "Email confirmation",
-                                          link);
+            Message message = new Message(new string[] { user.Email }, "Email confirmation", link);
 
             await _emailSenderService.SendEmailAsync(message);
 
