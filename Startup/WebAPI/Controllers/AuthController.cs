@@ -9,6 +9,26 @@ namespace WebAPI.Controllers
 {
     public class AuthController : BaseController
     {
+        #region [GET]
+
+        [HttpGet]
+        [Route("confirm-email")]
+        [AllowAnonymous]
+        public async Task<IActionResult> ConfirmEmail([FromQuery] string username, [FromQuery] string token)
+        {
+            await Mediator.Send(new ConfirmEmailCommand()
+            {
+                Token = token,
+                UserName = username
+            });
+
+            return Ok();
+        }
+
+        #endregion
+
+        #region [POST]
+
         [HttpPost]
         [Route("login")]
         [AllowAnonymous]
@@ -29,18 +49,6 @@ namespace WebAPI.Controllers
             return Ok();
         }
 
-        [HttpGet]
-        [Route("confirm-email")]
-        [AllowAnonymous]
-        public async Task<IActionResult> ConfirmEmail([FromQuery] string username, [FromQuery] string token)
-        {
-            await Mediator.Send(new ConfirmEmailCommand()
-            {
-                Token = token,
-                UserName = username
-            });
-
-            return Ok();
-        }
+        #endregion        
     }
 }
