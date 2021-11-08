@@ -14,17 +14,21 @@ namespace Application.Users.Queries.Search
     {
         private readonly IManagersService _managersService;
         private readonly IMapper _mapper;
+        private readonly ICurrentUserService _currentUserService;
 
         public SearchUsersQueryHandler(IManagersService managersService,
-                                       IMapper mapper)
+                                       IMapper mapper,
+                                       ICurrentUserService currentUserService)
         {
             _managersService = managersService;
             _mapper = mapper;
+            _currentUserService = currentUserService;
         }
 
         public async Task<PaginationResultViewModel<SearchUsersViewModel>> Handle(SearchUsersQuery request, CancellationToken cancellationToken)
         {
             IQueryable<SearchUsersViewModel> list = _managersService.GetUsers()
+                                                                    .Where(x => x.UserName != _currentUserService.UserName)
                                                                     .ProjectTo<SearchUsersViewModel>(_mapper.ConfigurationProvider);
 
             PaginatedList<SearchUsersViewModel> paginatedList = await PaginatedList<SearchUsersViewModel>.CreateAsync(list,

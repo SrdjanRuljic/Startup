@@ -1,4 +1,5 @@
 using Application;
+using Application.Common.Interfaces;
 using Infrastructure;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -9,6 +10,7 @@ using Microsoft.OpenApi.Models;
 using Persistence;
 using System.Collections.Generic;
 using WebAPI._1_Startup;
+using WebAPI.Services;
 
 namespace WebAPI
 {
@@ -32,6 +34,8 @@ namespace WebAPI
             services.AddInfrastructure(Configuration);
             services.AddPersistence(Configuration);
             services.AddApplication();
+            services.AddScoped<ICurrentUserService, CurrentUserService>();
+            services.AddHttpContextAccessor();
             services.AddCors(options =>
             {
                 options.AddPolicy(MyAllowSpecificOrigins,
