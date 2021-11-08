@@ -1,5 +1,6 @@
 ﻿using Application.Common.Models;
 using Domain.Entities.Identity;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Application.Common.Interfaces
@@ -12,6 +13,7 @@ namespace Application.Common.Interfaces
         Task<Result> CreateUserAsync(AppUser user, string password, string role);
         Task<AppUser> FindByUserNameAsync(string userName);
         Task<string[]> GetRoleAsync(AppUser user);
+        IQueryable<AppUser> GetUsers();
         Task<string> GenerateEmailConfirmationTokenAsync(AppUser user);
         Task<bool> IsThereAnyRoleAsync();
         Task<bool> IsThereAnyUserAsync();

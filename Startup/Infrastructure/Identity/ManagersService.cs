@@ -88,6 +88,9 @@ namespace Infrastructure.Identity
             return list.ToArray();
         }
 
+        public IQueryable<AppUser> GetUsers() =>
+            _userManager.Users;
+
         public async Task<bool> IsThereAnyRoleAsync() =>
             await _roleManager.Roles.AnyAsync();
 
