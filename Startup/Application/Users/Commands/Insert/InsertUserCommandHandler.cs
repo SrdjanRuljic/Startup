@@ -39,7 +39,7 @@ namespace Application.Users.Commands.Insert
             if (String.IsNullOrEmpty(request.LastName) || String.IsNullOrWhiteSpace(request.LastName))
                 request.LastName = null;
 
-            bool userExist = await _managersService.UserExist(request.Username, request.Email);
+            bool userExist = await _managersService.UserExistAsync(request.Username, request.Email);
 
             if (userExist)
                 throw new HttpStatusCodeException(HttpStatusCode.BadRequest, ErrorMessages.UserExists);

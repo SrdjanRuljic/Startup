@@ -90,6 +90,9 @@ namespace Infrastructure.Identity
         public async Task<AppUser> FindByUserNameAsync(string userName) =>
             await _userManager.FindByNameAsync(userName);
 
+        public async Task<AppUser> FindByIdAsync(string id) =>
+            await _userManager.FindByIdAsync(id);
+
         public async Task<string> GenerateEmailConfirmationTokenAsync(AppUser user) =>
             await _userManager.GenerateEmailConfirmationTokenAsync(user);
 
@@ -116,8 +119,11 @@ namespace Infrastructure.Identity
             return result.ToApplicationResult();
         }
 
-        public async Task<bool> UserExist(string userName, string email) =>
+        public async Task<bool> UserExistAsync(string userName, string email) =>
             await _userManager.Users.AnyAsync(x => x.UserName.Equals(userName) || x.Email.Equals(email));
+
+        public async Task<bool> UserNameExistAsync(string id, string userName) =>
+            await _userManager.Users.AnyAsync(x => x.UserName.Equals(userName) && !x.Id.Equals(id));
 
         private async Task<IdentityResult> DeleteUserAsync(AppUser user) =>
             await _userManager.DeleteAsync(user);

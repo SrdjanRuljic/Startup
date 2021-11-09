@@ -1,6 +1,7 @@
 ﻿using Application.Common.Pagination.Models;
 using Application.Users.Commands.ChangePassword;
 using Application.Users.Commands.Insert;
+using Application.Users.Commands.Update;
 using Application.Users.Queries.Search;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -36,14 +37,14 @@ namespace WebAPI.Controllers
 
         #region [PUT]
 
-        //[Authorize(Policy = "RequireAdminRole")]
-        //[HttpPut]
-        //[Route("")]
-        //public async Task<IActionResult> Update()
-        //{
+        [HttpPut]
+        [Route("")]
+        public async Task<IActionResult> Update(UpdateUserCommand command)
+        {
+            await Mediator.Send(command);
 
-        //    return Ok();
-        //}
+            return Ok();
+        }
 
         [HttpPut]
         [Route("change-password")]

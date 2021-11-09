@@ -13,12 +13,14 @@ namespace Application.Common.Interfaces
         Task<Result> CreateRoleAsync(string roleName);
         Task<Result> CreateUserAsync(AppUser user, string password, string[] roles);
         Task<AppUser> FindByUserNameAsync(string userName);
+        Task<AppUser> FindByIdAsync(string id);
         Task<string[]> GetRoleAsync(AppUser user);
         IQueryable<AppUser> GetUsers();
         Task<string> GenerateEmailConfirmationTokenAsync(AppUser user);
         Task<bool> IsThereAnyRoleAsync();
         Task<bool> IsThereAnyUserAsync();
         Task<Result> UpdateUserAsync(AppUser user);
-        Task<bool> UserExist(string userName, string email);
+        Task<bool> UserExistAsync(string userName, string email);
+        Task<bool> UserNameExistAsync(string id, string userName);
     }
 }
