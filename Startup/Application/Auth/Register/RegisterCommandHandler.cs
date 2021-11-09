@@ -55,7 +55,7 @@ namespace Application.Auth.Register
                 Email = request.Email
             };
 
-            Result result = await _managersService.CreateUserAsync(user, request.Password, Domain.Enums.Roles.Basic.ToString());
+            Result result = await _managersService.CreateUserAsync(user, request.Password, new string[] { Domain.Enums.Roles.Basic.ToString() });
 
             if (!result.Succeeded)
                 throw new HttpStatusCodeException(HttpStatusCode.BadRequest, string.Concat(result.Errors));
