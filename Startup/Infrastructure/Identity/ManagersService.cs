@@ -109,6 +109,13 @@ namespace Infrastructure.Identity
         public async Task<bool> IsThereAnyUserAsync() =>
             await _userManager.Users.AnyAsync();
 
+        public async Task<Result> UpdateUserAsync(AppUser user)
+        {
+            IdentityResult result = await _userManager.UpdateAsync(user);
+
+            return result.ToApplicationResult();
+        }
+
         public async Task<bool> UserExist(string userName, string email) =>
             await _userManager.Users.AnyAsync(x => x.UserName.Equals(userName) || x.Email.Equals(email));
 
