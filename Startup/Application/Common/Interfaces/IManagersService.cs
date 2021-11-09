@@ -9,6 +9,7 @@ namespace Application.Common.Interfaces
     {
         Task<AppUser> AuthenticateAsync(string userName, string password);
         Task<Result> ConfirmEmailAsync(AppUser user, string token);
+        Task<Result> ChangePasswordAsync(AppUser user, string currentPassword, string newPassword);
         Task<Result> CreateRoleAsync(string roleName);
         Task<Result> CreateUserAsync(AppUser user, string password, string role);
         Task<Result> CreateUserAsync(AppUser user, string password, string[] roles);

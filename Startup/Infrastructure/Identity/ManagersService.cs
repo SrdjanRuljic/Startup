@@ -38,6 +38,13 @@ namespace Infrastructure.Identity
             return result.Succeeded ? user : null;
         }
 
+        public async Task<Result> ChangePasswordAsync(AppUser user, string currentPassword, string newPassword)
+        {
+            IdentityResult result = await _userManager.ChangePasswordAsync(user, currentPassword, newPassword);
+
+            return result.ToApplicationResult();
+        }
+
         public async Task<Result> ConfirmEmailAsync(AppUser user, string token)
         {
             IdentityResult result = await _userManager.ConfirmEmailAsync(user, token);
