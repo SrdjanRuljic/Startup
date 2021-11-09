@@ -11,6 +11,7 @@ namespace Application.Common.Interfaces
         Task<Result> ConfirmEmailAsync(AppUser user, string token);
         Task<Result> CreateRoleAsync(string roleName);
         Task<Result> CreateUserAsync(AppUser user, string password, string role);
+        Task<Result> CreateUserAsync(AppUser user, string password, string[] roles);
         Task<AppUser> FindByUserNameAsync(string userName);
         Task<string[]> GetRoleAsync(AppUser user);
         IQueryable<AppUser> GetUsers();

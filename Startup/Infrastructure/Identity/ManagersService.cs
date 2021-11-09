@@ -75,6 +75,31 @@ namespace Infrastructure.Identity
             return result.ToApplicationResult();
         }
 
+        public async Task<Result> CreateUserAsync(AppUser user, string password, string[] roles)
+        {
+            IdentityResult result = new IdentityResult();
+
+            using (TransactionScope scope = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
+            {
+                result = await _userManager.CreateAsync(user, password);
+
+                if (result.Succeeded)
+                {
+                    foreach (var role in roles)
+                    {
+                        result = await _userManager.AddToRoleAsync(user, role);
+                    }
+                }
+
+                if (result.Succeeded)
+                    scope.Complete();
+                else
+                    scope.Dispose();
+            }
+
+            return result.ToApplicationResult();
+        }
+
         public async Task<AppUser> FindByUserNameAsync(string userName) =>
             await _userManager.FindByNameAsync(userName);
 

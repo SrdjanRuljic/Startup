@@ -10,24 +10,21 @@ using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Application.Auth.Register
+namespace Application.Users.Commands.Insert
 {
-    public class RegisterCommandHandler : IRequestHandler<RegisterCommand>
+    public class InsertUserCommandHandler : IRequestHandler<InsertUserCommand>
     {
         private readonly IManagersService _managersService;
-        private readonly IJwtFactory _jwtFactory;
         private readonly IEmailSenderService _emailSenderService;
 
-        public RegisterCommandHandler(IManagersService managersService,
-                                      IJwtFactory jwtFactory,
-                                      IEmailSenderService emailSenderService)
+        public InsertUserCommandHandler(IManagersService managersService,
+                                        IEmailSenderService emailSenderService)
         {
             _managersService = managersService;
-            _jwtFactory = jwtFactory;
             _emailSenderService = emailSenderService;
         }
 
-        public async Task<Unit> Handle(RegisterCommand request, CancellationToken cancellationToken)
+        public async Task<Unit> Handle(InsertUserCommand request, CancellationToken cancellationToken)
         {
             string errorMessage = null;
 
@@ -52,20 +49,20 @@ namespace Application.Auth.Register
                 FirstName = request.FirstName,
                 LastName = request.LastName,
                 UserName = request.Username,
-                Email = request.Email
+                Email = request.Email,
+                EmailConfirmed = true
             };
 
-            Result result = await _managersService.CreateUserAsync(user, request.Password, Domain.Enums.Roles.Basic.ToString());
+            string password = PasswordGenerator.GeneratePasword();
+
+            Result result = await _managersService.CreateUserAsync(user, password, request.Roles);
 
             if (!result.Succeeded)
                 throw new HttpStatusCodeException(HttpStatusCode.BadRequest, string.Concat(result.Errors));
 
-            string token = await _managersService.GenerateEmailConfirmationTokenAsync(user);
-            string link = LinkMaker.CreateConfirmLink(user.UserName, token);
+            Message message = new Message(new string[] { user.Email }, "Password send", null, password);
 
-            Message message = new Message(new string[] { user.Email }, "Email confirmation", link, null);
-
-            await _emailSenderService.SendConfirmationEmailAsync(message);
+            await _emailSenderService.SendPasswordEmailAsync(message);
 
             return Unit.Value;
         }

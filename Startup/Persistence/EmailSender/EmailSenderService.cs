@@ -22,14 +22,21 @@ namespace Persistence.EmailSender
             _logger = logger;
         }
 
-        public async Task SendEmailAsync(Message message)
+        public async Task SendConfirmationEmailAsync(Message message)
         {
-            MimeMessage mimeMessage = CreateEmailMessage(message);
+            MimeMessage mimeMessage = CreateConfirmationEmailMessage(message);
 
             await SendAsync(mimeMessage);
         }
 
-        private MimeMessage CreateEmailMessage(Message message)
+        public async Task SendPasswordEmailAsync(Message message)
+        {
+            MimeMessage mimeMessage = CreateEmailPasswordMessage(message);
+
+            await SendAsync(mimeMessage);
+        }
+
+        private MimeMessage CreateConfirmationEmailMessage(Message message)
         {
             MimeMessage emailMessage = new MimeMessage();
             emailMessage.From.Add(MailboxAddress.Parse(_emailConfiguration.From));
@@ -39,6 +46,23 @@ namespace Persistence.EmailSender
             BodyBuilder bodyBuilder = new BodyBuilder
             {
                 HtmlBody = string.Format("Please confirm your account by <a href = '{0}'>clicking here</a>", message.Link)
+            };
+
+            emailMessage.Body = bodyBuilder.ToMessageBody();
+
+            return emailMessage;
+        }
+
+        private MimeMessage CreateEmailPasswordMessage(Message message)
+        {
+            MimeMessage emailMessage = new MimeMessage();
+            emailMessage.From.Add(MailboxAddress.Parse(_emailConfiguration.From));
+            emailMessage.To.AddRange(message.To);
+            emailMessage.Subject = message.Subject;
+
+            BodyBuilder bodyBuilder = new BodyBuilder
+            {
+                HtmlBody = string.Format("Your generated password: {0}", message.Password)
             };
 
             emailMessage.Body = bodyBuilder.ToMessageBody();

@@ -5,6 +5,7 @@ namespace Application.Common.Interfaces
 {
     public interface IEmailSenderService
     {
-        Task SendEmailAsync(Message message);
+        Task SendConfirmationEmailAsync(Message message);
+        Task SendPasswordEmailAsync(Message message);
     }
 }
