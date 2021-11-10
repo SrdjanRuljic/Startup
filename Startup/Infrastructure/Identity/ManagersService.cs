@@ -87,6 +87,13 @@ namespace Infrastructure.Identity
             return result.ToApplicationResult();
         }
 
+        public async Task<Result> DeleteUserAsync(AppUser user)
+        {
+            IdentityResult result = await _userManager.DeleteAsync(user);
+
+            return result.ToApplicationResult();
+        }
+
         public async Task<AppUser> FindByUserNameAsync(string userName) =>
             await _userManager.FindByNameAsync(userName);
 
@@ -153,8 +160,5 @@ namespace Infrastructure.Identity
 
         public async Task<bool> UserNameExistAsync(string id, string userName) =>
             await _userManager.Users.AnyAsync(x => x.UserName.Equals(userName) && !x.Id.Equals(id));
-
-        private async Task<IdentityResult> DeleteUserAsync(AppUser user) =>
-            await _userManager.DeleteAsync(user);
     }
 }

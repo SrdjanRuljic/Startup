@@ -12,6 +12,7 @@ namespace Application.Common.Interfaces
         Task<Result> ChangePasswordAsync(AppUser user, string currentPassword, string newPassword);
         Task<Result> CreateRoleAsync(string roleName);
         Task<Result> CreateUserAsync(AppUser user, string password, string[] roles);
+        Task<Result> DeleteUserAsync(AppUser user);
         Task<AppUser> FindByUserNameAsync(string userName);
         Task<AppUser> FindByIdAsync(string id);
         Task<string[]> GetRoleAsync(AppUser user);

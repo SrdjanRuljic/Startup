@@ -1,5 +1,6 @@
 ﻿using Application.Common.Pagination.Models;
 using Application.Users.Commands.ChangePassword;
+using Application.Users.Commands.Delete;
 using Application.Users.Commands.Insert;
 using Application.Users.Commands.Update.Self;
 using Application.Users.Commands.Update.Update;
@@ -62,6 +63,23 @@ namespace WebAPI.Controllers
         public async Task<IActionResult> ChangePassword(ChangePasswordCommand command)
         {
             await Mediator.Send(command);
+
+            return Ok();
+        }
+
+        #endregion
+
+        #region [DELETE]
+
+        [Authorize(Policy = "RequireAdminRole")]
+        [HttpDelete]
+        [Route("{id}")]
+        public async Task<IActionResult> Delete(string id)
+        {
+            await Mediator.Send(new DeleteUserCommand
+            {
+                Id = id
+            });
 
             return Ok();
         }
