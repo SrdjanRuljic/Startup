@@ -43,7 +43,7 @@ namespace Application.Users.Commands.Update.Update
 
             if (model.Roles.Length == 0)
             {
-                validationMessage += "At least one role is requiredEmail is not valid. ";
+                validationMessage += "At least one role is required. ";
                 isValid = false;
             }
 
