@@ -30,7 +30,7 @@ namespace Application.Users.Commands.Update.Update
             AppUser user = await _managersService.FindByIdAsync(request.Id);
 
             if (user == null)
-                throw new HttpStatusCodeException(HttpStatusCode.BadRequest, ErrorMessages.DataNotFound);
+                throw new HttpStatusCodeException(HttpStatusCode.NotFound, ErrorMessages.DataNotFound);
 
             if (String.IsNullOrEmpty(request.FirstName) || String.IsNullOrWhiteSpace(request.FirstName))
                 request.FirstName = null;

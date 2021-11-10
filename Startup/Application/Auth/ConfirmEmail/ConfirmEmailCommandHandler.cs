@@ -24,7 +24,7 @@ namespace Application.Auth.ConfirmEmail
             AppUser user = await _managersService.FindByUserNameAsync(request.UserName);
 
             if (user == null)
-                throw new HttpStatusCodeException(HttpStatusCode.BadRequest, ErrorMessages.DataNotFound);
+                throw new HttpStatusCodeException(HttpStatusCode.NotFound, ErrorMessages.DataNotFound);
 
             Result result = await _managersService.ConfirmEmailAsync(user, request.Token);
 

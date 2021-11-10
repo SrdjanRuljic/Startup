@@ -15,6 +15,7 @@ namespace Application.Common.Interfaces
         Task<Result> DeleteUserAsync(AppUser user);
         Task<AppUser> FindByUserNameAsync(string userName);
         Task<AppUser> FindByIdAsync(string id);
+        IQueryable<AppUser> FindById(string id);
         Task<string[]> GetRoleAsync(AppUser user);
         IQueryable<AppUser> GetUsers();
         Task<string> GenerateEmailConfirmationTokenAsync(AppUser user);

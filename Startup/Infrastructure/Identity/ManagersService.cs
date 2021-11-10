@@ -100,6 +100,9 @@ namespace Infrastructure.Identity
         public async Task<AppUser> FindByIdAsync(string id) =>
             await _userManager.FindByIdAsync(id);
 
+        public IQueryable<AppUser> FindById(string id) =>
+            _userManager.Users.Where(x => x.Id.Equals(id));
+
         public async Task<string> GenerateEmailConfirmationTokenAsync(AppUser user) =>
             await _userManager.GenerateEmailConfirmationTokenAsync(user);
 
