@@ -1,10 +1,9 @@
 ﻿using Application.Common.Interfaces;
 using Application.Exceptions;
 using AutoMapper;
-using AutoMapper.QueryableExtensions;
+using Domain.Entities.Identity;
 using Domain.Exceptions;
 using MediatR;
-using Microsoft.EntityFrameworkCore;
 using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
@@ -25,11 +24,14 @@ namespace Application.Users.Queries.GetById
 
         public async Task<GetUserByIdViewModel> Handle(GetUserByIdQuery request, CancellationToken cancellationToken)
         {
-            GetUserByIdViewModel model = await _managerService.FindById(request.Id)
-                                                                   .ProjectTo<GetUserByIdViewModel>(_mapper.ConfigurationProvider)
-                                                                   .FirstOrDefaultAsync();
-            if (model == null)
+            AppUser user = await _managerService.FindByIdAsync(request.Id);
+
+            if (user == null)
                 throw new HttpStatusCodeException(HttpStatusCode.NotFound, ErrorMessages.DataNotFound);
+
+            GetUserByIdViewModel model = _mapper.Map<GetUserByIdViewModel>(user);
+
+            model.Roles = await _managerService.GetRoleAsync(user);
 
             return model;
         }

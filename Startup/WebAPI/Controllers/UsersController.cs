@@ -4,6 +4,7 @@ using Application.Users.Commands.Delete;
 using Application.Users.Commands.Insert;
 using Application.Users.Commands.Update.Self;
 using Application.Users.Commands.Update.Update;
+using Application.Users.Queries.GetById;
 using Application.Users.Queries.Search;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -13,6 +14,23 @@ namespace WebAPI.Controllers
 {
     public class UsersController : BaseController
     {
+        #region [GET]
+
+        [HttpGet]
+        [Route("{id}")]
+        public async Task<IActionResult> GetById(string id)
+        {
+            GetUserByIdViewModel user = await Mediator.Send(new GetUserByIdQuery
+            {
+                Id = id
+            });
+
+            return Ok(user);
+        }
+
+        #endregion
+
+
         #region [POST]
 
         [Authorize(Policy = "RequireAdminRole")]
