@@ -119,6 +119,35 @@ namespace Infrastructure.Identity
             return result.ToApplicationResult();
         }
 
+        public async Task<Result> UpdateUserAsync(AppUser user, string[] roles)
+        {
+            IdentityResult result = new IdentityResult();
+
+            using (TransactionScope scope = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
+            {
+                result = await _userManager.UpdateAsync(user);
+
+                if (result.Succeeded)
+                {
+                    string[] currentRoles = await GetRoleAsync(user);
+
+                    result = await _userManager.RemoveFromRolesAsync(user, currentRoles);
+
+                    if (result.Succeeded)
+                    {
+                        result = await _userManager.AddToRolesAsync(user, roles);
+                    }
+                }
+
+                if (result.Succeeded)
+                    scope.Complete();
+                else
+                    scope.Dispose();
+            }
+
+            return result.ToApplicationResult();
+        }
+
         public async Task<bool> UserExistAsync(string userName, string email) =>
             await _userManager.Users.AnyAsync(x => x.UserName.Equals(userName) || x.Email.Equals(email));
 

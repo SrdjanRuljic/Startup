@@ -9,18 +9,18 @@ using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Application.Users.Commands.Update
+namespace Application.Users.Commands.Update.Self
 {
-    public class UpdateUserCommandHandler : IRequestHandler<UpdateUserCommand>
+    public class UpdateSelfCommandHandler : IRequestHandler<UpdateSelfCommand>
     {
         private readonly IManagersService _managersService;
 
-        public UpdateUserCommandHandler(IManagersService managersService)
+        public UpdateSelfCommandHandler(IManagersService managersService)
         {
             _managersService = managersService;
         }
 
-        public async Task<Unit> Handle(UpdateUserCommand request, CancellationToken cancellationToken)
+        public async Task<Unit> Handle(UpdateSelfCommand request, CancellationToken cancellationToken)
         {
             string errorMessage = null;
 

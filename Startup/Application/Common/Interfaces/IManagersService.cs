@@ -20,6 +20,7 @@ namespace Application.Common.Interfaces
         Task<bool> IsThereAnyRoleAsync();
         Task<bool> IsThereAnyUserAsync();
         Task<Result> UpdateUserAsync(AppUser user);
+        Task<Result> UpdateUserAsync(AppUser user, string[] roles);
         Task<bool> UserExistAsync(string userName, string email);
         Task<bool> UserNameExistAsync(string id, string userName);
     }

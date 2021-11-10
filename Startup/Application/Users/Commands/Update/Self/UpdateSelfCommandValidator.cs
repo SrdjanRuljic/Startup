@@ -2,11 +2,11 @@
 using System.Linq;
 using System.Text.RegularExpressions;
 
-namespace Application.Users.Commands.Insert
+namespace Application.Users.Commands.Update.Self
 {
-    public static class InsertUserCommandValidator
+    public static class UpdateSelfCommandValidator
     {
-        public static bool IsValid(this InsertUserCommand model, out string validationMessage)
+        public static bool IsValid(this UpdateSelfCommand model, out string validationMessage)
         {
             validationMessage = null;
             bool isValid = true;
@@ -38,12 +38,6 @@ namespace Application.Users.Commands.Insert
             if (!model.Email.IsValidEmail())
             {
                 validationMessage += "Email is not valid. ";
-                isValid = false;
-            }
-
-            if (model.Roles.Length == 0)
-            {
-                validationMessage += "At least one role is requiredEmail is not valid. ";
                 isValid = false;
             }
 
