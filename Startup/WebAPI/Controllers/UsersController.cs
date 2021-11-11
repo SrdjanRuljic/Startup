@@ -30,7 +30,6 @@ namespace WebAPI.Controllers
 
         #endregion
 
-
         #region [POST]
 
         [Authorize(Policy = "RequireAdminRole")]
