@@ -8,7 +8,7 @@ using MimeKit;
 using System;
 using System.Threading.Tasks;
 
-namespace Persistence.EmailSender
+namespace Infrastructure.EmailSender
 {
     public class EmailSenderService : IEmailSenderService
     {

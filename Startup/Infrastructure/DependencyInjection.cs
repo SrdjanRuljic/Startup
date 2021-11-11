@@ -1,6 +1,7 @@
 ﻿using Application.Common.Interfaces;
 using Domain.Entities.Identity;
 using Infrastructure.Auth;
+using Infrastructure.EmailSender;
 using Infrastructure.Identity;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
@@ -70,6 +71,11 @@ namespace Infrastructure
                     policy.RequireAuthenticatedUser();
                 });
             });
+
+            EmailConfiguration emailConfig = configuration.GetSection("EmailConfiguration").Get<EmailConfiguration>();
+
+            services.AddSingleton(emailConfig);
+            services.AddScoped<IEmailSenderService, EmailSenderService>();
 
             return services;
         }

@@ -1,4 +1,4 @@
-﻿namespace Persistence.EmailSender
+﻿namespace Infrastructure.EmailSender
 {
     public class EmailConfiguration
     {
