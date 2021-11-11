@@ -10,6 +10,7 @@ using Microsoft.OpenApi.Models;
 using Persistence;
 using System.Collections.Generic;
 using WebAPI._1_Startup;
+using WebAPI.Helpers;
 using WebAPI.Services;
 
 namespace WebAPI
@@ -66,6 +67,8 @@ namespace WebAPI
                         }, new List<string>()
                     }
                 });
+
+                options.OperationFilter<SwaggerLanguageHeader>();
             });
         }
 
@@ -94,6 +97,8 @@ namespace WebAPI
             app.UseAuthentication();
 
             app.UseAuthorization();
+
+            app.UseRequestLocalization();
 
             app.UseEndpoints(endpoints =>
             {

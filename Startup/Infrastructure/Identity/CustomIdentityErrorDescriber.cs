@@ -21,7 +21,11 @@ namespace Infrastructure.Identity
 
         public override IdentityError DuplicateEmail(string email)
         {
-            return base.DuplicateEmail(email);
+            return new IdentityError
+            {
+                Code = nameof(DuplicateEmail),
+                Description = Resources.Translations.DuplicateEmail
+            };
         }
 
         public override IdentityError DuplicateRoleName(string name)

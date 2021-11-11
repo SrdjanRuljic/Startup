@@ -4,11 +4,14 @@ using Infrastructure.Auth;
 using Infrastructure.EmailSender;
 using Infrastructure.Identity;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
+using System.Collections.Generic;
+using System.Globalization;
 using System.Text;
 
 namespace Infrastructure
@@ -76,6 +79,23 @@ namespace Infrastructure
 
             services.AddSingleton(emailConfig);
             services.AddScoped<IEmailSenderService, EmailSenderService>();
+
+            services.AddLocalization(options =>
+            {
+                options.ResourcesPath = "Resources";
+            });
+            services.Configure<RequestLocalizationOptions>(options =>
+            {
+                List<CultureInfo> supportedCultures = new List<CultureInfo>
+                {
+                    new CultureInfo("en"),
+                    new CultureInfo("sr"),
+                    new CultureInfo("ba")
+                };
+                options.SupportedCultures = supportedCultures;
+                options.SupportedUICultures = supportedCultures;
+
+            });
 
             return services;
         }

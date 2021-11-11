@@ -1,7 +1,6 @@
 ﻿using Application.Common.Behaviours;
 using Application.Common.Interfaces;
 using Application.Common.Models;
-using Application.Exceptions;
 using Domain.Entities.Identity;
 using Domain.Exceptions;
 using MediatR;
@@ -42,10 +41,10 @@ namespace Application.Auth.Register
             if (String.IsNullOrEmpty(request.LastName) || String.IsNullOrWhiteSpace(request.LastName))
                 request.LastName = null;
 
-            bool userExist = await _managersService.UserExistAsync(request.Username, request.Email);
+            //bool userExist = await _managersService.UserExistAsync(request.Username, request.Email);
 
-            if (userExist)
-                throw new HttpStatusCodeException(HttpStatusCode.BadRequest, ErrorMessages.UserExists);
+            //if (userExist)
+            //    throw new HttpStatusCodeException(HttpStatusCode.BadRequest, ErrorMessages.UserExists);
 
             AppUser user = new AppUser
             {
