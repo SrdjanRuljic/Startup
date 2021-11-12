@@ -9,14 +9,76 @@ namespace Infrastructure.Identity
 
         }
 
-        public override IdentityError ConcurrencyFailure()
-        {
-            return base.ConcurrencyFailure();
-        }
-
         public override IdentityError DefaultError()
         {
-            return base.DefaultError();
+            return new IdentityError
+            {
+                Code = nameof(DefaultError),
+                Description = Resources.Translations.DefaultError
+            };
+        }
+
+        public override IdentityError ConcurrencyFailure()
+        {
+            return new IdentityError
+            {
+                Code = nameof(ConcurrencyFailure),
+                Description = Resources.Translations.ConcurrencyFailure
+            };
+        }
+
+        public override IdentityError PasswordMismatch()
+        {
+            return new IdentityError
+            {
+                Code = nameof(PasswordMismatch),
+                Description = Resources.Translations.PasswordMismatch
+            };
+        }
+
+        public override IdentityError InvalidToken()
+        {
+            return new IdentityError
+            {
+                Code = nameof(InvalidToken),
+                Description = Resources.Translations.InvalidToken
+            };
+        }
+
+        public override IdentityError LoginAlreadyAssociated()
+        {
+            return new IdentityError
+            {
+                Code = nameof(LoginAlreadyAssociated),
+                Description = Resources.Translations.LoginAlreadyAssociated
+            };
+        }
+
+        public override IdentityError InvalidUserName(string userName)
+        {
+            return new IdentityError
+            {
+                Code = nameof(InvalidUserName),
+                Description = string.Format(Resources.Translations.InvalidUserName, userName)
+            };
+        }
+
+        public override IdentityError InvalidEmail(string email)
+        {
+            return new IdentityError
+            {
+                Code = nameof(InvalidEmail),
+                Description = string.Format(Resources.Translations.InvalidEmail, email)
+            };
+        }
+
+        public override IdentityError DuplicateUserName(string userName)
+        {
+            return new IdentityError
+            {
+                Code = nameof(DuplicateUserName),
+                Description = string.Format(Resources.Translations.DuplicateUserName, userName)
+            };
         }
 
         public override IdentityError DuplicateEmail(string email)
@@ -24,88 +86,107 @@ namespace Infrastructure.Identity
             return new IdentityError
             {
                 Code = nameof(DuplicateEmail),
-                Description = Resources.Translations.DuplicateEmail
+                Description = string.Format(Resources.Translations.DuplicateEmail, email)
             };
         }
 
-        public override IdentityError DuplicateRoleName(string name)
+        public override IdentityError InvalidRoleName(string role)
         {
-            return base.DuplicateRoleName(name);
+            return new IdentityError
+            {
+                Code = nameof(InvalidRoleName),
+                Description = string.Format(Resources.Translations.InvalidRoleName, role)
+            };
         }
 
-        public override IdentityError DuplicateUserName(string name)
+        public override IdentityError DuplicateRoleName(string role)
         {
-            return base.DuplicateUserName(name);
-        }
-
-        public override IdentityError InvalidEmail(string email)
-        {
-            return base.InvalidEmail(email);
-        }
-
-        public override IdentityError InvalidRoleName(string name)
-        {
-            return base.InvalidRoleName(name);
-        }
-
-        public override IdentityError InvalidToken()
-        {
-            return base.InvalidToken();
-        }
-
-        public override IdentityError InvalidUserName(string name)
-        {
-            return base.InvalidUserName(name);
-        }
-
-        public override IdentityError LoginAlreadyAssociated()
-        {
-            return base.LoginAlreadyAssociated();
-        }
-
-        public override IdentityError PasswordMismatch()
-        {
-            return base.PasswordMismatch();
-        }
-
-        public override IdentityError PasswordRequiresDigit()
-        {
-            return base.PasswordRequiresDigit();
-        }
-
-        public override IdentityError PasswordRequiresLower()
-        {
-            return base.PasswordRequiresLower();
-        }
-
-        public override IdentityError PasswordRequiresUpper()
-        {
-            return base.PasswordRequiresUpper();
-        }
-
-        public override IdentityError PasswordTooShort(int length)
-        {
-            return base.PasswordTooShort(length);
+            return new IdentityError
+            {
+                Code = nameof(DuplicateRoleName),
+                Description = string.Format(Resources.Translations.DuplicateRoleName, role)
+            };
         }
 
         public override IdentityError UserAlreadyHasPassword()
         {
-            return base.UserAlreadyHasPassword();
-        }
-
-        public override IdentityError UserAlreadyInRole(string role)
-        {
-            return base.UserAlreadyInRole(role);
+            return new IdentityError
+            {
+                Code = nameof(UserAlreadyHasPassword),
+                Description = Resources.Translations.UserAlreadyHasPassword
+            };
         }
 
         public override IdentityError UserLockoutNotEnabled()
         {
-            return base.UserLockoutNotEnabled();
+            return new IdentityError
+            {
+                Code = nameof(UserLockoutNotEnabled),
+                Description = Resources.Translations.UserLockoutNotEnabled
+            };
+        }
+
+        public override IdentityError UserAlreadyInRole(string role)
+        {
+            return new IdentityError
+            {
+                Code = nameof(UserAlreadyInRole),
+                Description = string.Format(Resources.Translations.UserAlreadyInRole, role)
+            };
         }
 
         public override IdentityError UserNotInRole(string role)
         {
-            return base.UserNotInRole(role);
+            return new IdentityError
+            {
+                Code = nameof(UserNotInRole),
+                Description = string.Format(Resources.Translations.UserNotInRole, role)
+            };
+        }
+
+        public override IdentityError PasswordTooShort(int length)
+        {
+            return new IdentityError
+            {
+                Code = nameof(PasswordTooShort),
+                Description = string.Format(Resources.Translations.PasswordTooShort, length)
+            };
+        }
+
+        public override IdentityError PasswordRequiresNonAlphanumeric()
+        {
+            return new IdentityError
+            {
+                Code = nameof(PasswordRequiresNonAlphanumeric),
+                Description = Resources.Translations.PasswordRequiresNonAlphanumeric
+            };
+        }
+
+        public override IdentityError PasswordRequiresDigit()
+        {
+            return new IdentityError
+            {
+                Code = nameof(PasswordRequiresDigit),
+                Description = Resources.Translations.PasswordRequiresDigit
+            };
+        }
+
+        public override IdentityError PasswordRequiresLower()
+        {
+            return new IdentityError
+            {
+                Code = nameof(PasswordRequiresLower),
+                Description = Resources.Translations.PasswordRequiresLower
+            };
+        }
+
+        public override IdentityError PasswordRequiresUpper()
+        {
+            return new IdentityError
+            {
+                Code = nameof(PasswordRequiresUpper),
+                Description = Resources.Translations.PasswordRequiresUpper
+            };
         }
     }
 }
