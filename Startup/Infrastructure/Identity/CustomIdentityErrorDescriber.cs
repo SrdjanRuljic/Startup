@@ -14,7 +14,7 @@ namespace Infrastructure.Identity
             return new IdentityError
             {
                 Code = nameof(DefaultError),
-                Description = Resources.Translations.DefaultError
+                Description = Application.Resources.Translation.DefaultError
             };
         }
 
@@ -23,7 +23,7 @@ namespace Infrastructure.Identity
             return new IdentityError
             {
                 Code = nameof(ConcurrencyFailure),
-                Description = Resources.Translations.ConcurrencyFailure
+                Description = Application.Resources.Translation.ConcurrencyFailure
             };
         }
 
@@ -32,7 +32,7 @@ namespace Infrastructure.Identity
             return new IdentityError
             {
                 Code = nameof(PasswordMismatch),
-                Description = Resources.Translations.PasswordMismatch
+                Description = Application.Resources.Translation.PasswordMismatch
             };
         }
 
@@ -41,7 +41,7 @@ namespace Infrastructure.Identity
             return new IdentityError
             {
                 Code = nameof(InvalidToken),
-                Description = Resources.Translations.InvalidToken
+                Description = Application.Resources.Translation.InvalidToken
             };
         }
 
@@ -50,7 +50,7 @@ namespace Infrastructure.Identity
             return new IdentityError
             {
                 Code = nameof(LoginAlreadyAssociated),
-                Description = Resources.Translations.LoginAlreadyAssociated
+                Description = Application.Resources.Translation.LoginAlreadyAssociated
             };
         }
 
@@ -59,7 +59,7 @@ namespace Infrastructure.Identity
             return new IdentityError
             {
                 Code = nameof(InvalidUserName),
-                Description = string.Format(Resources.Translations.InvalidUserName, userName)
+                Description = string.Format(Application.Resources.Translation.InvalidUserName, userName)
             };
         }
 
@@ -68,7 +68,7 @@ namespace Infrastructure.Identity
             return new IdentityError
             {
                 Code = nameof(InvalidEmail),
-                Description = string.Format(Resources.Translations.InvalidEmail, email)
+                Description = string.Format(Application.Resources.Translation.InvalidEmail, email)
             };
         }
 
@@ -77,7 +77,7 @@ namespace Infrastructure.Identity
             return new IdentityError
             {
                 Code = nameof(DuplicateUserName),
-                Description = string.Format(Resources.Translations.DuplicateUserName, userName)
+                Description = string.Format(Application.Resources.Translation.DuplicateUserName, userName)
             };
         }
 
@@ -86,7 +86,7 @@ namespace Infrastructure.Identity
             return new IdentityError
             {
                 Code = nameof(DuplicateEmail),
-                Description = string.Format(Resources.Translations.DuplicateEmail, email)
+                Description = string.Format(Application.Resources.Translation.DuplicateEmail, email)
             };
         }
 
@@ -95,7 +95,7 @@ namespace Infrastructure.Identity
             return new IdentityError
             {
                 Code = nameof(InvalidRoleName),
-                Description = string.Format(Resources.Translations.InvalidRoleName, role)
+                Description = string.Format(Application.Resources.Translation.InvalidRoleName, role)
             };
         }
 
@@ -104,7 +104,7 @@ namespace Infrastructure.Identity
             return new IdentityError
             {
                 Code = nameof(DuplicateRoleName),
-                Description = string.Format(Resources.Translations.DuplicateRoleName, role)
+                Description = string.Format(Application.Resources.Translation.DuplicateRoleName, role)
             };
         }
 
@@ -113,7 +113,7 @@ namespace Infrastructure.Identity
             return new IdentityError
             {
                 Code = nameof(UserAlreadyHasPassword),
-                Description = Resources.Translations.UserAlreadyHasPassword
+                Description = Application.Resources.Translation.UserAlreadyHasPassword
             };
         }
 
@@ -122,7 +122,7 @@ namespace Infrastructure.Identity
             return new IdentityError
             {
                 Code = nameof(UserLockoutNotEnabled),
-                Description = Resources.Translations.UserLockoutNotEnabled
+                Description = Application.Resources.Translation.UserLockoutNotEnabled
             };
         }
 
@@ -131,7 +131,7 @@ namespace Infrastructure.Identity
             return new IdentityError
             {
                 Code = nameof(UserAlreadyInRole),
-                Description = string.Format(Resources.Translations.UserAlreadyInRole, role)
+                Description = string.Format(Application.Resources.Translation.UserAlreadyInRole, role)
             };
         }
 
@@ -140,7 +140,7 @@ namespace Infrastructure.Identity
             return new IdentityError
             {
                 Code = nameof(UserNotInRole),
-                Description = string.Format(Resources.Translations.UserNotInRole, role)
+                Description = string.Format(Application.Resources.Translation.UserNotInRole, role)
             };
         }
 
@@ -149,7 +149,7 @@ namespace Infrastructure.Identity
             return new IdentityError
             {
                 Code = nameof(PasswordTooShort),
-                Description = string.Format(Resources.Translations.PasswordTooShort, length)
+                Description = string.Format(Application.Resources.Translation.PasswordTooShort, length)
             };
         }
 
@@ -158,7 +158,7 @@ namespace Infrastructure.Identity
             return new IdentityError
             {
                 Code = nameof(PasswordRequiresNonAlphanumeric),
-                Description = Resources.Translations.PasswordRequiresNonAlphanumeric
+                Description = Application.Resources.Translation.PasswordRequiresNonAlphanumeric
             };
         }
 
@@ -167,7 +167,7 @@ namespace Infrastructure.Identity
             return new IdentityError
             {
                 Code = nameof(PasswordRequiresDigit),
-                Description = Resources.Translations.PasswordRequiresDigit
+                Description = Application.Resources.Translation.PasswordRequiresDigit
             };
         }
 
@@ -176,7 +176,7 @@ namespace Infrastructure.Identity
             return new IdentityError
             {
                 Code = nameof(PasswordRequiresLower),
-                Description = Resources.Translations.PasswordRequiresLower
+                Description = Application.Resources.Translation.PasswordRequiresLower
             };
         }
 
@@ -185,7 +185,7 @@ namespace Infrastructure.Identity
             return new IdentityError
             {
                 Code = nameof(PasswordRequiresUpper),
-                Description = Resources.Translations.PasswordRequiresUpper
+                Description = Application.Resources.Translation.PasswordRequiresUpper
             };
         }
     }

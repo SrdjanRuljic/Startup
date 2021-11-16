@@ -5,38 +5,38 @@
         private static string inernalServerError;
         private static string unauthorised;
         private static string dataNotFound;
-        private static string incorectUsernameOrPassword;
+        private static string incorrectUsernameOrPassword;
         private static string userExists;
         private static string emailNotSend;
 
         public static string InernalServerError
         {
-            get { return inernalServerError = "Server side error, please contact the administrator. "; }
+            get { return inernalServerError = Resources.Translation.InernalServerError; }
         }
 
         public static string Unauthorised
         {
-            get { return inernalServerError = "Unauthorised. "; }
+            get { return inernalServerError = Resources.Translation.Unauthorised; }
         }
 
-        public static string IncorectUsernameOrPassword
+        public static string IncorrectUsernameOrPassword
         {
-            get { return incorectUsernameOrPassword = "Incorect username or password. "; }
+            get { return incorrectUsernameOrPassword = Resources.Translation.IncorrectUsernameOrPassword; }
         }
 
         public static string DataNotFound
         {
-            get { return dataNotFound = "The requested data was not found. "; }
+            get { return dataNotFound = Resources.Translation.DataNotFound; }
         }
 
         public static string UserExists
         {
-            get { return userExists = "A user with given username already exists, please enter another username. "; }
+            get { return userExists = Resources.Translation.UserExists; }
         }
 
         public static string EmailNotSend
         {
-            get { return emailNotSend = "An error occurred while seending mail. "; }
+            get { return emailNotSend = Resources.Translation.EmailNotSend; }
         }
     }
 }

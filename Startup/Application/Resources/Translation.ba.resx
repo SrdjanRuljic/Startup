@@ -118,63 +118,81 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="ConcurrencyFailure" xml:space="preserve">
-    <value>Оптимистички неуспјех паралелности, објекат је измјењен.</value>
+    <value>Optimistički neuspjeh paralelnosti, objekt je izmijenjen.</value>
+  </data>
+  <data name="DataNotFound" xml:space="preserve">
+    <value>Traženi podaci nisu pronađeni.</value>
   </data>
   <data name="DefaultError" xml:space="preserve">
-    <value>Дошло је до непознате грешке.</value>
+    <value>Došlo je do nepoznate greške.</value>
   </data>
   <data name="DuplicateEmail" xml:space="preserve">
-    <value>Мејл '{0}' је већ заузет.</value>
+    <value>Mejl '{0}' je već zauzeta.</value>
   </data>
   <data name="DuplicateRoleName" xml:space="preserve">
-    <value>Назив улоге '{0}' је већ заузет.</value>
+    <value>Naziv uloge '{0}' je već zauzet.</value>
   </data>
   <data name="DuplicateUserName" xml:space="preserve">
-    <value>Корисничко име '{0}' је већ заузето.</value>
+    <value>Korisničko ime '{0}' je već zauzeto.</value>
+  </data>
+  <data name="EmailNotSend" xml:space="preserve">
+    <value>Došlo je do greške prilikom slanja pošte.</value>
+  </data>
+  <data name="IncorrectUsernameOrPassword" xml:space="preserve">
+    <value>Pogrešno korisničko ime ili lozinka.</value>
+  </data>
+  <data name="InernalServerError" xml:space="preserve">
+    <value>Greška na serverskoj strani, molim kontaktirajte administratora.</value>
   </data>
   <data name="InvalidEmail" xml:space="preserve">
-    <value>Мејл '{0}' је неважећи.</value>
+    <value>Mejl '{0}' je nevažeći.</value>
   </data>
   <data name="InvalidRoleName" xml:space="preserve">
-    <value>Назив улоге '{0}' је неважећи.</value>
+    <value>Naziv uloge '{0}' je nevažeći.</value>
   </data>
   <data name="InvalidToken" xml:space="preserve">
-    <value>Неважећи токен.</value>
+    <value>Nevažeći token.</value>
   </data>
   <data name="InvalidUserName" xml:space="preserve">
-    <value>Корисничко име '{0}' је неважеће, може садржати само слова или цифре.</value>
+    <value>Korisničko ime '{0}' je nevažeće, može sadržavati samo slova ili cifre.</value>
   </data>
   <data name="LoginAlreadyAssociated" xml:space="preserve">
-    <value>Корисник са овом пријавом већ постоји.</value>
+    <value>Korisnik sa ovom prijavom već postoji.</value>
   </data>
   <data name="PasswordMismatch" xml:space="preserve">
-    <value>Неподударање лозинке.</value>
+    <value>Nepodudaranje lozinke.</value>
   </data>
   <data name="PasswordRequiresDigit" xml:space="preserve">
-    <value>Лозинке морају имати најмање једну цифру ('0'-'9').</value>
+    <value>Lozinke moraju imati najmanje jednu cifru ('0'-'9').</value>
   </data>
   <data name="PasswordRequiresLower" xml:space="preserve">
-    <value>Лозинке морају имати најмање једно мало слово ('а'-'з').</value>
+    <value>Lozinke moraju imati najmanje jedno malo slovo ('a'-'z').</value>
   </data>
   <data name="PasswordRequiresNonAlphanumeric" xml:space="preserve">
-    <value>Лозинке морају имати најмање један знак који није алфанумерички.</value>
+    <value>Lozinke moraju imati najmanje jedan znak koji nije alfanumerički.</value>
   </data>
   <data name="PasswordRequiresUpper" xml:space="preserve">
-    <value>Лозинке морају имати најмање једно велико слово ('А'-'З').</value>
+    <value>Lozinke moraju imati najmanje jedno veliko slovo ('A'-'Z').</value>
   </data>
   <data name="PasswordTooShort" xml:space="preserve">
-    <value>Лозинке морају имати најманје {0} знакова.</value>
+    <value>Lozinke moraju imati najmanje {0} znakova.</value>
+  </data>
+  <data name="Unauthorised" xml:space="preserve">
+    <value>Nemate pravo pristupa.</value>
   </data>
   <data name="UserAlreadyHasPassword" xml:space="preserve">
-    <value>Корисник већ има поставлјену лозинку.</value>
+    <value>Korisnik već ima postavljenu lozinku.</value>
   </data>
   <data name="UserAlreadyInRole" xml:space="preserve">
-    <value>Корисник већ има улогу '{0}'.</value>
+    <value>Korisnik već ima ulogu '{0}'.</value>
+  </data>
+  <data name="UserExists" xml:space="preserve">
+    <value>Korisnik sa datim korisničkim imenom već postoji, molimo unesite drugo korisničko ime.</value>
   </data>
   <data name="UserLockoutNotEnabled" xml:space="preserve">
-    <value>Закључавање није омогућено за овог корисника.</value>
+    <value>Zaključavanje nije omogućeno za ovog korisnika.</value>
   </data>
   <data name="UserNotInRole" xml:space="preserve">
-    <value>Косрисник није у улози '{0}'.</value>
+    <value>Korisnik nije u  ulozi '{0}'.</value>
   </data>
 </root>

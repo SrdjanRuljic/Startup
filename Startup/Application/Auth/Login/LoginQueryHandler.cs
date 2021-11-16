@@ -31,7 +31,7 @@ namespace Application.Auth.Queries.Login
             AppUser user = await _managersService.AuthenticateAsync(request.Username, request.Password);
 
             if (user == null)
-                throw new HttpStatusCodeException(HttpStatusCode.BadRequest, ErrorMessages.IncorectUsernameOrPassword);
+                throw new HttpStatusCodeException(HttpStatusCode.BadRequest, ErrorMessages.IncorrectUsernameOrPassword);
 
             string[] roles = await _managersService.GetRoleAsync(user);
 

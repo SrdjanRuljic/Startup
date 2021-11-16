@@ -24,5 +24,12 @@ namespace WebAPI.Helpers
             respounse.Headers.Add("Access-Control-Expose-Headers", "Not-Found-Exception");
             respounse.Headers.Add("Access-Control-Allow-Origin", "*");
         }
+
+        public static void AddUnauthorisedExcention(this HttpResponse respounse, string message)
+        {
+            respounse.Headers.Add("Unauthorised-Exception", message);
+            respounse.Headers.Add("Access-Control-Expose-Headers", "Unauthorised-Exception");
+            respounse.Headers.Add("Access-Control-Allow-Origin", "*");
+        }
     }
 }
