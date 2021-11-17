@@ -37,7 +37,7 @@ namespace Application.Auth.Register
 
             if (model.Password.Length < 6)
             {
-                validationMessage += Resources.Translation.PasswordMinLength;
+                validationMessage += string.Format(Resources.Translation.PasswordTooShort, 6);
                 isValid = false;
             }
 

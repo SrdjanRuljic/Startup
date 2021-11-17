@@ -117,8 +117,17 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="AtLeastOneRoleRequired" xml:space="preserve">
+    <value>Неопходна је најманје једна улога.</value>
+  </data>
   <data name="ConcurrencyFailure" xml:space="preserve">
     <value>Оптимистички неуспјех паралелности, објекат је измјењен.</value>
+  </data>
+  <data name="CurrentPasswordMustContain" xml:space="preserve">
+    <value>Тренутна лозинка мора садржати велика и мала слова, бројеве и специјалне знакове.</value>
+  </data>
+  <data name="CurrentRasswordRequired" xml:space="preserve">
+    <value>Тренутна лозинка је неопходна.</value>
   </data>
   <data name="DataNotFound" xml:space="preserve">
     <value>Тражени подаци нису пронађени.</value>
@@ -165,11 +174,14 @@
   <data name="ModelCanNotBeNull" xml:space="preserve">
     <value>Модел не може бити непостојећи.</value>
   </data>
-  <data name="PasswordMinLength" xml:space="preserve">
-    <value>Лозинка мора садржати најманје 6 знакове.</value>
+  <data name="NewPasswordMustContain" xml:space="preserve">
+    <value>Нова лозинка мора садржати велика и мала слова, бројеве и специјалне знакове.</value>
+  </data>
+  <data name="NewPasswordRequired" xml:space="preserve">
+    <value>Нова лозинка је неопходна.</value>
   </data>
   <data name="PasswordMismatch" xml:space="preserve">
-    <value>Неподударање лозинке.</value>
+    <value>Неподударање лозинки.</value>
   </data>
   <data name="PasswordMustContain" xml:space="preserve">
     <value>Лозинка мора садржати велика и мала слова, бројеве и специјалне знакове.</value>

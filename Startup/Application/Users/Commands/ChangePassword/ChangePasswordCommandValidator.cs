@@ -18,43 +18,37 @@ namespace Application.Users.Commands.ChangePassword
 
             if (String.IsNullOrWhiteSpace(model.CurrentPassword))
             {
-                validationMessage += "Current password is required. ";
+                validationMessage += Resources.Translation.CurrentRasswordRequired;
                 isValid = false;
             }
 
-            if (model.CurrentPassword.Length < 6)
+            if (model.CurrentPassword.Length < 6 || model.NewPassword.Length < 6)
             {
-                validationMessage += "The current password must contain a minimum of 6 characters. ";
+                validationMessage += string.Format(Resources.Translation.PasswordTooShort, 6);
                 isValid = false;
             }
 
             if (!model.CurrentPassword.IsValidPassword())
             {
-                validationMessage += "The current password must contain uppercase and lowercase letters, numbers, and special characters. ";
+                validationMessage += Resources.Translation.CurrentPasswordMustContain;
                 isValid = false;
             }
 
             if (String.IsNullOrWhiteSpace(model.NewPassword))
             {
-                validationMessage += "New password is required. ";
-                isValid = false;
-            }
-
-            if (model.NewPassword.Length < 6)
-            {
-                validationMessage += "The new password must contain a minimum of 6 characters. ";
+                validationMessage += Resources.Translation.NewPasswordRequired;
                 isValid = false;
             }
 
             if (!model.NewPassword.IsValidPassword())
             {
-                validationMessage += "The new password must contain uppercase and lowercase letters, numbers, and special characters. ";
+                validationMessage += Resources.Translation.NewPasswordMustContain;
                 isValid = false;
             }
 
             if (String.Compare(model.NewPassword, model.ConfirmedPassword) != 0)
             {
-                validationMessage += "Confirmed password and new password are different. ";
+                validationMessage += Resources.Translation.PasswordMismatch;
                 isValid = false;
             }
 

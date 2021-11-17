@@ -61,11 +61,38 @@ namespace Application.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to At least one role is required..
+        /// </summary>
+        public static string AtLeastOneRoleRequired {
+            get {
+                return ResourceManager.GetString("AtLeastOneRoleRequired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Optimistic concurrency failure, object has been modified..
         /// </summary>
         public static string ConcurrencyFailure {
             get {
                 return ResourceManager.GetString("ConcurrencyFailure", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to A current password must contain uppercase and lowercase letters, numbers, and special characters..
+        /// </summary>
+        public static string CurrentPasswordMustContain {
+            get {
+                return ResourceManager.GetString("CurrentPasswordMustContain", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Current password is required..
+        /// </summary>
+        public static string CurrentRasswordRequired {
+            get {
+                return ResourceManager.GetString("CurrentRasswordRequired", resourceCulture);
             }
         }
         
@@ -205,16 +232,25 @@ namespace Application.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The password must contain a minimum of 6 characters..
+        ///   Looks up a localized string similar to A new password must contain uppercase and lowercase letters, numbers, and special characters..
         /// </summary>
-        public static string PasswordMinLength {
+        public static string NewPasswordMustContain {
             get {
-                return ResourceManager.GetString("PasswordMinLength", resourceCulture);
+                return ResourceManager.GetString("NewPasswordMustContain", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Password mismatch..
+        ///   Looks up a localized string similar to New password is required..
+        /// </summary>
+        public static string NewPasswordRequired {
+            get {
+                return ResourceManager.GetString("NewPasswordRequired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Passwords mismatch..
         /// </summary>
         public static string PasswordMismatch {
             get {

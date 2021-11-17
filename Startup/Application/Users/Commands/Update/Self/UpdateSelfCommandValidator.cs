@@ -13,31 +13,31 @@ namespace Application.Users.Commands.Update.Self
 
             if (model == null)
             {
-                validationMessage = "Model can not be null. ";
+                validationMessage = Resources.Translation.ModelCanNotBeNull;
                 isValid = false;
             }
 
             if (String.IsNullOrWhiteSpace(model.Username))
             {
-                validationMessage += "Username is required. ";
+                validationMessage += Resources.Translation.UsernameRequired;
                 isValid = false;
             }
 
             if (!model.Username.All(x => Char.IsLetterOrDigit(x) || x == '-' || x == '.' || x == '_' || x == '@' || x == '+'))
             {
-                validationMessage += "The username can only contain letters or numbers. ";
+                validationMessage += string.Format(Resources.Translation.InvalidUserName, model.Username);
                 isValid = false;
             }
 
             if (String.IsNullOrWhiteSpace(model.Email))
             {
-                validationMessage += "Email is required. ";
+                validationMessage += Resources.Translation.EmailRequired;
                 isValid = false;
             }
 
             if (!model.Email.IsValidEmail())
             {
-                validationMessage += "Email is not valid. ";
+                validationMessage += string.Format(Resources.Translation.InvalidEmail, model.Email);
                 isValid = false;
             }
 
