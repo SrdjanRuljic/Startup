@@ -187,6 +187,15 @@ namespace Application.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Model can not be null..
+        /// </summary>
+        public static string ModelCanNotBeNull {
+            get {
+                return ResourceManager.GetString("ModelCanNotBeNull", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Password mismatch..
         /// </summary>
         public static string PasswordMismatch {
@@ -241,6 +250,15 @@ namespace Application.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Token is required..
+        /// </summary>
+        public static string TokenIsRequired {
+            get {
+                return ResourceManager.GetString("TokenIsRequired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Unauthorised.
         /// </summary>
         public static string Unauthorised {
@@ -282,6 +300,15 @@ namespace Application.Resources {
         public static string UserLockoutNotEnabled {
             get {
                 return ResourceManager.GetString("UserLockoutNotEnabled", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Username is required..
+        /// </summary>
+        public static string UsernameIsRequired {
+            get {
+                return ResourceManager.GetString("UsernameIsRequired", resourceCulture);
             }
         }
         

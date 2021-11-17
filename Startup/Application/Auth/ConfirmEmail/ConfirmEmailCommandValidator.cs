@@ -11,19 +11,19 @@ namespace Application.Auth.ConfirmEmail
 
             if (model == null)
             {
-                validationMessage = "Model can not be null. ";
+                validationMessage = Resources.Translation.ModelCanNotBeNull;
                 isValid = false;
             }
 
             if (String.IsNullOrWhiteSpace(model.UserName))
             {
-                validationMessage += "Username is required. ";
+                validationMessage += Resources.Translation.UsernameIsRequired;
                 isValid = false;
             }
 
             if (String.IsNullOrWhiteSpace(model.Token))
             {
-                validationMessage += "Token is required. ";
+                validationMessage += Resources.Translation.TokenIsRequired;
                 isValid = false;
             }
 

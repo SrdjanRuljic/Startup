@@ -159,6 +159,9 @@
   <data name="LoginAlreadyAssociated" xml:space="preserve">
     <value>A user with this login already exists.</value>
   </data>
+  <data name="ModelCanNotBeNull" xml:space="preserve">
+    <value>Model can not be null.</value>
+  </data>
   <data name="PasswordMismatch" xml:space="preserve">
     <value>Password mismatch.</value>
   </data>
@@ -177,6 +180,9 @@
   <data name="PasswordTooShort" xml:space="preserve">
     <value>Passwords must be at least {0} characters.</value>
   </data>
+  <data name="TokenIsRequired" xml:space="preserve">
+    <value>Token is required.</value>
+  </data>
   <data name="Unauthorised" xml:space="preserve">
     <value>Unauthorised</value>
   </data>
@@ -191,6 +197,9 @@
   </data>
   <data name="UserLockoutNotEnabled" xml:space="preserve">
     <value>Lockout is not enabled for this user.</value>
+  </data>
+  <data name="UsernameIsRequired" xml:space="preserve">
+    <value>Username is required.</value>
   </data>
   <data name="UserNotInRole" xml:space="preserve">
     <value>User is not in role '{0}'.</value>
