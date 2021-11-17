@@ -17,13 +17,13 @@ namespace Application.Auth.Queries.Login
 
             if (String.IsNullOrWhiteSpace(model.Username))
             {
-                validationMessage += Resources.Translation.UsernameIsRequired;
+                validationMessage += Resources.Translation.UsernameRequired;
                 isValid = false;
             }
 
             if (String.IsNullOrWhiteSpace(model.Password))
             {
-                validationMessage += Resources.Translation.PasswordIsRequired;
+                validationMessage += Resources.Translation.PasswordRequired;
                 isValid = false;
             }
 

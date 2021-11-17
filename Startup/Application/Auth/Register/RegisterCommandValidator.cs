@@ -19,19 +19,19 @@ namespace Application.Auth.Register
 
             if (String.IsNullOrWhiteSpace(model.Username))
             {
-                validationMessage += Resources.Translation.UsernameIsRequired;
+                validationMessage += Resources.Translation.UsernameRequired;
                 isValid = false;
             }
 
             if (!model.Username.All(x => Char.IsLetterOrDigit(x) || x == '-' || x == '.' || x == '_' || x == '@' || x == '+'))
             {
-                validationMessage += Resources.Translation.UserNameLetterOrDigit;
+                validationMessage += string.Format(Resources.Translation.InvalidUserName, model.Username);
                 isValid = false;
             }
 
             if (String.IsNullOrWhiteSpace(model.Password))
             {
-                validationMessage += Resources.Translation.PasswordIsRequired;
+                validationMessage += Resources.Translation.PasswordRequired;
                 isValid = false;
             }
 
@@ -49,13 +49,13 @@ namespace Application.Auth.Register
 
             if (String.IsNullOrWhiteSpace(model.Email))
             {
-                validationMessage += Resources.Translation.EmailIsRequired;
+                validationMessage += Resources.Translation.EmailRequired;
                 isValid = false;
             }
 
             if (!model.Email.IsValidEmail())
             {
-                validationMessage += Resources.Translation.EmailIsNotValid;
+                validationMessage += string.Format(Resources.Translation.InvalidEmail, model.Email);
                 isValid = false;
             }
 

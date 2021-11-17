@@ -12,13 +12,13 @@ namespace Application.Users.Commands.ChangePassword
 
             if (model == null)
             {
-                validationMessage = "Model can not be null. ";
+                validationMessage = Resources.Translation.ModelCanNotBeNull;
                 isValid = false;
             }
 
             if (String.IsNullOrWhiteSpace(model.CurrentPassword))
             {
-                validationMessage += "NCurrentew password is required. ";
+                validationMessage += "Current password is required. ";
                 isValid = false;
             }
 

@@ -17,13 +17,13 @@ namespace Application.Auth.ConfirmEmail
 
             if (String.IsNullOrWhiteSpace(model.UserName))
             {
-                validationMessage += Resources.Translation.UsernameIsRequired;
+                validationMessage += Resources.Translation.UsernameRequired;
                 isValid = false;
             }
 
             if (String.IsNullOrWhiteSpace(model.Token))
             {
-                validationMessage += Resources.Translation.TokenIsRequired;
+                validationMessage += Resources.Translation.TokenRequired;
                 isValid = false;
             }
 

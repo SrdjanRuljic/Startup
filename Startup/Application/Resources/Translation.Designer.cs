@@ -115,29 +115,20 @@ namespace Application.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Email is not valid..
+        ///   Looks up a localized string similar to An error occurred while seending mail..
         /// </summary>
-        public static string EmailIsNotValid {
+        public static string EmailNotSend {
             get {
-                return ResourceManager.GetString("EmailIsNotValid", resourceCulture);
+                return ResourceManager.GetString("EmailNotSend", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Email is required..
         /// </summary>
-        public static string EmailIsRequired {
+        public static string EmailRequired {
             get {
-                return ResourceManager.GetString("EmailIsRequired", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to An error occurred while seending mail..
-        /// </summary>
-        public static string EmailNotSend {
-            get {
-                return ResourceManager.GetString("EmailNotSend", resourceCulture);
+                return ResourceManager.GetString("EmailRequired", resourceCulture);
             }
         }
         
@@ -214,15 +205,6 @@ namespace Application.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Password is required..
-        /// </summary>
-        public static string PasswordIsRequired {
-            get {
-                return ResourceManager.GetString("PasswordIsRequired", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to The password must contain a minimum of 6 characters..
         /// </summary>
         public static string PasswordMinLength {
@@ -246,6 +228,15 @@ namespace Application.Resources {
         public static string PasswordMustContain {
             get {
                 return ResourceManager.GetString("PasswordMustContain", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Password is required..
+        /// </summary>
+        public static string PasswordRequired {
+            get {
+                return ResourceManager.GetString("PasswordRequired", resourceCulture);
             }
         }
         
@@ -297,9 +288,9 @@ namespace Application.Resources {
         /// <summary>
         ///   Looks up a localized string similar to Token is required..
         /// </summary>
-        public static string TokenIsRequired {
+        public static string TokenRequired {
             get {
-                return ResourceManager.GetString("TokenIsRequired", resourceCulture);
+                return ResourceManager.GetString("TokenRequired", resourceCulture);
             }
         }
         
@@ -351,18 +342,9 @@ namespace Application.Resources {
         /// <summary>
         ///   Looks up a localized string similar to Username is required..
         /// </summary>
-        public static string UsernameIsRequired {
+        public static string UsernameRequired {
             get {
-                return ResourceManager.GetString("UsernameIsRequired", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to The username can only contain letters or numbers..
-        /// </summary>
-        public static string UserNameLetterOrDigit {
-            get {
-                return ResourceManager.GetString("UserNameLetterOrDigit", resourceCulture);
+                return ResourceManager.GetString("UsernameRequired", resourceCulture);
             }
         }
         
