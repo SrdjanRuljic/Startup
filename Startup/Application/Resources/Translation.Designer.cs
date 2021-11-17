@@ -115,6 +115,24 @@ namespace Application.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Email is not valid..
+        /// </summary>
+        public static string EmailIsNotValid {
+            get {
+                return ResourceManager.GetString("EmailIsNotValid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Email is required..
+        /// </summary>
+        public static string EmailIsRequired {
+            get {
+                return ResourceManager.GetString("EmailIsRequired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to An error occurred while seending mail..
         /// </summary>
         public static string EmailNotSend {
@@ -205,11 +223,29 @@ namespace Application.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The password must contain a minimum of 6 characters..
+        /// </summary>
+        public static string PasswordMinLength {
+            get {
+                return ResourceManager.GetString("PasswordMinLength", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Password mismatch..
         /// </summary>
         public static string PasswordMismatch {
             get {
                 return ResourceManager.GetString("PasswordMismatch", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The password must contain uppercase and lowercase letters, numbers, and special characters..
+        /// </summary>
+        public static string PasswordMustContain {
+            get {
+                return ResourceManager.GetString("PasswordMustContain", resourceCulture);
             }
         }
         
@@ -318,6 +354,15 @@ namespace Application.Resources {
         public static string UsernameIsRequired {
             get {
                 return ResourceManager.GetString("UsernameIsRequired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The username can only contain letters or numbers..
+        /// </summary>
+        public static string UserNameLetterOrDigit {
+            get {
+                return ResourceManager.GetString("UserNameLetterOrDigit", resourceCulture);
             }
         }
         

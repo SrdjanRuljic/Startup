@@ -13,49 +13,49 @@ namespace Application.Auth.Register
 
             if (model == null)
             {
-                validationMessage = "Model can not be null. ";
+                validationMessage = Resources.Translation.ModelCanNotBeNull;
                 isValid = false;
             }
 
             if (String.IsNullOrWhiteSpace(model.Username))
             {
-                validationMessage += "Username is required. ";
+                validationMessage += Resources.Translation.UsernameIsRequired;
                 isValid = false;
             }
 
             if (!model.Username.All(x => Char.IsLetterOrDigit(x) || x == '-' || x == '.' || x == '_' || x == '@' || x == '+'))
             {
-                validationMessage += "The username can only contain letters or numbers. ";
+                validationMessage += Resources.Translation.UserNameLetterOrDigit;
                 isValid = false;
             }
 
             if (String.IsNullOrWhiteSpace(model.Password))
             {
-                validationMessage += "Password is required. ";
+                validationMessage += Resources.Translation.PasswordIsRequired;
                 isValid = false;
             }
 
             if (model.Password.Length < 6)
             {
-                validationMessage += "The password must contain a minimum of 6 characters. ";
+                validationMessage += Resources.Translation.PasswordMinLength;
                 isValid = false;
             }
 
             if (!model.Password.IsValidPassword())
             {
-                validationMessage += "The password must contain uppercase and lowercase letters, numbers, and special characters. ";
+                validationMessage += Resources.Translation.PasswordMustContain;
                 isValid = false;
             }
 
             if (String.IsNullOrWhiteSpace(model.Email))
             {
-                validationMessage += "Email is required. ";
+                validationMessage += Resources.Translation.EmailIsRequired;
                 isValid = false;
             }
 
             if (!model.Email.IsValidEmail())
             {
-                validationMessage += "Email is not valid. ";
+                validationMessage += Resources.Translation.EmailIsNotValid;
                 isValid = false;
             }
 
