@@ -162,6 +162,9 @@
   <data name="ModelCanNotBeNull" xml:space="preserve">
     <value>Model ne može biti nepostojeći.</value>
   </data>
+  <data name="PasswordIsRequired" xml:space="preserve">
+    <value>Lozinka je neophodna.</value>
+  </data>
   <data name="PasswordMismatch" xml:space="preserve">
     <value>Nepodudaranje lozinke.</value>
   </data>

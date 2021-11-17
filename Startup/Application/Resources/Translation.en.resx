@@ -162,6 +162,9 @@
   <data name="ModelCanNotBeNull" xml:space="preserve">
     <value>Model can not be null.</value>
   </data>
+  <data name="PasswordIsRequired" xml:space="preserve">
+    <value>Password is required.</value>
+  </data>
   <data name="PasswordMismatch" xml:space="preserve">
     <value>Password mismatch.</value>
   </data>

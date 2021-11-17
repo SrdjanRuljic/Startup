@@ -9,15 +9,21 @@ namespace Application.Auth.Queries.Login
             validationMessage = null;
             bool isValid = true;
 
+            if (model == null)
+            {
+                validationMessage = Resources.Translation.ModelCanNotBeNull;
+                isValid = false;
+            }
+
             if (String.IsNullOrWhiteSpace(model.Username))
             {
-                validationMessage += "Username is required. ";
+                validationMessage += Resources.Translation.UsernameIsRequired;
                 isValid = false;
             }
 
             if (String.IsNullOrWhiteSpace(model.Password))
             {
-                validationMessage += "Password is required. ";
+                validationMessage += Resources.Translation.PasswordIsRequired;
                 isValid = false;
             }
 
