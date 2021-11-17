@@ -32,9 +32,9 @@ namespace WebAPI
         public void ConfigureServices(IServiceCollection services)
         {
 
+            services.AddApplication();
             services.AddInfrastructure(Configuration);
             services.AddPersistence(Configuration);
-            services.AddApplication();
             services.AddScoped<ICurrentUserService, CurrentUserService>();
             services.AddHttpContextAccessor();
             services.AddCors(options =>
@@ -94,11 +94,11 @@ namespace WebAPI
 
             app.UseRouting();
 
+            app.UseRequestLocalization();
+
             app.UseAuthentication();
 
             app.UseAuthorization();
-
-            app.UseRequestLocalization();
 
             app.UseEndpoints(endpoints =>
             {

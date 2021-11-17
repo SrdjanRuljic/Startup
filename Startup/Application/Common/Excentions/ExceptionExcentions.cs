@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Http;
 
-namespace WebAPI.Helpers
+namespace Application.Common.Excentions
 {
-    public static class Excentions
+    public static class ExceptionExcentions
     {
         public static void AddApplicationExcention(this HttpResponse respounse, string message)
         {

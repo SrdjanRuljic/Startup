@@ -16,7 +16,7 @@
 
         public static string Unauthorised
         {
-            get { return inernalServerError = Resources.Translation.Unauthorised; }
+            get { return unauthorised = Resources.Translation.Unauthorised; }
         }
 
         public static string IncorrectUsernameOrPassword

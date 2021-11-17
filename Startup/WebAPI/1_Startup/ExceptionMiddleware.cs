@@ -1,10 +1,10 @@
-﻿using Domain.Exceptions;
+﻿using Application.Common.Excentions;
+using Domain.Exceptions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using System;
 using System.Net;
 using System.Threading.Tasks;
-using WebAPI.Helpers;
 
 namespace WebAPI._1_Startup
 {
