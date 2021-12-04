@@ -4,3 +4,7 @@
 @import "~bootstrap/scss/bootstrap";
 /* Importing Toastr SCSS file. */
 @import "~ngx-toastr/toastr";
+
+.pointer {
+  cursor: pointer;
+}
