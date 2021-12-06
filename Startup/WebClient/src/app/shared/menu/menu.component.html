@@ -19,19 +19,19 @@
   </button>
   <ngx-navbar-collapse id="main-nav" #collapse="ngxNavbarCollapse">
     <ul class="navbar-nav me-auto">
-      <li class="nav-item active">
-        <a class="nav-link" href="#">Home</a>
+      <li class="nav-item">
+        <a class="nav-link" (click)="goToHome()">Home</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#">Users</a>
+        <a class="nav-link">Users</a>
       </li>
     </ul>
     <ul class="navbar-nav ms-auto">
-      <li class="nav-item active">
-        <a class="nav-link" href="#">Login</a>
+      <li class="nav-item">
+        <a class="nav-link">Login</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#">Register</a>
+        <a class="nav-link" (click)="goToRegister()">Register</a>
       </li>
     </ul>
   </ngx-navbar-collapse>
