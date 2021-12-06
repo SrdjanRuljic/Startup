@@ -1,0 +1,38 @@
+<nav ngxNavbarDynamicExpand class="navbar-dark bg-dark">
+  <button
+    class="navbar-toggler"
+    type="button"
+    (click)="collapse.toggle()"
+    aria-controls="main-nav"
+    aria-expanded="false"
+    aria-label="Navigáció kapcsoló"
+  >
+    <span
+      class="
+        navbar-toggler-icon
+        d-flex
+        align-items-center
+        justify-content-center
+      "
+    >
+    </span>
+  </button>
+  <ngx-navbar-collapse id="main-nav" #collapse="ngxNavbarCollapse">
+    <ul class="navbar-nav me-auto">
+      <li class="nav-item active">
+        <a class="nav-link" href="#">Home</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#">Users</a>
+      </li>
+    </ul>
+    <ul class="navbar-nav ms-auto">
+      <li class="nav-item active">
+        <a class="nav-link" href="#">Login</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#">Register</a>
+      </li>
+    </ul>
+  </ngx-navbar-collapse>
+</nav>
