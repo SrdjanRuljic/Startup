@@ -5,6 +5,7 @@
 /* Importing Toastr SCSS file. */
 @import "~ngx-toastr/toastr.css";
 
-li {
+li,
+a {
   cursor: pointer;
 }

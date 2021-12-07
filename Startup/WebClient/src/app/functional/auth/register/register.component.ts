@@ -36,7 +36,7 @@ export class RegisterComponent implements OnInit {
     ) {
       this._authService.register(this.model).subscribe((response) => {
         this.goBack();
-        this._toastrService.success('Successfully register.');
+        this._toastrService.success('Successfully register, check your email.');
       });
     }
   }
@@ -51,6 +51,10 @@ export class RegisterComponent implements OnInit {
 
   emailValidation() {
     return !!!(this.model.email == '' || this.model.email.length < 1);
+  }
+
+  goToLogin() {
+    this._router.navigate(['/login']);
   }
 
   goBack() {
