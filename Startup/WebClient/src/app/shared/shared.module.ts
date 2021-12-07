@@ -5,6 +5,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgxNavbarModule } from 'ngx-bootstrap-navbar';
 import { ToastrModule } from 'ngx-toastr';
 import { HttpClientModule } from '@angular/common/http';
+import { ModalModule } from 'ngx-bootstrap/modal';
 
 import { AuthService } from './services/auth.service';
 
@@ -17,6 +18,7 @@ import { AuthService } from './services/auth.service';
       positionClass: 'toast-bottom-right',
     }),
     HttpClientModule,
+    ModalModule.forRoot(),
   ],
   declarations: [MenuComponent],
   exports: [MenuComponent],
