@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AppGlobals } from './app-globals';
-import { ErrorInterceptorProvider } from './http-intercepter';
+import { ErrorInterceptorProvider } from './http-interceptor';
 
 @NgModule({
   imports: [CommonModule],
