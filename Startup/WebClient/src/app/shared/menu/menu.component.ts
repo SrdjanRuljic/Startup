@@ -15,6 +15,10 @@ export class MenuComponent implements OnInit {
     this._router.navigate(['/']);
   }
 
+  goToLogin() {
+    this._router.navigate(['/login']);
+  }
+
   goToRegister() {
     this._router.navigate(['/register']);
   }
