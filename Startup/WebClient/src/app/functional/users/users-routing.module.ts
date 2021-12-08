@@ -13,7 +13,7 @@ const userRoutes: Routes = [
     component: UsersListComponent,
     pathMatch: 'full',
     canActivate: [AuthGuard],
-    data: { roles: [Role.Admin] },
+    data: { role: Role.Admin },
   },
   // {
   //   path: 'videos/form/:id',

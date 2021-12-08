@@ -1,22 +1,15 @@
 import { Injectable } from '@angular/core';
-import {
-  ActivatedRouteSnapshot,
-  CanActivate,
-  CanDeactivate,
-  Router,
-  RouterStateSnapshot,
-  UrlTree,
-} from '@angular/router';
+import { ActivatedRouteSnapshot, CanActivate, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
-import { Observable, take } from 'rxjs';
-import { Role } from '../shared/enums/role';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { AuthService } from '../shared/services/auth.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthGuard implements CanActivate {
-  isAuthorized: boolean = false;
+  isAuthorized$: Observable<boolean>;
   isInRole: boolean = false;
 
   constructor(
@@ -24,34 +17,29 @@ export class AuthGuard implements CanActivate {
     private _toastrService: ToastrService,
     private _authService: AuthService
   ) {
-    this._authService
-      .getIsAuthorized()
-      .pipe(take(1))
-      .subscribe((response) => {
-        this.isAuthorized = response;
-      });
+    this.isAuthorized$ = this._authService.getIsAuthorized();
   }
 
-  canActivate(route: ActivatedRouteSnapshot): boolean {
-    const roles = route.data?.['roles'] as Role[];
+  canActivate(route: ActivatedRouteSnapshot) {
+    const role = route.data?.['role'] as string;
 
-    this.checkIfIsInRole(roles);
-
-    if (this.isAuthorized && this.isInRole) {
-      return true;
+    if (this.isAuthorized$) {
+      return this._authService.isInRole(role).pipe(
+        map((isInRole) => {
+          if (isInRole) {
+            return true;
+          } else {
+            this.goToHome();
+            this._toastrService.error('Unauthorized.');
+            return false;
+          }
+        })
+      );
     }
-    this.goToHome();
-    this._toastrService.error('You are unauthorized.');
-    return false;
-  }
 
-  checkIfIsInRole(role: any) {
-    this._authService
-      .isInRole(role)
-      .pipe(take(1))
-      .subscribe((response) => {
-        this.isInRole = response;
-      });
+    this.goToHome();
+    this._toastrService.error('Unauthorized.');
+    return false;
   }
 
   goToHome() {
