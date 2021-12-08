@@ -9,6 +9,7 @@ import {
 } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { Observable, take } from 'rxjs';
+import { Role } from '../shared/enums/role';
 import { AuthService } from '../shared/services/auth.service';
 
 @Injectable({
@@ -16,6 +17,7 @@ import { AuthService } from '../shared/services/auth.service';
 })
 export class AuthGuard implements CanActivate {
   isAuthorized: boolean = false;
+  isInRole: boolean = false;
 
   constructor(
     private _router: Router,
@@ -30,13 +32,26 @@ export class AuthGuard implements CanActivate {
       });
   }
 
-  canActivate(): boolean {
-    if (this.isAuthorized) {
+  canActivate(route: ActivatedRouteSnapshot): boolean {
+    const roles = route.data?.['roles'] as Role[];
+
+    this.checkIfIsInRole(roles);
+
+    if (this.isAuthorized && this.isInRole) {
       return true;
     }
     this.goToHome();
     this._toastrService.error('You are unauthorized.');
     return false;
+  }
+
+  checkIfIsInRole(role: any) {
+    this._authService
+      .isInRole(role)
+      .pipe(take(1))
+      .subscribe((response) => {
+        this.isInRole = response;
+      });
   }
 
   goToHome() {

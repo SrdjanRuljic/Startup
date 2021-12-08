@@ -21,6 +21,7 @@ namespace Application.Common.Interfaces
         Task<string> GenerateEmailConfirmationTokenAsync(AppUser user);
         Task<bool> IsThereAnyRoleAsync();
         Task<bool> IsThereAnyUserAsync();
+        Task<bool> IsUserInRoleAsync(AppUser user, string role);
         Task<Result> UpdateUserAsync(AppUser user);
         Task<Result> UpdateUserAsync(AppUser user, string[] roles);
         Task<bool> UserExistAsync(string userName, string email);

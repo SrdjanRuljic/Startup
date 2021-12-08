@@ -122,6 +122,9 @@ namespace Infrastructure.Identity
         public async Task<bool> IsThereAnyUserAsync() =>
             await _userManager.Users.AnyAsync();
 
+        public async Task<bool> IsUserInRoleAsync(AppUser user, string role) =>
+            await _userManager.IsInRoleAsync(user, role);
+
         public async Task<Result> UpdateUserAsync(AppUser user)
         {
             IdentityResult result = await _userManager.UpdateAsync(user);

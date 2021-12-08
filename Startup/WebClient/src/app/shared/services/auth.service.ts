@@ -31,6 +31,12 @@ export class AuthService {
     );
   }
 
+  isInRole(role: any): Observable<any> {
+    return this._http
+      .get(this._authUrl + '/is-in-role/' + role)
+      .pipe(map((res) => res));
+  }
+
   logout(): void {
     this.isAuthorized$.next(false);
     window.sessionStorage.clear();

@@ -5,6 +5,7 @@ import { UsersListComponent } from './users-list/users-list.component';
 // import { VidoesFormComponent } from './vidoes-form/vidoes-form.component';
 
 import { AuthGuard } from 'src/app/core/auth.guard';
+import { Role } from 'src/app/shared/enums/role';
 
 const userRoutes: Routes = [
   {
@@ -12,6 +13,7 @@ const userRoutes: Routes = [
     component: UsersListComponent,
     pathMatch: 'full',
     canActivate: [AuthGuard],
+    data: { roles: [Role.Admin] },
   },
   // {
   //   path: 'videos/form/:id',

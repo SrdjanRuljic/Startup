@@ -1,4 +1,5 @@
 ﻿using Application.Auth.ConfirmEmail;
+using Application.Auth.IsInRole;
 using Application.Auth.Queries.Login;
 using Application.Auth.Register;
 using Microsoft.AspNetCore.Authorization;
@@ -23,6 +24,19 @@ namespace WebAPI.Controllers
             });
 
             return Ok();
+        }
+
+        [HttpGet]
+        [Route("is-in-role/{role}")]
+        [AllowAnonymous]
+        public async Task<IActionResult> IsInRole(string role)
+        {
+            bool isInRole = await Mediator.Send(new IsInRoleQuery()
+            {
+                Role = role
+            });
+
+            return Ok(isInRole);
         }
 
         #endregion
