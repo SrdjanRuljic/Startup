@@ -48,4 +48,8 @@ export class MenuComponent implements OnInit {
   goToRegister() {
     this._router.navigate(['/register']);
   }
+
+  goToUsers() {
+    this._router.navigate(['/users']);
+  }
 }

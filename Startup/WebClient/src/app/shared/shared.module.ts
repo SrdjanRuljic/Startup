@@ -8,6 +8,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { ModalModule } from 'ngx-bootstrap/modal';
 
 import { AuthService } from './services/auth.service';
+import { UsersService } from './services/users.service';
 
 @NgModule({
   imports: [
@@ -22,6 +23,6 @@ import { AuthService } from './services/auth.service';
   ],
   declarations: [MenuComponent],
   exports: [MenuComponent],
-  providers: [AuthService],
+  providers: [AuthService, UsersService],
 })
 export class SharedModule {}
