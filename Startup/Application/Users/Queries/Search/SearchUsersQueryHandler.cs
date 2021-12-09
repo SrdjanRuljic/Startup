@@ -29,7 +29,8 @@ namespace Application.Users.Queries.Search
         {
             IQueryable<SearchUsersViewModel> list = _managersService.GetUsers()
                                                                     .Where(x => x.UserName != _currentUserService.UserName)
-                                                                    .ProjectTo<SearchUsersViewModel>(_mapper.ConfigurationProvider);
+                                                                    .ProjectTo<SearchUsersViewModel>(_mapper.ConfigurationProvider)
+                                                                    .OrderBy(x => x.UserName);
 
             PaginatedList<SearchUsersViewModel> paginatedList = await PaginatedList<SearchUsersViewModel>.CreateAsync(list,
                                                                                                                       request.PageNumber,
