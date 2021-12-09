@@ -24,7 +24,7 @@ export class UsersListComponent implements OnInit {
     this.users = [];
     this.searchModel = {
       pageNumber: 1,
-      pageSize: 10,
+      pageSize: 5,
     };
     this.pagination = {
       pageNumber: 0,
@@ -35,7 +35,7 @@ export class UsersListComponent implements OnInit {
 
   initSearchModel() {
     this.searchModel.pageNumber = 1;
-    this.searchModel.pageSize = 10;
+    this.searchModel.pageSize = 5;
   }
 
   ngOnInit() {

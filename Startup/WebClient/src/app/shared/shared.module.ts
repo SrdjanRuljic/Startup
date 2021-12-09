@@ -6,6 +6,7 @@ import { NgxNavbarModule } from 'ngx-bootstrap-navbar';
 import { ToastrModule } from 'ngx-toastr';
 import { HttpClientModule } from '@angular/common/http';
 import { ModalModule } from 'ngx-bootstrap/modal';
+import { PaginationModule } from 'ngx-bootstrap/pagination';
 
 import { AuthService } from './services/auth.service';
 import { UsersService } from './services/users.service';
@@ -20,6 +21,7 @@ import { UsersService } from './services/users.service';
     }),
     HttpClientModule,
     ModalModule.forRoot(),
+    PaginationModule.forRoot(),
   ],
   declarations: [MenuComponent],
   exports: [MenuComponent],

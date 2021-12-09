@@ -13,3 +13,18 @@ a {
 .float-right {
   float: right;
 }
+
+pagination {
+  .page-item {
+    .page-link {
+      margin-left: 4px;
+      margin-right: 4px;
+      border-radius: 4px;
+      color: black !important;
+    }
+  }
+  .page-item.active .page-link {
+    background-color: dimgrey;
+    border-color: dimgrey;
+  }
+}
