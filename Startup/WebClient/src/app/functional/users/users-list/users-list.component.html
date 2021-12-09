@@ -2,6 +2,23 @@
   <div class="row d-flex justify-content-center h-100">
     <div class="col-12 col-md-9 col-lg-7 col-xl-6">
       <h2 class="text-uppercase mb-5">Users</h2>
+      <div class="row">
+        <div class="form-group col-md-6">
+          <div>
+            <input
+              type="text"
+              [(ngModel)]="searchModel.term"
+              class="form-control"
+              id="term"
+              name="term"
+              autocomplete="off"
+              (input)="onSearchChange()"
+              placeholder="Search..."
+            />
+          </div>
+        </div>
+      </div>
+      <br />
       <table class="table table-hover">
         <thead>
           <tr>

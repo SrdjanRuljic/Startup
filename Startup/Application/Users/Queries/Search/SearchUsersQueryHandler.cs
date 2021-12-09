@@ -29,6 +29,11 @@ namespace Application.Users.Queries.Search
         {
             IQueryable<SearchUsersViewModel> list = _managersService.GetUsers()
                                                                     .Where(x => x.UserName != _currentUserService.UserName)
+                                                                    .Where(x => string.IsNullOrEmpty(request.Term) ?
+                                                                                true :
+                                                                                x.FirstName.Contains(request.Term) ||
+                                                                                x.LastName.Contains(request.Term) ||
+                                                                                x.UserName.Contains(request.Term))
                                                                     .ProjectTo<SearchUsersViewModel>(_mapper.ConfigurationProvider)
                                                                     .OrderBy(x => x.UserName);
 

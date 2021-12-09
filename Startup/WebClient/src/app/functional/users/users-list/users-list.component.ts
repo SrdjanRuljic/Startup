@@ -4,6 +4,7 @@ import { ToastrService } from 'ngx-toastr';
 import { IPagination, ISearchModel } from 'src/app/shared/models/pagination';
 import { AuthService } from 'src/app/shared/services/auth.service';
 import { UsersService } from 'src/app/shared/services/users.service';
+import { UsersSearchModel } from '../users-search';
 
 @Component({
   selector: 'app-users-list',
@@ -12,7 +13,7 @@ import { UsersService } from 'src/app/shared/services/users.service';
 })
 export class UsersListComponent implements OnInit {
   users: any[];
-  searchModel: ISearchModel;
+  searchModel: UsersSearchModel;
   pagination: IPagination;
 
   constructor(
@@ -22,10 +23,7 @@ export class UsersListComponent implements OnInit {
     private _usersService: UsersService
   ) {
     this.users = [];
-    this.searchModel = {
-      pageNumber: 1,
-      pageSize: 5,
-    };
+    this.searchModel = new UsersSearchModel(1, 10, '');
     this.pagination = {
       pageNumber: 0,
       totalCount: 0,
@@ -34,8 +32,9 @@ export class UsersListComponent implements OnInit {
   }
 
   initSearchModel() {
+    this.searchModel.term = '';
     this.searchModel.pageNumber = 1;
-    this.searchModel.pageSize = 5;
+    this.searchModel.pageSize = 10;
   }
 
   ngOnInit() {
@@ -60,5 +59,13 @@ export class UsersListComponent implements OnInit {
   pageChanged(event: any) {
     this.searchModel.pageNumber = event.page;
     this.search();
+  }
+
+  onSearchChange() {
+    if (this.searchModel.term.length > 1) {
+      this.search();
+    } else if (this.searchModel.term.length == 0) {
+      this.resetSearch();
+    }
   }
 }
