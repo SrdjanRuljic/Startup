@@ -13,7 +13,7 @@ export class AuthService {
   private _authUrl = this._appGlobals.WebApiUrl + 'api/auth';
   private _jwtHelper = new JwtHelperService();
 
-  private isAuthorized$ = new BehaviorSubject<boolean>(this.hasToken());
+  private isAuthorized$ = new BehaviorSubject<boolean>(this.getIsAuthorized());
 
   constructor(private _appGlobals: AppGlobals, private _http: HttpClient) {}
 
@@ -42,7 +42,7 @@ export class AuthService {
     window.sessionStorage.clear();
   }
 
-  getIsAuthorized(): Observable<boolean> {
+  getIsAuthorized$(): Observable<boolean> {
     return this.isAuthorized$.asObservable();
   }
 
@@ -60,7 +60,7 @@ export class AuthService {
     this.isAuthorized$.next(true);
   }
 
-  private hasToken() {
+  getIsAuthorized() {
     let token = this.getToken();
     return !this._jwtHelper.isTokenExpired(token!);
   }

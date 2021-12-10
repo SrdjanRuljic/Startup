@@ -18,7 +18,7 @@ export class MenuComponent implements OnInit {
     private _authService: AuthService,
     private _modalService: BsModalService
   ) {
-    this.isAuthorized$ = this._authService.getIsAuthorized();
+    this.isAuthorized$ = this._authService.getIsAuthorized$();
   }
 
   ngOnInit() {}

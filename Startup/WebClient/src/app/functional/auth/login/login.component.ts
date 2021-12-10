@@ -24,7 +24,9 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit() {
-    if (this._authService.getToken()) {
+    const isAuthorized = this._authService.getIsAuthorized();
+
+    if (isAuthorized) {
       this.goBack();
       this._toastrService.success('Already logged in.');
     }
