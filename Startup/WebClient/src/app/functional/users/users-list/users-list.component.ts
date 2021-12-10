@@ -68,4 +68,8 @@ export class UsersListComponent implements OnInit {
       this.resetSearch();
     }
   }
+
+  goToVideoForm(id: any) {
+    this._router.navigate(['/users/form', id]);
+  }
 }

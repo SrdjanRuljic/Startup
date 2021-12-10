@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
 import { UsersListComponent } from './users-list/users-list.component';
-// import { VidoesFormComponent } from './vidoes-form/vidoes-form.component';
+import { UsersFormComponent } from './users-form/users-form.component';
 
 import { AuthGuard } from 'src/app/core/auth.guard';
 import { Role } from 'src/app/shared/enums/role';
@@ -15,11 +15,12 @@ const userRoutes: Routes = [
     canActivate: [AuthGuard],
     data: { role: Role.Admin },
   },
-  // {
-  //   path: 'videos/form/:id',
-  //   component: VidoesFormComponent,
-  //   canActivate: [AuthGuard],
-  // },
+  {
+    path: 'users/form/:id',
+    component: UsersFormComponent,
+    canActivate: [AuthGuard],
+    data: { role: Role.Admin },
+  },
 ];
 
 @NgModule({
