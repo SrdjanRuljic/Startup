@@ -1,9 +1,8 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, CanActivate, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
-import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
 import { AuthService } from '../shared/services/auth.service';
+import { NgxPermissionsService } from 'ngx-permissions';
 
 @Injectable({
   providedIn: 'root',
@@ -12,11 +11,12 @@ export class AuthGuard implements CanActivate {
   constructor(
     private _router: Router,
     private _toastrService: ToastrService,
-    private _authService: AuthService
+    private _authService: AuthService,
+    private _permissionsService: NgxPermissionsService
   ) {}
 
   canActivate(route: ActivatedRouteSnapshot) {
-    const role = route.data?.['role'] as string;
+    const permission = route.data?.['permission'] as string;
     const isAuthorized = this._authService.getIsAuthorized();
 
     if (!isAuthorized) {
@@ -25,17 +25,17 @@ export class AuthGuard implements CanActivate {
       return false;
     }
 
-    return this._authService.isInRole(role).pipe(
-      map((isInRole) => {
-        if (isInRole) {
+    return this._permissionsService
+      .hasPermission(permission)
+      .then((response) => {
+        if (response) {
           return true;
         } else {
           this.goToHome();
           this._toastrService.error('Unauthorized.');
           return false;
         }
-      })
-    );
+      });
   }
 
   goToHome() {

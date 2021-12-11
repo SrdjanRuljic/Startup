@@ -7,6 +7,7 @@ import { ToastrModule } from 'ngx-toastr';
 import { HttpClientModule } from '@angular/common/http';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { PaginationModule } from 'ngx-bootstrap/pagination';
+import { NgxPermissionsModule } from 'ngx-permissions';
 
 import { AuthService } from './services/auth.service';
 import { UsersService } from './services/users.service';
@@ -22,9 +23,10 @@ import { UsersService } from './services/users.service';
     HttpClientModule,
     ModalModule.forRoot(),
     PaginationModule.forRoot(),
+    NgxPermissionsModule.forRoot(),
   ],
   declarations: [MenuComponent],
-  exports: [MenuComponent],
+  exports: [MenuComponent, NgxPermissionsModule],
   providers: [AuthService, UsersService],
 })
 export class SharedModule {}

@@ -5,7 +5,7 @@ import { UsersListComponent } from './users-list/users-list.component';
 import { UsersFormComponent } from './users-form/users-form.component';
 
 import { AuthGuard } from 'src/app/core/auth.guard';
-import { Role } from 'src/app/shared/enums/role';
+import { Permission } from 'src/app/shared/enums/permissions';
 
 const userRoutes: Routes = [
   {
@@ -13,13 +13,13 @@ const userRoutes: Routes = [
     component: UsersListComponent,
     pathMatch: 'full',
     canActivate: [AuthGuard],
-    data: { role: Role.Admin },
+    data: { permission: Permission.Admin },
   },
   {
     path: 'users/form/:id',
     component: UsersFormComponent,
     canActivate: [AuthGuard],
-    data: { role: Role.Admin },
+    data: { permission: Permission.Admin },
   },
 ];
 

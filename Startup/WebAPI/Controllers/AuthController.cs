@@ -1,4 +1,5 @@
 ﻿using Application.Auth.ConfirmEmail;
+using Application.Auth.GetUserRoles;
 using Application.Auth.IsInRole;
 using Application.Auth.Queries.Login;
 using Application.Auth.Register;
@@ -37,6 +38,15 @@ namespace WebAPI.Controllers
             });
 
             return Ok(isInRole);
+        }
+
+        [HttpGet]
+        [Route("user-roles")]
+        public async Task<IActionResult> UserRoles()
+        {
+            string[] roles = await Mediator.Send(new GetUserRolesQuery());
+
+            return Ok(roles);
         }
 
         #endregion
