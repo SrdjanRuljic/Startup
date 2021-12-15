@@ -22,7 +22,7 @@
       <li class="nav-item">
         <a class="nav-link" (click)="goToHome()">Home</a>
       </li>
-      <li class="nav-item" *ngIf="isAuthorized$ | async">
+      <li class="nav-item" *ngxPermissionsOnly="[PERMISSION.ADMIN]">
         <a class="nav-link" (click)="goToUsers()">Users</a>
       </li>
     </ul>

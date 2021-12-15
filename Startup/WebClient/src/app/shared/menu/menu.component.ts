@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { AuthService } from '../services/auth.service';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
+import { PERMISSION } from '../../shared/enums/permissions';
 
 @Component({
   selector: 'app-menu',
@@ -12,6 +13,7 @@ import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 export class MenuComponent implements OnInit {
   isAuthorized$: Observable<boolean>;
   modalRef?: BsModalRef;
+  PERMISSION: typeof PERMISSION = PERMISSION;
 
   constructor(
     private _router: Router,

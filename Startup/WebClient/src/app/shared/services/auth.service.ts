@@ -4,7 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, map, Observable, take } from 'rxjs';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { NgxPermissionsService } from 'ngx-permissions';
-import { Permission } from '../enums/permissions';
+import { PERMISSION } from '../enums/permissions';
 
 const TOKEN_KEY = 'auth-token';
 
