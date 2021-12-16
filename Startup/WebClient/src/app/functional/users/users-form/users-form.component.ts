@@ -32,7 +32,7 @@ export class UsersFormComponent implements OnInit {
   ngOnInit() {
     this._route.params.subscribe((params) => {
       let id = params['id'];
-      if (!isNaN(id) && id != '0') {
+      if (id != '0') {
         this.getUser(id);
       }
     });
