@@ -69,7 +69,7 @@ export class UsersListComponent implements OnInit {
     }
   }
 
-  goToVideoForm(id: any) {
+  goToVideoForm(id: string) {
     this._router.navigate(['/users/form', id]);
   }
 }

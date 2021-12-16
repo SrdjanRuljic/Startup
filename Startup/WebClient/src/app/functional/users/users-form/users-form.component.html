@@ -1,3 +1,87 @@
-<p>
-  users-form works!
-</p>
+<div class="h-100">
+  <div class="row d-flex justify-content-center h-100">
+    <div class="col-12 col-md-9 col-lg-7 col-xl-6">
+      <h2 class="mt-2 mb-5"><span class="text-uppercase">Adding user</span></h2>
+      <div class="row">
+        <form name="form" (ngSubmit)="f.valid && save()" #f="ngForm">
+          <fieldset>
+            <div class="form-outline mb-4">
+              <input
+                type="text"
+                id="firstName"
+                name="firstName"
+                class="form-control form-control"
+                [(ngModel)]="model.firstName"
+                autocomplete="off"
+                placeholder="First Name"
+              />
+            </div>
+
+            <div class="form-outline mb-4">
+              <input
+                type="text"
+                id="lastName"
+                name="lastName"
+                class="form-control form-control"
+                [(ngModel)]="model.lastName"
+                autocomplete="off"
+                placeholder="Last Name"
+              />
+            </div>
+
+            <div class="form-outline mb-4">
+              <input
+                type="text"
+                [(ngModel)]="model.username"
+                class="form-control"
+                [ngClass]="{
+                  'is-invalid': f.submitted && !usernameValidation()
+                }"
+                id="username"
+                name="username"
+                autocomplete="off"
+                placeholder="Username"
+              />
+              <small
+                *ngIf="f.submitted && !usernameValidation()"
+                class="text-danger"
+              >
+                Username is required
+              </small>
+            </div>
+
+            <div class="form-outline mb-4">
+              <input
+                type="text"
+                [(ngModel)]="model.email"
+                class="form-control"
+                [ngClass]="{
+                  'is-invalid': f.submitted && !emailValidation()
+                }"
+                id="email"
+                name="email"
+                autocomplete="off"
+                placeholder="Email"
+              />
+              <small
+                *ngIf="f.submitted && !emailValidation()"
+                class="text-danger"
+              >
+                Email is required
+              </small>
+            </div>
+
+            <div class="">
+              <button type="button" class="btn btn-dark" (click)="goBack()">
+                Back
+              </button>
+              <button type="submit" class="btn btn-dark float-right">
+                Save
+              </button>
+            </div>
+          </fieldset>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
