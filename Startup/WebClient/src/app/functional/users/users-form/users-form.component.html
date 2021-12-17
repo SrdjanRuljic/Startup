@@ -73,6 +73,27 @@
               </small>
             </div>
 
+            <h5 class="mt-5">
+              <span>Choose roles</span>
+            </h5>
+            <hr />
+            <div *ngFor="let role of roles; let i = index">
+              <label>
+                <input
+                  type="checkbox"
+                  [value]="role.value"
+                  (change)="onCheckboxChange($event)"
+                />
+                {{ role.name }}
+              </label>
+            </div>
+            <small
+              *ngIf="f.submitted && !rolesValidation()"
+              class="text-danger"
+            >
+              At least one role is required
+            </small>
+
             <hr />
             <div class="">
               <button type="button" class="btn btn-dark" (click)="goBack()">

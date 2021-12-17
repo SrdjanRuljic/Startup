@@ -12,7 +12,10 @@ import { IUser } from '../user';
 })
 export class UsersFormComponent implements OnInit {
   model: IUser;
-
+  roles: Array<any> = [
+    { name: PERMISSION.BASIC, value: PERMISSION.BASIC },
+    { name: PERMISSION.MODERATOR, value: PERMISSION.MODERATOR },
+  ];
   constructor(
     private _router: Router,
     private _route: ActivatedRoute,
@@ -25,7 +28,7 @@ export class UsersFormComponent implements OnInit {
       lastName: '',
       username: '',
       email: '',
-      roles: [PERMISSION.BASIC],
+      roles: [],
     };
   }
 
@@ -40,6 +43,21 @@ export class UsersFormComponent implements OnInit {
 
   getUser(id: string) {}
 
+  onCheckboxChange(e: any) {
+    if (e.target.checked) {
+      this.model.roles.push(e.target.value);
+    } else {
+      let i: number = 0;
+      this.model.roles.forEach((role: string) => {
+        if (role == e.target.value) {
+          this.model.roles.splice(i, 1);
+          return;
+        }
+        i++;
+      });
+    }
+  }
+
   usernameValidation() {
     return !!!(this.model.username == '' || this.model.username.length < 1);
   }
@@ -48,12 +66,20 @@ export class UsersFormComponent implements OnInit {
     return !!!(this.model.email == '' || this.model.email.length < 1);
   }
 
+  rolesValidation() {
+    return !!!(this.model.roles.length < 1);
+  }
+
   goBack() {
     this._router.navigate(['/users']);
   }
 
   save() {
-    if (this.usernameValidation() && this.emailValidation()) {
+    if (
+      this.usernameValidation() &&
+      this.emailValidation() &&
+      this.rolesValidation()
+    ) {
       if (this.model.id == '0') {
         this.insert();
       } else {
