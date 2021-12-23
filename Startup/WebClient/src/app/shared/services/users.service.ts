@@ -22,6 +22,10 @@ export class UsersService {
     return this._http.post(this._usersUrl, model).pipe(map((res) => res));
   }
 
+  getById(id: string): Observable<any> {
+    return this._http.get(this._usersUrl + '/' + id).pipe(map((res) => res));
+  }
+
   update(model: IUser): Observable<any> {
     return this._http.put(this._usersUrl, model).pipe(map((res) => res));
   }

@@ -4,7 +4,8 @@
 @import "~bootstrap/scss/bootstrap";
 /* Importing Toastr SCSS file. */
 @import "~ngx-toastr/toastr.css";
-
+/* Importing Boostrap icons */
+@import "~bootstrap-icons/font/bootstrap-icons.css";
 li,
 a {
   cursor: pointer;

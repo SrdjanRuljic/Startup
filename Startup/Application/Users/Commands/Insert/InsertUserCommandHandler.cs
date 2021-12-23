@@ -31,7 +31,7 @@ namespace Application.Users.Commands.Insert
             if (!request.IsValid(out errorMessage))
                 throw new HttpStatusCodeException(HttpStatusCode.BadRequest, errorMessage);
 
-            request.Username = request.Username.ToLower();
+            request.UserName = request.UserName.ToLower();
 
             if (String.IsNullOrEmpty(request.FirstName) || String.IsNullOrWhiteSpace(request.FirstName))
                 request.FirstName = null;
@@ -39,7 +39,7 @@ namespace Application.Users.Commands.Insert
             if (String.IsNullOrEmpty(request.LastName) || String.IsNullOrWhiteSpace(request.LastName))
                 request.LastName = null;
 
-            bool userExist = await _managersService.UserExistAsync(request.Username, request.Email);
+            bool userExist = await _managersService.UserExistAsync(request.UserName, request.Email);
 
             if (userExist)
                 throw new HttpStatusCodeException(HttpStatusCode.BadRequest, ErrorMessages.UserExists);
@@ -48,7 +48,7 @@ namespace Application.Users.Commands.Insert
             {
                 FirstName = request.FirstName,
                 LastName = request.LastName,
-                UserName = request.Username,
+                UserName = request.UserName,
                 Email = request.Email,
                 EmailConfirmed = true
             };

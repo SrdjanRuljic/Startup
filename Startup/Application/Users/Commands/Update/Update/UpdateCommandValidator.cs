@@ -17,15 +17,15 @@ namespace Application.Users.Commands.Update.Update
                 isValid = false;
             }
 
-            if (String.IsNullOrWhiteSpace(model.Username))
+            if (String.IsNullOrWhiteSpace(model.UserName))
             {
                 validationMessage += Resources.Translation.UsernameRequired;
                 isValid = false;
             }
 
-            if (!model.Username.All(x => Char.IsLetterOrDigit(x) || x == '-' || x == '.' || x == '_' || x == '@' || x == '+'))
+            if (!model.UserName.All(x => Char.IsLetterOrDigit(x) || x == '-' || x == '.' || x == '_' || x == '@' || x == '+'))
             {
-                validationMessage += string.Format(Resources.Translation.InvalidUserName, model.Username);
+                validationMessage += string.Format(Resources.Translation.InvalidUserName, model.UserName);
                 isValid = false;
             }
 

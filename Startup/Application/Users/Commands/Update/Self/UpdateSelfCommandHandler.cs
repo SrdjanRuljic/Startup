@@ -40,7 +40,7 @@ namespace Application.Users.Commands.Update.Self
 
             user.FirstName = request.FirstName;
             user.LastName = request.LastName;
-            user.UserName = request.Username;
+            user.UserName = request.UserName;
             user.Email = request.Email;
 
             Result result = await _managersService.UpdateUserAsync(user);

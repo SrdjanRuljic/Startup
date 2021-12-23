@@ -6,7 +6,7 @@
         <button
           type="button"
           class="btn btn-default float-right"
-          (click)="goToVideoForm('0')"
+          (click)="goToUserForm('0')"
         >
           Add
         </button>
@@ -47,7 +47,14 @@
             <td>{{ item.userName }}</td>
             <td>{{ item.firstName }}</td>
             <td>{{ item.lastName }}</td>
-            <td></td>
+            <td>
+              <button
+                class="btn btn-default btn-sml"
+                (click)="goToUserForm(item.id)"
+              >
+                <i class="bi bi-pencil-square" title="Edit"></i>
+              </button>
+            </td>
           </tr>
         </tbody>
       </table>

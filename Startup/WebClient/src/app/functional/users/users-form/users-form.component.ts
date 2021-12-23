@@ -13,8 +13,8 @@ import { IUser } from '../user';
 export class UsersFormComponent implements OnInit {
   model: IUser;
   roles: Array<any> = [
-    { name: PERMISSION.BASIC, value: PERMISSION.BASIC },
-    { name: PERMISSION.MODERATOR, value: PERMISSION.MODERATOR },
+    { name: PERMISSION.BASIC, value: PERMISSION.BASIC, checked: false },
+    { name: PERMISSION.MODERATOR, value: PERMISSION.MODERATOR, checked: false },
   ];
   constructor(
     private _router: Router,
@@ -26,7 +26,7 @@ export class UsersFormComponent implements OnInit {
       id: '0',
       firstName: '',
       lastName: '',
-      username: '',
+      userName: '',
       email: '',
       roles: [],
     };
@@ -41,7 +41,13 @@ export class UsersFormComponent implements OnInit {
     });
   }
 
-  getUser(id: string) {}
+  getUser(id: string) {
+    this._usersService.getById(id).subscribe((response) => {
+      this.model = response;
+      this.setCheckedValues(this.model.roles);
+      // this.previousUsername = this.model.username;
+    });
+  }
 
   onCheckboxChange(e: any) {
     if (e.target.checked) {
@@ -58,8 +64,16 @@ export class UsersFormComponent implements OnInit {
     }
   }
 
+  setCheckedValues(currentRoles: string[]) {
+    this.roles.forEach((role: any) => {
+      if (currentRoles.includes(role.value)) {
+        role.checked = true;
+      }
+    });
+  }
+
   usernameValidation() {
-    return !!!(this.model.username == '' || this.model.username.length < 1);
+    return !!!(this.model.userName == '' || this.model.userName.length < 1);
   }
 
   emailValidation() {
