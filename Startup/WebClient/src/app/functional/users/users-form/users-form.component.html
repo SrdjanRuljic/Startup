@@ -5,7 +5,7 @@
 
       <hr />
       <div class="row">
-        <form name="form" (ngSubmit)="f.valid && save(template)" #f="ngForm">
+        <form name="form" (ngSubmit)="f.valid && save()" #f="ngForm">
           <fieldset>
             <div class="form-outline mb-4 col-md-7">
               <input
@@ -110,19 +110,3 @@
     </div>
   </div>
 </div>
-
-<ng-template #template>
-  <div class="modal-body">
-    <p class="text-center">Are your sure you want to update username?</p>
-    <button type="button" class="btn btn-default" (click)="decline()">
-      No
-    </button>
-    <button
-      type="button"
-      class="btn btn-default float-right"
-      (click)="confirm()"
-    >
-      Yes
-    </button>
-  </div>
-</ng-template>

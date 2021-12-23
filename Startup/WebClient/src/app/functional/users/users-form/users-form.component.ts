@@ -6,6 +6,7 @@ import { ICheckbox } from 'src/app/shared/models/checkbox';
 import { UsersService } from 'src/app/shared/services/users.service';
 import { IUser } from '../user';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
+import { ConfirmationModalComponent } from 'src/app/shared/confirmation-modal/confirmation-modal.component';
 
 @Component({
   selector: 'app-users-form',
@@ -106,7 +107,7 @@ export class UsersFormComponent implements OnInit {
     this._router.navigate(['/users']);
   }
 
-  save(template: any) {
+  save() {
     if (
       this.usernameValidation() &&
       this.emailValidation() &&
@@ -116,8 +117,13 @@ export class UsersFormComponent implements OnInit {
         this.insert();
       } else {
         if (this.compareUsernames()) {
-          this.modalRef = this._modalService.show(template, {
+          this.modalRef = this._modalService.show(ConfirmationModalComponent, {
             class: 'modal-sm',
+          });
+          this.modalRef.content.onClose.subscribe((result: boolean) => {
+            if (result) {
+              this.update();
+            }
           });
         } else {
           this.update();
@@ -138,14 +144,5 @@ export class UsersFormComponent implements OnInit {
       this._toastrService.success('User successfully updated.');
       this.goBack();
     });
-  }
-
-  confirm(): void {
-    this.update();
-    this.modalRef?.hide();
-  }
-
-  decline(): void {
-    this.modalRef?.hide();
   }
 }
