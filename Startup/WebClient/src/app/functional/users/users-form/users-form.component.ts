@@ -2,8 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { PERMISSION } from 'src/app/shared/enums/permissions';
+import { ICheckbox } from 'src/app/shared/models/checkbox';
 import { UsersService } from 'src/app/shared/services/users.service';
 import { IUser } from '../user';
+import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 
 @Component({
   selector: 'app-users-form',
@@ -12,15 +14,27 @@ import { IUser } from '../user';
 })
 export class UsersFormComponent implements OnInit {
   model: IUser;
-  roles: Array<any> = [
-    { name: PERMISSION.BASIC, value: PERMISSION.BASIC, checked: false },
-    { name: PERMISSION.MODERATOR, value: PERMISSION.MODERATOR, checked: false },
+  checkboxRoles: Array<ICheckbox> = [
+    {
+      name: PERMISSION.BASIC,
+      value: PERMISSION.BASIC,
+      checked: false,
+    },
+    {
+      name: PERMISSION.MODERATOR,
+      value: PERMISSION.MODERATOR,
+      checked: false,
+    },
   ];
+  previousUserName: string | null = null;
+  modalRef?: BsModalRef;
+
   constructor(
     private _router: Router,
     private _route: ActivatedRoute,
     private _usersService: UsersService,
-    private _toastrService: ToastrService
+    private _toastrService: ToastrService,
+    private _modalService: BsModalService
   ) {
     this.model = {
       id: '0',
@@ -45,7 +59,7 @@ export class UsersFormComponent implements OnInit {
     this._usersService.getById(id).subscribe((response) => {
       this.model = response;
       this.setCheckedValues(this.model.roles);
-      // this.previousUsername = this.model.username;
+      this.previousUserName = this.model.userName;
     });
   }
 
@@ -65,9 +79,9 @@ export class UsersFormComponent implements OnInit {
   }
 
   setCheckedValues(currentRoles: string[]) {
-    this.roles.forEach((role: any) => {
-      if (currentRoles.includes(role.value)) {
-        role.checked = true;
+    this.checkboxRoles.forEach((item: ICheckbox) => {
+      if (currentRoles.includes(item.value)) {
+        item.checked = true;
       }
     });
   }
@@ -84,11 +98,15 @@ export class UsersFormComponent implements OnInit {
     return !!!(this.model.roles.length < 1);
   }
 
+  compareUsernames() {
+    return !!!(this.previousUserName === this.model.userName);
+  }
+
   goBack() {
     this._router.navigate(['/users']);
   }
 
-  save() {
+  save(template: any) {
     if (
       this.usernameValidation() &&
       this.emailValidation() &&
@@ -97,7 +115,13 @@ export class UsersFormComponent implements OnInit {
       if (this.model.id == '0') {
         this.insert();
       } else {
-        this.update();
+        if (this.compareUsernames()) {
+          this.modalRef = this._modalService.show(template, {
+            class: 'modal-sm',
+          });
+        } else {
+          this.update();
+        }
       }
     }
   }
@@ -114,5 +138,14 @@ export class UsersFormComponent implements OnInit {
       this._toastrService.success('User successfully updated.');
       this.goBack();
     });
+  }
+
+  confirm(): void {
+    this.update();
+    this.modalRef?.hide();
+  }
+
+  decline(): void {
+    this.modalRef?.hide();
   }
 }

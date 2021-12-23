@@ -5,7 +5,7 @@
 
       <hr />
       <div class="row">
-        <form name="form" (ngSubmit)="f.valid && save()" #f="ngForm">
+        <form name="form" (ngSubmit)="f.valid && save(template)" #f="ngForm">
           <fieldset>
             <div class="form-outline mb-4 col-md-7">
               <input
@@ -77,15 +77,15 @@
               <span>Choose roles</span>
             </h5>
             <hr />
-            <div *ngFor="let role of roles; let i = index">
+            <div *ngFor="let item of checkboxRoles; let i = index">
               <label>
                 <input
                   type="checkbox"
-                  [value]="role.value"
-                  [checked]="role.checked"
+                  [value]="item.value"
+                  [checked]="item.checked"
                   (change)="onCheckboxChange($event)"
                 />
-                {{ role.name }}
+                {{ item.name }}
               </label>
             </div>
             <small
@@ -110,3 +110,19 @@
     </div>
   </div>
 </div>
+
+<ng-template #template>
+  <div class="modal-body">
+    <p class="text-center">Are your sure you want to update username?</p>
+    <button type="button" class="btn btn-default" (click)="decline()">
+      No
+    </button>
+    <button
+      type="button"
+      class="btn btn-default float-right"
+      (click)="confirm()"
+    >
+      Yes
+    </button>
+  </div>
+</ng-template>
