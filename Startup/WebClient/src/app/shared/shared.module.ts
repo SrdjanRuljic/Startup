@@ -8,10 +8,11 @@ import { HttpClientModule } from '@angular/common/http';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { PaginationModule } from 'ngx-bootstrap/pagination';
 import { NgxPermissionsModule } from 'ngx-permissions';
-import { ConfirmationModalComponent } from './confirmation-modal/confirmation-modal.component';
+import { ConfirmationModalModule } from './confirmation-modal/confirmation-modal.module';
 
 import { AuthService } from './services/auth.service';
 import { UsersService } from './services/users.service';
+import { ConfirmationModalService } from './services/confirmation-modal.service';
 
 @NgModule({
   imports: [
@@ -25,9 +26,10 @@ import { UsersService } from './services/users.service';
     ModalModule.forRoot(),
     PaginationModule.forRoot(),
     NgxPermissionsModule.forRoot(),
+    ConfirmationModalModule,
   ],
-  declarations: [MenuComponent, ConfirmationModalComponent],
-  exports: [MenuComponent, ConfirmationModalComponent, NgxPermissionsModule],
-  providers: [AuthService, UsersService],
+  declarations: [MenuComponent],
+  exports: [MenuComponent, NgxPermissionsModule],
+  providers: [AuthService, UsersService, ConfirmationModalService],
 })
 export class SharedModule {}

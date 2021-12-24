@@ -8,21 +8,21 @@ import { Subject } from 'rxjs';
   styleUrls: ['./confirmation-modal.component.scss'],
 })
 export class ConfirmationModalComponent implements OnInit {
-  public onClose: Subject<boolean>;
+  result: Subject<boolean>;
 
   constructor(private _bsModalRef: BsModalRef) {
-    this.onClose = new Subject();
+    this.result = new Subject();
   }
 
   ngOnInit() {}
 
   public confirm(): void {
-    this.onClose.next(true);
+    this.result.next(true);
     this._bsModalRef.hide();
   }
 
   public decline(): void {
-    this.onClose.next(false);
+    this.result.next(false);
     this._bsModalRef.hide();
   }
 }

@@ -7,6 +7,7 @@ import { UsersService } from 'src/app/shared/services/users.service';
 import { IUser } from '../user';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { ConfirmationModalComponent } from 'src/app/shared/confirmation-modal/confirmation-modal.component';
+import { ConfirmationModalService } from 'src/app/shared/services/confirmation-modal.service';
 
 @Component({
   selector: 'app-users-form',
@@ -35,7 +36,7 @@ export class UsersFormComponent implements OnInit {
     private _route: ActivatedRoute,
     private _usersService: UsersService,
     private _toastrService: ToastrService,
-    private _modalService: BsModalService
+    private _confirmationModalService: ConfirmationModalService
   ) {
     this.model = {
       id: '0',
@@ -107,7 +108,7 @@ export class UsersFormComponent implements OnInit {
     this._router.navigate(['/users']);
   }
 
-  save() {
+  async save() {
     if (
       this.usernameValidation() &&
       this.emailValidation() &&
@@ -117,14 +118,7 @@ export class UsersFormComponent implements OnInit {
         this.insert();
       } else {
         if (this.compareUsernames()) {
-          this.modalRef = this._modalService.show(ConfirmationModalComponent, {
-            class: 'modal-sm',
-          });
-          this.modalRef.content.onClose.subscribe((result: boolean) => {
-            if (result) {
-              this.update();
-            }
-          });
+          await this.openConfirmationModal();
         } else {
           this.update();
         }
@@ -144,5 +138,12 @@ export class UsersFormComponent implements OnInit {
       this._toastrService.success('User successfully updated.');
       this.goBack();
     });
+  }
+
+  async openConfirmationModal() {
+    const result = await this._confirmationModalService.confirm();
+    if (result) {
+      this.update();
+    }
   }
 }

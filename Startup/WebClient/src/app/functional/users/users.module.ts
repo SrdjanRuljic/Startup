@@ -5,7 +5,6 @@ import { PaginationModule } from 'ngx-bootstrap/pagination';
 
 import { UsersListComponent } from './users-list/users-list.component';
 import { UsersFormComponent } from './users-form/users-form.component';
-import { ConfirmationModalComponent } from 'src/app/shared/confirmation-modal/confirmation-modal.component';
 
 import { UsersRoutingModule } from './users-routing.module';
 
