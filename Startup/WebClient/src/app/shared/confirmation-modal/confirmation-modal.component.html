@@ -1,13 +1,15 @@
-<div class="container">
+<div class="alert-box">
   <div class="modal-body">
-    <h5 class="text-center">Are you sure you want to update username?</h5>
+    <h5 class="text-center">
+      {{ message }}
+    </h5>
     <br />
-    <button type="button" class="btn btn-default" (click)="decline()">
+    <button type="button" class="btn btn-dark btn-sm" (click)="decline()">
       No
     </button>
     <button
       type="button"
-      class="btn btn-default float-right"
+      class="btn btn-dark float-right btn-sm"
       (click)="confirm()"
     >
       Yes

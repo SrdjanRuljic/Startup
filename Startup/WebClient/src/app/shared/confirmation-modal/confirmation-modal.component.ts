@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { BsModalRef } from 'ngx-bootstrap/modal';
 import { Subject } from 'rxjs';
 
@@ -8,6 +8,7 @@ import { Subject } from 'rxjs';
   styleUrls: ['./confirmation-modal.component.scss'],
 })
 export class ConfirmationModalComponent implements OnInit {
+  @Input() message: string = '';
   result: Subject<boolean>;
 
   constructor(private _bsModalRef: BsModalRef) {

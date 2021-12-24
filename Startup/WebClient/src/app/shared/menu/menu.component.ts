@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { AuthService } from '../services/auth.service';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { PERMISSION } from '../../shared/enums/permissions';
+import { ConfirmationModalService } from '../services/confirmation-modal.service';
 
 @Component({
   selector: 'app-menu',
@@ -12,31 +13,29 @@ import { PERMISSION } from '../../shared/enums/permissions';
 })
 export class MenuComponent implements OnInit {
   isAuthorized$: Observable<boolean>;
-  modalRef?: BsModalRef;
   PERMISSION: typeof PERMISSION = PERMISSION;
 
   constructor(
     private _router: Router,
     private _authService: AuthService,
-    private _modalService: BsModalService
+    private _confirmationModalService: ConfirmationModalService
   ) {
     this.isAuthorized$ = this._authService.getIsAuthorized$();
   }
 
   ngOnInit() {}
 
-  logout(template: TemplateRef<any>) {
-    this.modalRef = this._modalService.show(template, { class: 'modal-sm' });
+  async logout() {
+    await this.openConfirmationModal();
   }
 
-  confirm(): void {
-    this._authService.logout();
-    this.modalRef?.hide();
-    this.goToHome();
-  }
-
-  decline(): void {
-    this.modalRef?.hide();
+  async openConfirmationModal() {
+    const result = await this._confirmationModalService.confirm(
+      'Are you sure you want to log out?'
+    );
+    if (result) {
+      this._authService.logout();
+    }
   }
 
   goToHome() {

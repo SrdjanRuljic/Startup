@@ -34,24 +34,8 @@
         <a class="nav-link" (click)="goToRegister()">Register</a>
       </li>
       <li class="nav-item" *ngIf="isAuthorized$ | async">
-        <a class="nav-link" (click)="logout(template)">Logout</a>
+        <a class="nav-link" (click)="logout()">Logout</a>
       </li>
     </ul>
   </ngx-navbar-collapse>
 </nav>
-
-<ng-template #template>
-  <div class="modal-body">
-    <p class="text-center">Are you sure you want to log out?</p>
-    <button type="button" class="btn btn-default" (click)="decline()">
-      No
-    </button>
-    <button
-      type="button"
-      class="btn btn-default float-right"
-      (click)="confirm()"
-    >
-      Yes
-    </button>
-  </div>
-</ng-template>

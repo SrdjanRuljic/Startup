@@ -6,9 +6,10 @@ import { ConfirmationModalComponent } from '../confirmation-modal/confirmation-m
 export class ConfirmationModalService {
   constructor(private _bsModalService: BsModalService) {}
 
-  confirm(): Promise<boolean> {
+  confirm(message: string): Promise<boolean> {
     const modal = this._bsModalService.show(ConfirmationModalComponent, {
       class: 'modal-sm',
+      initialState: { message: message },
     });
 
     return new Promise<boolean>((resolve, reject) =>

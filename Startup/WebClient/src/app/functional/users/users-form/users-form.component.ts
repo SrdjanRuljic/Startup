@@ -141,7 +141,9 @@ export class UsersFormComponent implements OnInit {
   }
 
   async openConfirmationModal() {
-    const result = await this._confirmationModalService.confirm();
+    const result = await this._confirmationModalService.confirm(
+      'Are you sure you want to update username?'
+    );
     if (result) {
       this.update();
     }
