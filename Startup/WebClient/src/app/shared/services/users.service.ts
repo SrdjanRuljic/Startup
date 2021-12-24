@@ -29,4 +29,8 @@ export class UsersService {
   update(model: IUser): Observable<any> {
     return this._http.put(this._usersUrl, model).pipe(map((res) => res));
   }
+
+  delete(id: string): Observable<any> {
+    return this._http.delete(this._usersUrl + '/' + id).pipe(map((res) => res));
+  }
 }

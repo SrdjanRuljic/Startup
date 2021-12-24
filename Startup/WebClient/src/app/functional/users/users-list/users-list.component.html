@@ -5,10 +5,10 @@
         <span class="text-uppercase">Users</span>
         <button
           type="button"
-          class="btn btn-default float-right"
+          class="btn btn-default btn-lg float-right"
           (click)="goToUserForm('0')"
         >
-          Add
+          <i class="bi bi-person-plus" title="Add"></i>
         </button>
       </h2>
 
@@ -49,10 +49,16 @@
             <td>{{ item.lastName }}</td>
             <td>
               <button
-                class="btn btn-default btn-sml"
+                class="btn btn-default btn-sm float-right"
+                (click)="openConfirmationModal(item.id)"
+              >
+                <i class="bi bi-person-x" title="Delete"></i>
+              </button>
+              <button
+                class="btn btn-default btn-sm float-right"
                 (click)="goToUserForm(item.id)"
               >
-                <i class="bi bi-pencil-square" title="Edit"></i>
+                <i class="bi bi-person-check" title="Edit"></i>
               </button>
             </td>
           </tr>

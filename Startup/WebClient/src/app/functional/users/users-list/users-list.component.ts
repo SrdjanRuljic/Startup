@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { IPagination, ISearchModel } from 'src/app/shared/models/pagination';
 import { AuthService } from 'src/app/shared/services/auth.service';
+import { ConfirmationModalService } from 'src/app/shared/services/confirmation-modal.service';
 import { UsersService } from 'src/app/shared/services/users.service';
 import { UsersSearchModel } from '../users-search';
 
@@ -20,7 +21,8 @@ export class UsersListComponent implements OnInit {
     private _router: Router,
     private _authService: AuthService,
     private _toastrService: ToastrService,
-    private _usersService: UsersService
+    private _usersService: UsersService,
+    private _confirmationModalService: ConfirmationModalService
   ) {
     this.users = [];
     this.searchModel = new UsersSearchModel(1, 10, '');
@@ -71,5 +73,23 @@ export class UsersListComponent implements OnInit {
 
   goToUserForm(id: string) {
     this._router.navigate(['/users/form', id]);
+  }
+
+  delete(id: string) {
+    this._usersService.delete(id).subscribe((response) => {
+      if (response == null) {
+        this._toastrService.success('User successfully deleted.');
+        this.search();
+      }
+    });
+  }
+
+  async openConfirmationModal(id: string) {
+    const result = await this._confirmationModalService.confirm(
+      'Are you sure you want to delete user?'
+    );
+    if (result) {
+      this.delete(id);
+    }
   }
 }
