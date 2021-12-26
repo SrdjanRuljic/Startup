@@ -106,6 +106,12 @@ namespace Infrastructure.Identity
         public async Task<string> GenerateEmailConfirmationTokenAsync(AppUser user) =>
             await _userManager.GenerateEmailConfirmationTokenAsync(user);
 
+        public async Task<string> GetDisplayNameAsync(string userName) => 
+            await _userManager.Users
+                              .Where(x => x.UserName.Equals(userName))
+                              .Select(x => SetDisplayName(x.FirstName, x.LastName))
+                              .FirstOrDefaultAsync();
+
         public async Task<string[]> GetRoleAsync(AppUser user)
         {
             IList<string> list = await _userManager.GetRolesAsync(user);
@@ -166,5 +172,19 @@ namespace Infrastructure.Identity
 
         public async Task<bool> UserNameExistAsync(string id, string userName) =>
             await _userManager.Users.AnyAsync(x => x.UserName.Equals(userName) && !x.Id.Equals(id));
+
+        private static string SetDisplayName(string firstName, string lastName)
+        {
+            string displayName = "NN";
+
+            if (string.IsNullOrEmpty(firstName) && !string.IsNullOrEmpty(lastName))
+                displayName = lastName;
+            else if(!string.IsNullOrEmpty(firstName) && string.IsNullOrEmpty(lastName))
+                displayName = firstName;
+            else if (!string.IsNullOrEmpty(firstName) && !string.IsNullOrEmpty(lastName))
+                displayName = firstName + " " + lastName;
+
+            return displayName;
+        }
     }
 }

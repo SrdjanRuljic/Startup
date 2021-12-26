@@ -5,6 +5,7 @@ import { AuthService } from '../services/auth.service';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { PERMISSION } from '../../shared/enums/permissions';
 import { ConfirmationModalService } from '../services/confirmation-modal.service';
+import { UsersService } from '../services/users.service';
 
 @Component({
   selector: 'app-menu',
@@ -18,7 +19,8 @@ export class MenuComponent implements OnInit {
   constructor(
     private _router: Router,
     private _authService: AuthService,
-    private _confirmationModalService: ConfirmationModalService
+    private _confirmationModalService: ConfirmationModalService,
+    private _usersService: UsersService
   ) {
     this.isAuthorized$ = this._authService.getIsAuthorized$();
   }
@@ -35,6 +37,7 @@ export class MenuComponent implements OnInit {
     );
     if (result) {
       this._authService.logout();
+      this._usersService.setDisplayName$(null);
     }
   }
 

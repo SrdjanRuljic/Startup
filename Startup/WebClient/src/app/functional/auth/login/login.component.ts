@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { AuthService } from 'src/app/shared/services/auth.service';
+import { UsersService } from 'src/app/shared/services/users.service';
 import { ILogin } from '../login';
 
 @Component({
@@ -11,10 +12,12 @@ import { ILogin } from '../login';
 })
 export class LoginComponent implements OnInit {
   model: ILogin;
+  displayName: string = '';
 
   constructor(
     private _router: Router,
     private _authService: AuthService,
+    private _usersService: UsersService,
     private _toastrService: ToastrService
   ) {
     this.model = {
@@ -35,6 +38,7 @@ export class LoginComponent implements OnInit {
   login() {
     if (this.usernameValidation() && this.passwordValidation()) {
       this._authService.login(this.model).subscribe((response) => {
+        this.getDisplayName();
         this.goBack();
         this._toastrService.success('Successfully logged in.');
       });
@@ -51,5 +55,9 @@ export class LoginComponent implements OnInit {
 
   goBack() {
     this._router.navigate(['/']);
+  }
+
+  getDisplayName() {
+    this._usersService.getDisplayName().subscribe((response) => {});
   }
 }

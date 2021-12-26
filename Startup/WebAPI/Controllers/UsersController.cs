@@ -5,6 +5,7 @@ using Application.Users.Commands.Insert;
 using Application.Users.Commands.Update.Self;
 using Application.Users.Commands.Update.Update;
 using Application.Users.Queries.GetById;
+using Application.Users.Queries.GetDisplayName;
 using Application.Users.Queries.Search;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -26,6 +27,15 @@ namespace WebAPI.Controllers
             });
 
             return Ok(user);
+        }
+
+        [HttpGet]
+        [Route("display-name")]
+        public async Task<IActionResult> GetDisplayName()
+        {
+            string displayName = await Mediator.Send(new GetDisplayNameQuery());
+
+            return Ok(new {displayName = displayName});
         }
 
         #endregion
