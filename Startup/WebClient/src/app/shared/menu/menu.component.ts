@@ -2,7 +2,7 @@ import { Component, OnInit, TemplateRef } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { AuthService } from '../services/auth.service';
-import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
+import { BsDropdownConfig } from 'ngx-bootstrap/dropdown';
 import { PERMISSION } from '../../shared/enums/permissions';
 import { ConfirmationModalService } from '../services/confirmation-modal.service';
 import { UsersService } from '../services/users.service';
@@ -11,6 +11,12 @@ import { UsersService } from '../services/users.service';
   selector: 'app-menu',
   templateUrl: './menu.component.html',
   styleUrls: ['./menu.component.scss'],
+  providers: [
+    {
+      provide: BsDropdownConfig,
+      useValue: { isAnimated: true, autoClose: true },
+    },
+  ],
 })
 export class MenuComponent implements OnInit {
   isAuthorized$: Observable<boolean>;
@@ -40,6 +46,7 @@ export class MenuComponent implements OnInit {
     if (result) {
       this._authService.logout();
       this._usersService.setDisplayName$(null);
+      this.goToHome();
     }
   }
 

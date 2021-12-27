@@ -26,21 +26,38 @@
         <a class="nav-link" (click)="goToUsers()">Users</a>
       </li>
     </ul>
-    <ul class="navbar-nav ms-auto">
-      <li class="nav-item" *ngIf="!(isAuthorized$ | async)">
+    <ul class="navbar-nav ms-auto" *ngIf="!(isAuthorized$ | async)">
+      <li class="nav-item">
         <a class="nav-link" (click)="goToLogin()">Login</a>
       </li>
-      <li class="nav-item" *ngIf="!(isAuthorized$ | async)">
+      <li class="nav-item">
         <a class="nav-link" (click)="goToRegister()">Register</a>
       </li>
-      <li class="nav-item" *ngIf="isAuthorized$ | async">
-        <a class="nav-link" (click)="goToUserForm('0')">{{
-          displayName$ | async
-        }}</a>
+    </ul>
+    <ul dropdown class="navbar-nav ms-auto" *ngIf="isAuthorized$ | async">
+      <li class="nav-item">
+        <a
+          id="basic-link"
+          dropdownToggle
+          (click)="(false)"
+          aria-controls="basic-link-dropdown"
+          class="nav-link"
+          >{{ displayName$ | async }}</a
+        >
       </li>
-      <li class="nav-item" *ngIf="isAuthorized$ | async">
-        <a class="nav-link" (click)="logout()">Logout</a>
-      </li>
+      <ul
+        id="basic-link-dropdown"
+        *dropdownMenu
+        class="dropdown-menu navbar-dark bg-dark text-center"
+        aria-labelledby="basic-link"
+      >
+        <li class="nav-item">
+          <a class="nav-link" (click)="goToUserForm('0')">Update</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" (click)="logout()">Logout</a>
+        </li>
+      </ul>
     </ul>
   </ngx-navbar-collapse>
 </nav>

@@ -9,6 +9,7 @@ import { ModalModule } from 'ngx-bootstrap/modal';
 import { PaginationModule } from 'ngx-bootstrap/pagination';
 import { NgxPermissionsModule } from 'ngx-permissions';
 import { ConfirmationModalModule } from './confirmation-modal/confirmation-modal.module';
+import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 
 import { AuthService } from './services/auth.service';
 import { UsersService } from './services/users.service';
@@ -27,6 +28,7 @@ import { ConfirmationModalService } from './services/confirmation-modal.service'
     PaginationModule.forRoot(),
     NgxPermissionsModule.forRoot(),
     ConfirmationModalModule,
+    BsDropdownModule.forRoot(),
   ],
   declarations: [MenuComponent],
   exports: [MenuComponent, NgxPermissionsModule],
