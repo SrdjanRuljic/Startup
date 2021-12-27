@@ -66,7 +66,7 @@ export class MenuComponent implements OnInit {
     this._router.navigate(['/users']);
   }
 
-  goToUserForm(id: string) {
-    this._router.navigate(['/users/form', id]);
+  goToUpdateSelf() {
+    this._router.navigate(['/users/update-self']);
   }
 }

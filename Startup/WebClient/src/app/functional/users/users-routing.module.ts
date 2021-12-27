@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 
 import { UsersListComponent } from './users-list/users-list.component';
 import { UsersFormComponent } from './users-form/users-form.component';
+import { UpdateSelfComponent } from './update-self/update-self.component';
 
 import { AuthGuard } from 'src/app/core/auth.guard';
 import { PERMISSION } from 'src/app/shared/enums/permissions';
@@ -20,6 +21,11 @@ const userRoutes: Routes = [
     component: UsersFormComponent,
     canActivate: [AuthGuard],
     data: { permission: PERMISSION.ADMIN },
+  },
+  {
+    path: 'users/update-self',
+    component: UpdateSelfComponent,
+    canActivate: [AuthGuard],
   },
 ];
 
