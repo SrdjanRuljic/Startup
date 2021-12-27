@@ -43,12 +43,15 @@ export class UsersService {
     );
   }
 
+  getDisplayName$(): Observable<string> {
+    return this.displayName$.asObservable();
+  }
+
   setDisplayName$(response: any | null) {
     if (response == null) {
       this.displayName$.next('');
     } else {
       this.displayName$.next(response.displayName);
     }
-    console.log('this.displayName$:', this.displayName$);
   }
 }

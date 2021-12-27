@@ -15,6 +15,7 @@ import { UsersService } from '../services/users.service';
 export class MenuComponent implements OnInit {
   isAuthorized$: Observable<boolean>;
   PERMISSION: typeof PERMISSION = PERMISSION;
+  displayName$: Observable<string>;
 
   constructor(
     private _router: Router,
@@ -23,6 +24,7 @@ export class MenuComponent implements OnInit {
     private _usersService: UsersService
   ) {
     this.isAuthorized$ = this._authService.getIsAuthorized$();
+    this.displayName$ = this._usersService.getDisplayName$();
   }
 
   ngOnInit() {}
@@ -55,5 +57,9 @@ export class MenuComponent implements OnInit {
 
   goToUsers() {
     this._router.navigate(['/users']);
+  }
+
+  goToUserForm(id: string) {
+    this._router.navigate(['/users/form', id]);
   }
 }
