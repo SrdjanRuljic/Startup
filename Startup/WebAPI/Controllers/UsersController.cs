@@ -5,6 +5,7 @@ using Application.Users.Commands.Insert;
 using Application.Users.Commands.Update.Self;
 using Application.Users.Commands.Update.Update;
 using Application.Users.Queries.GetById;
+using Application.Users.Queries.GetByUserName;
 using Application.Users.Queries.GetDisplayName;
 using Application.Users.Queries.Search;
 using Microsoft.AspNetCore.Authorization;
@@ -25,6 +26,15 @@ namespace WebAPI.Controllers
             {
                 Id = id
             });
+
+            return Ok(user);
+        }
+
+        [HttpGet]
+        [Route("get-by-username")]
+        public async Task<IActionResult> GetByUserName(string id)
+        {
+            GetByUserNameViewModel user = await Mediator.Send(new GetByUserNameQuery());
 
             return Ok(user);
         }

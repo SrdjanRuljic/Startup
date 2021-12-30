@@ -12,26 +12,26 @@ namespace Application.Users.Queries.GetById
 {
     public class GetUserByIdQueryHandler : IRequestHandler<GetUserByIdQuery, GetUserByIdViewModel>
     {
-        private readonly IManagersService _managerService;
+        private readonly IManagersService _managersService;
         private readonly IMapper _mapper;
 
         public GetUserByIdQueryHandler(IManagersService managersService,
                                        IMapper mapper)
         {
-            _managerService = managersService;
+            _managersService = managersService;
             _mapper = mapper;
         }
 
         public async Task<GetUserByIdViewModel> Handle(GetUserByIdQuery request, CancellationToken cancellationToken)
         {
-            AppUser user = await _managerService.FindByIdAsync(request.Id);
+            AppUser user = await _managersService.FindByIdAsync(request.Id);
 
             if (user == null)
                 throw new HttpStatusCodeException(HttpStatusCode.NotFound, ErrorMessages.DataNotFound);
 
             GetUserByIdViewModel model = _mapper.Map<GetUserByIdViewModel>(user);
 
-            model.Roles = await _managerService.GetRoleAsync(user);
+            model.Roles = await _managersService.GetRoleAsync(user);
 
             return model;
         }

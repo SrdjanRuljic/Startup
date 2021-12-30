@@ -4,9 +4,8 @@ import { ToastrService } from 'ngx-toastr';
 import { PERMISSION } from 'src/app/shared/enums/permissions';
 import { ICheckbox } from 'src/app/shared/models/checkbox';
 import { UsersService } from 'src/app/shared/services/users.service';
-import { IUser } from '../user';
-import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
-import { ConfirmationModalComponent } from 'src/app/shared/confirmation-modal/confirmation-modal.component';
+import { IUserWithRoles } from '../user';
+import { BsModalRef } from 'ngx-bootstrap/modal';
 import { ConfirmationModalService } from 'src/app/shared/services/confirmation-modal.service';
 
 @Component({
@@ -15,7 +14,7 @@ import { ConfirmationModalService } from 'src/app/shared/services/confirmation-m
   styleUrls: ['./users-form.component.scss'],
 })
 export class UsersFormComponent implements OnInit {
-  model: IUser;
+  model: IUserWithRoles;
   checkboxRoles: Array<ICheckbox> = [
     {
       name: PERMISSION.BASIC,
