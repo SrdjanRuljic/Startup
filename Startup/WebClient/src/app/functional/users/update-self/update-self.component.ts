@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+import { AuthService } from 'src/app/shared/services/auth.service';
 import { ConfirmationModalService } from 'src/app/shared/services/confirmation-modal.service';
 import { UsersService } from 'src/app/shared/services/users.service';
 import { IUser } from '../user';
@@ -13,11 +14,13 @@ import { IUser } from '../user';
 export class UpdateSelfComponent implements OnInit {
   model: IUser;
   previousUserName: string | null = null;
+  previousFirstName: string | null = null;
+  previousLastName: string | null = null;
 
   constructor(
     private _router: Router,
-    private _route: ActivatedRoute,
     private _usersService: UsersService,
+    private _authService: AuthService,
     private _toastrService: ToastrService,
     private _confirmationModalService: ConfirmationModalService
   ) {
@@ -38,6 +41,8 @@ export class UpdateSelfComponent implements OnInit {
     this._usersService.getByUserName().subscribe((response) => {
       this.model = response;
       this.previousUserName = this.model.userName;
+      this.previousFirstName = this.model.firstName;
+      this.previousLastName = this.model.lastName;
     });
   }
 
@@ -49,8 +54,16 @@ export class UpdateSelfComponent implements OnInit {
     return !!!(this.model.email == '' || this.model.email.length < 1);
   }
 
-  compareUsernames() {
+  compareUserNames() {
     return !!!(this.previousUserName === this.model.userName);
+  }
+
+  compareFirstNames() {
+    return !!!(this.previousFirstName === this.model.firstName);
+  }
+
+  compareLastNames() {
+    return !!!(this.previousLastName === this.model.lastName);
   }
 
   goToHome() {
@@ -60,13 +73,14 @@ export class UpdateSelfComponent implements OnInit {
   update() {
     this._usersService.updateSelf(this.model).subscribe((response) => {
       this._toastrService.success('User successfully updated.');
+      this.refreshDisplaName();
       this.goToHome();
     });
   }
 
   async save() {
     if (this.usernameValidation() && this.emailValidation()) {
-      if (this.compareUsernames()) {
+      if (this.compareUserNames()) {
         await this.openConfirmationModal();
       } else {
         this.update();
@@ -76,10 +90,25 @@ export class UpdateSelfComponent implements OnInit {
 
   async openConfirmationModal() {
     const result = await this._confirmationModalService.confirm(
-      'Are you sure you want to update username?'
+      'Are you sure you want to update username? You will be logged out!'
     );
     if (result) {
       this.update();
+      this.logout();
+    }
+  }
+
+  logout() {
+    this._authService.logout();
+  }
+
+  getDisplayName() {
+    this._usersService.getDisplayName().subscribe((response) => {});
+  }
+
+  refreshDisplaName() {
+    if (this.compareFirstNames() || this.compareLastNames()) {
+      this.getDisplayName();
     }
   }
 }
