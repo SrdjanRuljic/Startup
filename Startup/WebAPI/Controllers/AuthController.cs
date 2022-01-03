@@ -1,4 +1,5 @@
 ﻿using Application.Auth.ConfirmEmail;
+using Application.Auth.ForgotPassword;
 using Application.Auth.GetUserRoles;
 using Application.Auth.Queries.Login;
 using Application.Auth.Register;
@@ -53,6 +54,16 @@ namespace WebAPI.Controllers
         [Route("register")]
         [AllowAnonymous]
         public async Task<IActionResult> Register(RegisterCommand command)
+        {
+            await Mediator.Send(command);
+
+            return Ok();
+        }
+
+        [HttpPost]
+        [Route("forgot-password")]
+        [AllowAnonymous]
+        public async Task<IActionResult> ForgotPassword(ForgotPasswordCommand command)
         {
             await Mediator.Send(command);
 

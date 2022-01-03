@@ -57,6 +57,10 @@ export class LoginComponent implements OnInit {
     this._router.navigate(['/']);
   }
 
+  goToForgotPassword() {
+    this._router.navigate(['/forgot-password']);
+  }
+
   getDisplayName() {
     this._usersService.getDisplayName().subscribe((response) => {});
   }

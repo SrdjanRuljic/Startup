@@ -5,6 +5,7 @@ import { BehaviorSubject, map, Observable, take } from 'rxjs';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { NgxPermissionsService } from 'ngx-permissions';
 import { PERMISSION } from '../enums/permissions';
+import { IForgotPassword } from 'src/app/functional/auth/forgot-password';
 
 const TOKEN_KEY = 'auth-token';
 
@@ -37,9 +38,9 @@ export class AuthService {
     );
   }
 
-  isInRole(role: any): Observable<any> {
+  forgotPassword(model: IForgotPassword): Observable<any> {
     return this._http
-      .get(this._authUrl + '/is-in-role/' + role)
+      .post(this._authUrl + '/' + 'forgot-password', model)
       .pipe(map((res) => res));
   }
 
