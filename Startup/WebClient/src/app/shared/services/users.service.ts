@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, map, Observable } from 'rxjs';
 import { AppGlobals } from 'src/app/core/app-globals';
+import { IChangePassword } from 'src/app/functional/users/change-password';
 import { IUser, IUserWithRoles } from 'src/app/functional/users/user';
 
 @Injectable({
@@ -53,6 +54,12 @@ export class UsersService {
         this.setDisplayName$(res);
       })
     );
+  }
+
+  changePassword(model: IChangePassword): Observable<any> {
+    return this._http
+      .put(this._usersUrl + '/change-password', model)
+      .pipe(map((res) => res));
   }
 
   getDisplayName$(): Observable<string> {

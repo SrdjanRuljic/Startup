@@ -6,11 +6,17 @@ import { PaginationModule } from 'ngx-bootstrap/pagination';
 import { UsersListComponent } from './users-list/users-list.component';
 import { UsersFormComponent } from './users-form/users-form.component';
 import { UpdateSelfComponent } from './update-self/update-self.component';
+import { ChangePasswordComponent } from './change-password/change-password.component';
 
 import { UsersRoutingModule } from './users-routing.module';
 
 @NgModule({
   imports: [CommonModule, UsersRoutingModule, FormsModule, PaginationModule],
-  declarations: [UsersListComponent, UsersFormComponent, UpdateSelfComponent],
+  declarations: [
+    UsersListComponent,
+    UsersFormComponent,
+    UpdateSelfComponent,
+    ChangePasswordComponent,
+  ],
 })
 export class UsersModule {}
