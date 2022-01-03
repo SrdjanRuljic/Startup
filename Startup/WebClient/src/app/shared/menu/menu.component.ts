@@ -69,4 +69,8 @@ export class MenuComponent implements OnInit {
   goToUpdateSelf() {
     this._router.navigate(['/users/update-self']);
   }
+
+  goToChangePassword() {
+    this._router.navigate(['/users/change-password']);
+  }
 }
