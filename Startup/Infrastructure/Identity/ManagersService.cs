@@ -100,11 +100,17 @@ namespace Infrastructure.Identity
         public async Task<AppUser> FindByIdAsync(string id) =>
             await _userManager.FindByIdAsync(id);
 
+        public async Task<AppUser> FindByEmailAsync(string email) =>
+            await _userManager.FindByEmailAsync(email);
+
         public IQueryable<AppUser> FindById(string id) =>
             _userManager.Users.Where(x => x.Id.Equals(id));
 
         public async Task<string> GenerateEmailConfirmationTokenAsync(AppUser user) =>
             await _userManager.GenerateEmailConfirmationTokenAsync(user);
+
+        public async Task<string> GeneratePasswordResetTokenAsync(AppUser user) =>
+            await _userManager.GeneratePasswordResetTokenAsync(user);
 
         public async Task<string> GetDisplayNameAsync(string userName) => 
             await _userManager.Users

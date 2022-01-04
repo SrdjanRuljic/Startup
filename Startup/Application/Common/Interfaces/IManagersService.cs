@@ -16,10 +16,12 @@ namespace Application.Common.Interfaces
         Task<AppUser> FindByUserNameAsync(string userName);
         Task<string> GetDisplayNameAsync(string userName);
         Task<AppUser> FindByIdAsync(string id);
+        Task<AppUser> FindByEmailAsync(string email);
         IQueryable<AppUser> FindById(string id);
         Task<string[]> GetRoleAsync(AppUser user);
         IQueryable<AppUser> GetUsers();
         Task<string> GenerateEmailConfirmationTokenAsync(AppUser user);
+        Task<string> GeneratePasswordResetTokenAsync(AppUser user);
         Task<bool> IsThereAnyRoleAsync();
         Task<bool> IsThereAnyUserAsync();
         Task<bool> IsUserInRoleAsync(AppUser user, string role);

@@ -36,6 +36,13 @@ namespace Infrastructure.EmailSender
             await SendAsync(mimeMessage);
         }
 
+        public async Task SendPasswordResetEmailAsync(Message message)
+        {
+            MimeMessage mimeMessage = CreatePasswordResetEmailMessage(message);
+
+            await SendAsync(mimeMessage);
+        }
+
         private MimeMessage CreateConfirmationEmailMessage(Message message)
         {
             MimeMessage emailMessage = new MimeMessage();
@@ -46,6 +53,23 @@ namespace Infrastructure.EmailSender
             BodyBuilder bodyBuilder = new BodyBuilder
             {
                 HtmlBody = string.Format("Please confirm your account by <a href = '{0}'>clicking here</a>", message.Link)
+            };
+
+            emailMessage.Body = bodyBuilder.ToMessageBody();
+
+            return emailMessage;
+        }
+
+        private MimeMessage CreatePasswordResetEmailMessage(Message message)
+        {
+            MimeMessage emailMessage = new MimeMessage();
+            emailMessage.From.Add(MailboxAddress.Parse(_emailConfiguration.From));
+            emailMessage.To.AddRange(message.To);
+            emailMessage.Subject = message.Subject;
+
+            BodyBuilder bodyBuilder = new BodyBuilder
+            {
+                HtmlBody = string.Format("Please confirm your password reset by <a href = '{0}'>clicking here</a>", message.Link)
             };
 
             emailMessage.Body = bodyBuilder.ToMessageBody();

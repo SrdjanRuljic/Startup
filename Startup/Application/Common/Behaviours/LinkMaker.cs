@@ -20,5 +20,20 @@ namespace Application.Common.Behaviours
 
             return link;
         }
+
+        public static string CreatePasswordResetLink(string email, string clientUri, string token)
+        {
+            Dictionary<string, string> param = new Dictionary<string, string>
+            {
+                {"email", email },
+                {"token", token }
+            };
+
+            Uri uri = new Uri(clientUri);
+
+            string link = QueryHelpers.AddQueryString(uri.ToString(), param);
+
+            return link;
+        }
     }
 }
