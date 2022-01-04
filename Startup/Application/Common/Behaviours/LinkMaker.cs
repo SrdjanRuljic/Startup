@@ -21,7 +21,7 @@ namespace Application.Common.Behaviours
             return link;
         }
 
-        public static string CreatePasswordResetLink(string email, string clientUri, string token)
+        public static string CreateResetPasswordLink(string email, string clientUri, string token)
         {
             Dictionary<string, string> param = new Dictionary<string, string>
             {

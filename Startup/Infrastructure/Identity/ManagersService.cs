@@ -109,7 +109,7 @@ namespace Infrastructure.Identity
         public async Task<string> GenerateEmailConfirmationTokenAsync(AppUser user) =>
             await _userManager.GenerateEmailConfirmationTokenAsync(user);
 
-        public async Task<string> GeneratePasswordResetTokenAsync(AppUser user) =>
+        public async Task<string> GenerateResetPasswordTokenAsync(AppUser user) =>
             await _userManager.GeneratePasswordResetTokenAsync(user);
 
         public async Task<string> GetDisplayNameAsync(string userName) => 
@@ -127,6 +127,13 @@ namespace Infrastructure.Identity
 
         public IQueryable<AppUser> GetUsers() =>
             _userManager.Users;
+
+        public async Task<Result> ResetPasswordAsync(AppUser user, string token, string password)
+        {
+            IdentityResult result = await _userManager.ResetPasswordAsync(user, token, password);
+
+            return result.ToApplicationResult();
+        }
 
         public async Task<bool> IsThereAnyRoleAsync() =>
             await _roleManager.Roles.AnyAsync();

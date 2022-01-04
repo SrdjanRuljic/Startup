@@ -21,7 +21,8 @@ namespace Application.Common.Interfaces
         Task<string[]> GetRoleAsync(AppUser user);
         IQueryable<AppUser> GetUsers();
         Task<string> GenerateEmailConfirmationTokenAsync(AppUser user);
-        Task<string> GeneratePasswordResetTokenAsync(AppUser user);
+        Task<string> GenerateResetPasswordTokenAsync(AppUser user);
+        Task<Result> ResetPasswordAsync(AppUser user, string token, string password); 
         Task<bool> IsThereAnyRoleAsync();
         Task<bool> IsThereAnyUserAsync();
         Task<bool> IsUserInRoleAsync(AppUser user, string role);

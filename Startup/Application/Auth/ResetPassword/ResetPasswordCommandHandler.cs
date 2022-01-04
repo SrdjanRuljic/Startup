@@ -1,5 +1,4 @@
-﻿using Application.Common.Behaviours;
-using Application.Common.Interfaces;
+﻿using Application.Common.Interfaces;
 using Application.Common.Models;
 using Application.Exceptions;
 using Domain.Entities.Identity;
@@ -13,19 +12,18 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Application.Auth.ForgotPassword
+namespace Application.Auth.ResetPassword
 {
-    public class ForgotPasswordCommandHandler : IRequestHandler<ForgotPasswordCommand>
+    public class ResetPasswordCommandHandler : IRequestHandler<ResetPasswordCommand>
     {
         private readonly IManagersService _managersService;
-        private readonly IEmailSenderService _emailSenderService;
 
-        public ForgotPasswordCommandHandler(IManagersService managersService)
+        public ResetPasswordCommandHandler(IManagersService managersService)
         {
             _managersService = managersService;
         }
 
-        public async Task<Unit> Handle(ForgotPasswordCommand request, CancellationToken cancellationToken)
+        public async Task<Unit> Handle(ResetPasswordCommand request, CancellationToken cancellationToken)
         {
             string errorMessage = null;
 
@@ -37,12 +35,10 @@ namespace Application.Auth.ForgotPassword
             if (user == null)
                 throw new HttpStatusCodeException(HttpStatusCode.BadRequest, ErrorMessages.DataNotFound);
 
-            string token = await _managersService.GenerateResetPasswordTokenAsync(user);
-            string link = LinkMaker.CreateResetPasswordLink(user.Email, request.ClientUri, token);
+            Result result = await _managersService.ResetPasswordAsync(user, request.Token, request.Password);
 
-            Message message = new Message(new string[] { user.Email }, "Reset password request", link, null);
-
-            await _emailSenderService.SendResetPasswordEmailAsync(message);
+            if (!result.Succeeded)
+                throw new HttpStatusCodeException(HttpStatusCode.BadRequest, string.Concat(result.Errors));
 
             return Unit.Value;
         }

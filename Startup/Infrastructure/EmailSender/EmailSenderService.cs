@@ -36,9 +36,9 @@ namespace Infrastructure.EmailSender
             await SendAsync(mimeMessage);
         }
 
-        public async Task SendPasswordResetEmailAsync(Message message)
+        public async Task SendResetPasswordEmailAsync(Message message)
         {
-            MimeMessage mimeMessage = CreatePasswordResetEmailMessage(message);
+            MimeMessage mimeMessage = CreateResetPasswordEmailMessage(message);
 
             await SendAsync(mimeMessage);
         }
@@ -60,7 +60,7 @@ namespace Infrastructure.EmailSender
             return emailMessage;
         }
 
-        private MimeMessage CreatePasswordResetEmailMessage(Message message)
+        private MimeMessage CreateResetPasswordEmailMessage(Message message)
         {
             MimeMessage emailMessage = new MimeMessage();
             emailMessage.From.Add(MailboxAddress.Parse(_emailConfiguration.From));

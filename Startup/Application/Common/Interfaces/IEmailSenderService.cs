@@ -7,6 +7,6 @@ namespace Application.Common.Interfaces
     {
         Task SendConfirmationEmailAsync(Message message);
         Task SendPasswordEmailAsync(Message message);
-        Task SendPasswordResetEmailAsync(Message message);
+        Task SendResetPasswordEmailAsync(Message message);
     }
 }
