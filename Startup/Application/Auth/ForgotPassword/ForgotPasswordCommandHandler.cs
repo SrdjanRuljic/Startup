@@ -5,11 +5,7 @@ using Application.Exceptions;
 using Domain.Entities.Identity;
 using Domain.Exceptions;
 using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -20,9 +16,11 @@ namespace Application.Auth.ForgotPassword
         private readonly IManagersService _managersService;
         private readonly IEmailSenderService _emailSenderService;
 
-        public ForgotPasswordCommandHandler(IManagersService managersService)
+        public ForgotPasswordCommandHandler(IManagersService managersService, 
+                                            IEmailSenderService emailSenderService)
         {
             _managersService = managersService;
+            _emailSenderService = emailSenderService;
         }
 
         public async Task<Unit> Handle(ForgotPasswordCommand request, CancellationToken cancellationToken)

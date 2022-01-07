@@ -3,6 +3,7 @@ using Application.Auth.ForgotPassword;
 using Application.Auth.GetUserRoles;
 using Application.Auth.Queries.Login;
 using Application.Auth.Register;
+using Application.Auth.ResetPassword;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
@@ -64,6 +65,16 @@ namespace WebAPI.Controllers
         [Route("forgot-password")]
         [AllowAnonymous]
         public async Task<IActionResult> ForgotPassword(ForgotPasswordCommand command)
+        {
+            await Mediator.Send(command);
+
+            return Ok();
+        }
+
+        [HttpPost]
+        [Route("reset-password")]
+        [AllowAnonymous]
+        public async Task<IActionResult> ResetPassword(ResetPasswordCommand command)
         {
             await Mediator.Send(command);
 

@@ -29,9 +29,7 @@ namespace Application.Common.Behaviours
                 {"token", token }
             };
 
-            Uri uri = new Uri(clientUri);
-
-            string link = QueryHelpers.AddQueryString(uri.ToString(), param);
+            string link = QueryHelpers.AddQueryString(clientUri, param);
 
             return link;
         }

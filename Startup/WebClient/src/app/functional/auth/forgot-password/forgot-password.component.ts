@@ -40,11 +40,11 @@ export class ForgotPasswordComponent implements OnInit {
       this._toastrService.success(
         'Request successfully sent, check your email.'
       );
-      this.goToHome();
+      this.goToLogin();
     });
   }
 
-  goToHome() {
-    this._router.navigate(['/']);
+  goToLogin() {
+    this._router.navigate(['/login']);
   }
 }

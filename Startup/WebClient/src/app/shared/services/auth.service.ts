@@ -6,6 +6,7 @@ import { JwtHelperService } from '@auth0/angular-jwt';
 import { NgxPermissionsService } from 'ngx-permissions';
 import { PERMISSION } from '../enums/permissions';
 import { IForgotPassword } from 'src/app/functional/auth/forgot-password';
+import { IResetPassword } from 'src/app/functional/auth/reset-password';
 
 const TOKEN_KEY = 'auth-token';
 
@@ -41,6 +42,12 @@ export class AuthService {
   forgotPassword(model: IForgotPassword): Observable<any> {
     return this._http
       .post(this._authUrl + '/' + 'forgot-password', model)
+      .pipe(map((res) => res));
+  }
+
+  resetPassword(model: IResetPassword): Observable<any> {
+    return this._http
+      .post(this._authUrl + '/' + 'reset-password', model)
       .pipe(map((res) => res));
   }
 

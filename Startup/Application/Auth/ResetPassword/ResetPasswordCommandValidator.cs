@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 
 namespace Application.Auth.ResetPassword
 {
@@ -37,6 +33,13 @@ namespace Application.Auth.ResetPassword
                 validationMessage += Resources.Translation.PasswordMustContain;
                 isValid = false;
             }
+
+            if (String.Compare(model.Password, model.ConfirmedPassword) != 0)
+            {
+                validationMessage += Resources.Translation.PasswordMismatch;
+                isValid = false;
+            }
+
 
             if (String.IsNullOrWhiteSpace(model.Email))
             {
