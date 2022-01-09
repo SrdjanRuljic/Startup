@@ -66,7 +66,7 @@ export class AuthService {
 
   logout(): void {
     this.isAuthorized$.next(false);
-    window.sessionStorage.clear();
+    localStorage.clear();
 
     this._permissionsService.flushPermissions();
   }
@@ -76,12 +76,12 @@ export class AuthService {
   }
 
   getToken(): string | null {
-    return window.sessionStorage.getItem(TOKEN_KEY);
+    return localStorage.getItem(TOKEN_KEY);
   }
 
   private saveToken(token: string): void {
-    window.sessionStorage.removeItem(TOKEN_KEY);
-    window.sessionStorage.setItem(TOKEN_KEY, token);
+    localStorage.removeItem(TOKEN_KEY);
+    localStorage.setItem(TOKEN_KEY, token);
   }
 
   private handleSuccess(response: any) {
