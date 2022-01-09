@@ -19,7 +19,7 @@ export class ForgotPasswordComponent implements OnInit {
   ) {
     this.model = {
       email: '',
-      clientUri: 'http://localhost:4200/reset-password',
+      clientUri: window.location.origin + '/reset-password',
     };
   }
 
