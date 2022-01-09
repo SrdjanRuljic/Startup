@@ -4,12 +4,12 @@ import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, map, Observable, take } from 'rxjs';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { NgxPermissionsService } from 'ngx-permissions';
-import { PERMISSION } from '../enums/permissions';
 import { IForgotPassword } from 'src/app/functional/auth/forgot-password';
 import { IResetPassword } from 'src/app/functional/auth/reset-password';
 import { IConfirmEmail } from 'src/app/functional/auth/confirm-email';
 
 const TOKEN_KEY = 'auth-token';
+const PERMISSIONS_KEY = 'permissions';
 
 @Injectable({
   providedIn: 'root',
@@ -88,7 +88,7 @@ export class AuthService {
     this.saveToken(response.auth_token);
     this.isAuthorized$.next(true);
 
-    this.loadPermissions();
+    this.getAllUserRoles();
   }
 
   getIsAuthorized() {
@@ -96,11 +96,20 @@ export class AuthService {
     return !this._jwtHelper.isTokenExpired(token!);
   }
 
-  private loadPermissions() {
+  private getAllUserRoles() {
     this.getUserRoles()
       .pipe(take(1))
       .subscribe((response) => {
-        this._permissionsService.loadPermissions(response);
+        localStorage.setItem(PERMISSIONS_KEY, JSON.stringify(response));
+        this.loadPermissions();
       });
+  }
+
+  loadPermissions() {
+    const permissions = localStorage.getItem(PERMISSIONS_KEY);
+
+    if (permissions) {
+      this._permissionsService.loadPermissions(JSON.parse(permissions));
+    }
   }
 }
