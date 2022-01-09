@@ -5,12 +5,14 @@ import { AppGlobals } from 'src/app/core/app-globals';
 import { IChangePassword } from 'src/app/functional/users/change-password';
 import { IUser, IUserWithRoles } from 'src/app/functional/users/user';
 
+const DISPLAYNAME_KEY = 'display-name';
+
 @Injectable({
   providedIn: 'root',
 })
 export class UsersService {
   private _usersUrl = this._appGlobals.WebApiUrl + 'api/users';
-  private displayName$ = new BehaviorSubject<string>('');
+  displayName$ = new BehaviorSubject<string>(this.displayName);
 
   constructor(private _appGlobals: AppGlobals, private _http: HttpClient) {}
 
@@ -50,8 +52,8 @@ export class UsersService {
 
   getDisplayName(): Observable<any> {
     return this._http.get(this._usersUrl + '/display-name').pipe(
-      map((res) => {
-        this.setDisplayName$(res);
+      map((res: any) => {
+        this.displayName = res.displayName;
       })
     );
   }
@@ -62,15 +64,16 @@ export class UsersService {
       .pipe(map((res) => res));
   }
 
-  getDisplayName$(): Observable<string> {
-    return this.displayName$.asObservable();
+  set displayName(value: any) {
+    if (value === '') {
+      localStorage.removeItem(DISPLAYNAME_KEY);
+    } else {
+      this.displayName$.next(value);
+      localStorage.setItem(DISPLAYNAME_KEY, value);
+    }
   }
 
-  setDisplayName$(response: any | null) {
-    if (response == null) {
-      this.displayName$.next('');
-    } else {
-      this.displayName$.next(response.displayName);
-    }
+  get displayName() {
+    return localStorage.getItem(DISPLAYNAME_KEY);
   }
 }

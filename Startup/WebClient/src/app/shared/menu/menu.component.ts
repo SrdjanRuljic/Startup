@@ -1,6 +1,6 @@
-import { Component, OnInit, TemplateRef } from '@angular/core';
+import { Component, OnDestroy, OnInit, TemplateRef } from '@angular/core';
 import { Router } from '@angular/router';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { AuthService } from '../services/auth.service';
 import { BsDropdownConfig } from 'ngx-bootstrap/dropdown';
 import { PERMISSION } from '../../shared/enums/permissions';
@@ -18,10 +18,11 @@ import { UsersService } from '../services/users.service';
     },
   ],
 })
-export class MenuComponent implements OnInit {
+export class MenuComponent implements OnInit, OnDestroy {
   isAuthorized$: Observable<boolean>;
   PERMISSION: typeof PERMISSION = PERMISSION;
-  displayName$: Observable<string>;
+  displayName: string = '';
+  subscription: Subscription;
 
   constructor(
     private _router: Router,
@@ -30,7 +31,11 @@ export class MenuComponent implements OnInit {
     private _usersService: UsersService
   ) {
     this.isAuthorized$ = this._authService.getIsAuthorized$();
-    this.displayName$ = this._usersService.getDisplayName$();
+    this.subscription = this._usersService.displayName$.subscribe(
+      (response) => {
+        this.displayName = response;
+      }
+    );
   }
 
   ngOnInit() {}
@@ -45,7 +50,7 @@ export class MenuComponent implements OnInit {
     );
     if (result) {
       this._authService.logout();
-      this._usersService.setDisplayName$(null);
+      this._usersService.displayName = '';
       this.goToHome();
     }
   }
@@ -72,5 +77,9 @@ export class MenuComponent implements OnInit {
 
   goToChangePassword() {
     this._router.navigate(['/users/change-password']);
+  }
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
   }
 }
