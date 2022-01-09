@@ -55,7 +55,7 @@ namespace Application.Auth.Register
                 throw new HttpStatusCodeException(HttpStatusCode.BadRequest, string.Concat(result.Errors));
 
             string token = await _managersService.GenerateEmailConfirmationTokenAsync(user);
-            string link = LinkMaker.CreateConfirmLink(user.UserName, token);
+            string link = LinkMaker.CreateConfirmLink(user.UserName, request.ClientUri, token);
 
             Message message = new Message(new string[] { user.Email }, "Email confirmation", link, null);
 

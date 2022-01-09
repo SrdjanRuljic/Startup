@@ -7,6 +7,7 @@ import { NgxPermissionsService } from 'ngx-permissions';
 import { PERMISSION } from '../enums/permissions';
 import { IForgotPassword } from 'src/app/functional/auth/forgot-password';
 import { IResetPassword } from 'src/app/functional/auth/reset-password';
+import { IConfirmEmail } from 'src/app/functional/auth/confirm-email';
 
 const TOKEN_KEY = 'auth-token';
 
@@ -37,6 +38,12 @@ export class AuthService {
         this.handleSuccess(res);
       })
     );
+  }
+
+  confirmEmail(model: IConfirmEmail): Observable<any> {
+    return this._http
+      .post(this._authUrl + '/' + 'confirm-email', model)
+      .pipe(map((res) => res));
   }
 
   forgotPassword(model: IForgotPassword): Observable<any> {

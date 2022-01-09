@@ -23,6 +23,7 @@ export class RegisterComponent implements OnInit {
       username: '',
       email: '',
       password: '',
+      clientUri: window.location.origin + '/confirm-email',
     };
   }
 

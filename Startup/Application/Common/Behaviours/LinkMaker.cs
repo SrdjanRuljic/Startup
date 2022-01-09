@@ -6,7 +6,7 @@ namespace Application.Common.Behaviours
 {
     public static class LinkMaker
     {
-        public static string CreateConfirmLink(string username, string token)
+        public static string CreateConfirmLink(string username, string clientUri, string token)
         {
             Dictionary<string, string> param = new Dictionary<string, string>
             {
@@ -14,9 +14,9 @@ namespace Application.Common.Behaviours
                 {"token", token }
             };
 
-            Uri uri = new Uri("https://localhost:44363/api/Auth/confirm-email/");
+            //Uri uri = new Uri("https://localhost:44363/api/Auth/confirm-email/");
 
-            string link = QueryHelpers.AddQueryString(uri.ToString(), param);
+            string link = QueryHelpers.AddQueryString(clientUri, param);
 
             return link;
         }

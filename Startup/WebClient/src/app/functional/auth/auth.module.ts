@@ -6,6 +6,7 @@ import { RegisterComponent } from './register/register.component';
 import { LoginComponent } from './login/login.component';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
+import { ConfirmEmailComponent } from './confirm-email/confirm-email.component';
 
 import { AuthRoutingModule } from './auth-routing.module';
 
@@ -16,6 +17,7 @@ import { AuthRoutingModule } from './auth-routing.module';
     LoginComponent,
     ForgotPasswordComponent,
     ResetPasswordComponent,
+    ConfirmEmailComponent,
   ],
   exports: [],
 })

@@ -5,6 +5,7 @@ import { RegisterComponent } from './register/register.component';
 import { LoginComponent } from './login/login.component';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
+import { ConfirmEmailComponent } from './confirm-email/confirm-email.component';
 
 const authRoutes: Routes = [
   {
@@ -25,6 +26,11 @@ const authRoutes: Routes = [
   {
     path: 'reset-password',
     component: ResetPasswordComponent,
+    pathMatch: 'full',
+  },
+  {
+    path: 'confirm-email',
+    component: ConfirmEmailComponent,
     pathMatch: 'full',
   },
 ];
