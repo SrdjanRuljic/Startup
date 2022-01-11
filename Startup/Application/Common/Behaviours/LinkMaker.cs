@@ -13,8 +13,6 @@ namespace Application.Common.Behaviours
                 {"token", token }
             };
 
-            //Uri uri = new Uri("https://localhost:44363/api/Auth/confirm-email/");
-
             string link = QueryHelpers.AddQueryString(clientUri, param);
 
             return link;

@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { UsersService } from 'src/app/shared/services/users.service';
-import { IChangePassword } from '../change-password';
+import { IChangePassword } from 'src/app/shared/models/change-password';
 
 @Component({
   selector: 'app-change-password',

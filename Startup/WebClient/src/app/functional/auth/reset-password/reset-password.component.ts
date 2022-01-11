@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { AuthService } from 'src/app/shared/services/auth.service';
-import { IResetPassword } from '../reset-password';
+import { IResetPassword } from 'src/app/shared/models/reset-password';
 
 @Component({
   selector: 'app-reset-password',

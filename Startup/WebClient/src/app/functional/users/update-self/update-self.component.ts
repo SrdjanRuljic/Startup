@@ -4,7 +4,7 @@ import { ToastrService } from 'ngx-toastr';
 import { AuthService } from 'src/app/shared/services/auth.service';
 import { ConfirmationModalService } from 'src/app/shared/services/confirmation-modal.service';
 import { UsersService } from 'src/app/shared/services/users.service';
-import { IUser } from '../user';
+import { IUser } from 'src/app/shared/models/user';
 
 @Component({
   selector: 'app-update-self',

@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { AuthService } from 'src/app/shared/services/auth.service';
-import { IForgotPassword } from '../forgot-password';
+import { IForgotPassword } from 'src/app/shared/models/forgot-password';
 
 @Component({
   selector: 'app-forgot-password',

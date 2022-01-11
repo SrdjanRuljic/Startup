@@ -4,7 +4,7 @@ import { ToastrService } from 'ngx-toastr';
 import { PERMISSION } from 'src/app/shared/enums/permissions';
 import { ICheckbox } from 'src/app/shared/models/checkbox';
 import { UsersService } from 'src/app/shared/services/users.service';
-import { IUserWithRoles } from '../user';
+import { IUserWithRoles } from 'src/app/shared/models/user';
 import { BsModalRef } from 'ngx-bootstrap/modal';
 import { ConfirmationModalService } from 'src/app/shared/services/confirmation-modal.service';
 

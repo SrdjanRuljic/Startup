@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { AuthService } from 'src/app/shared/services/auth.service';
 import { UsersService } from 'src/app/shared/services/users.service';
-import { ILogin } from '../login';
+import { ILogin } from 'src/app/shared/models/login';
 
 @Component({
   selector: 'app-login',

@@ -5,7 +5,7 @@ import { IPagination, ISearchModel } from 'src/app/shared/models/pagination';
 import { AuthService } from 'src/app/shared/services/auth.service';
 import { ConfirmationModalService } from 'src/app/shared/services/confirmation-modal.service';
 import { UsersService } from 'src/app/shared/services/users.service';
-import { UsersSearchModel } from '../users-search';
+import { UsersSearchModel } from 'src/app/shared/models/users-search';
 
 @Component({
   selector: 'app-users-list',

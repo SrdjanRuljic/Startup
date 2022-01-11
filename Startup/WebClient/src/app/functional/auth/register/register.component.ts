@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { AuthService } from 'src/app/shared/services/auth.service';
-import { IRegister } from '../register';
+import { IRegister } from 'src/app/shared/models/register';
 
 @Component({
   selector: 'app-register',

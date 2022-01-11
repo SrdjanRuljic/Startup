@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { AuthService } from 'src/app/shared/services/auth.service';
-import { IConfirmEmail } from '../confirm-email';
+import { IConfirmEmail } from 'src/app/shared/models/confirm-email';
 
 @Component({
   selector: 'app-confirm-email',

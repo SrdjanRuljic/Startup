@@ -1,5 +1,6 @@
 ﻿using Application.Common.Pagination.Models;
 using Application.Users.Commands.ChangePassword;
+using Application.Users.Commands.ChangeUserPassword;
 using Application.Users.Commands.Delete;
 using Application.Users.Commands.Insert;
 using Application.Users.Commands.Update.Self;
@@ -98,6 +99,16 @@ namespace WebAPI.Controllers
         [HttpPut]
         [Route("change-password")]
         public async Task<IActionResult> ChangePassword(ChangePasswordCommand command)
+        {
+            await Mediator.Send(command);
+
+            return Ok();
+        }
+
+        [Authorize(Policy = "RequireAdminRole")]
+        [HttpPut]
+        [Route("change-user-password")]
+        public async Task<IActionResult> ChangeUserPassword(ChangeUserPasswordCommand command)
         {
             await Mediator.Send(command);
 

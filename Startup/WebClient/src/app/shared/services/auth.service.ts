@@ -4,9 +4,6 @@ import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, map, Observable, take } from 'rxjs';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { NgxPermissionsService } from 'ngx-permissions';
-import { IForgotPassword } from 'src/app/functional/auth/forgot-password';
-import { IResetPassword } from 'src/app/functional/auth/reset-password';
-import { IConfirmEmail } from 'src/app/functional/auth/confirm-email';
 
 const TOKEN_KEY = 'auth-token';
 const PERMISSIONS_KEY = 'permissions';
@@ -40,19 +37,19 @@ export class AuthService {
     );
   }
 
-  confirmEmail(model: IConfirmEmail): Observable<any> {
+  confirmEmail(model: any): Observable<any> {
     return this._http
       .post(this._authUrl + '/' + 'confirm-email', model)
       .pipe(map((res) => res));
   }
 
-  forgotPassword(model: IForgotPassword): Observable<any> {
+  forgotPassword(model: any): Observable<any> {
     return this._http
       .post(this._authUrl + '/' + 'forgot-password', model)
       .pipe(map((res) => res));
   }
 
-  resetPassword(model: IResetPassword): Observable<any> {
+  resetPassword(model: any): Observable<any> {
     return this._http
       .post(this._authUrl + '/' + 'reset-password', model)
       .pipe(map((res) => res));
