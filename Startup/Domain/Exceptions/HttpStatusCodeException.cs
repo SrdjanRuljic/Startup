@@ -17,6 +17,8 @@ namespace Domain.Exceptions
             this.StatusCode = statusCode;
         }
 
-        public HttpStatusCodeException(HttpStatusCode statusCode, Exception inner) : this(statusCode, inner.ToString()) { }
+        public HttpStatusCodeException(HttpStatusCode statusCode, Exception inner) : this(statusCode, inner.ToString())
+        {
+        }
     }
 }

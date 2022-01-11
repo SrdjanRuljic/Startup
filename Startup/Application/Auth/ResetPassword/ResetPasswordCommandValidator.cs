@@ -40,7 +40,6 @@ namespace Application.Auth.ResetPassword
                 isValid = false;
             }
 
-
             if (String.IsNullOrWhiteSpace(model.Email))
             {
                 validationMessage += Resources.Translation.EmailRequired;

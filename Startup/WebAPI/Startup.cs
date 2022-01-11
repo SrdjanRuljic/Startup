@@ -17,7 +17,7 @@ namespace WebAPI
 {
     public class Startup
     {
-        readonly string MyAllowSpecificOrigins = "_ratingSystemPolicy";
+        private readonly string MyAllowSpecificOrigins = "_ratingSystemPolicy";
         public IConfiguration Configuration { get; }
 
         public Startup(IConfiguration configuration)
@@ -31,7 +31,6 @@ namespace WebAPI
         /// <param name="services"></param>
         public void ConfigureServices(IServiceCollection services)
         {
-
             services.AddApplication();
             services.AddInfrastructure(Configuration);
             services.AddPersistence(Configuration);

@@ -23,7 +23,7 @@ namespace WebAPI.Controllers
             return Ok(roles);
         }
 
-        #endregion
+        #endregion [GET]
 
         #region [POST]
 
@@ -77,6 +77,7 @@ namespace WebAPI.Controllers
             return Ok();
         }
 
-        #endregion        
+        #endregion [POST]
+
     }
 }

@@ -13,7 +13,6 @@ namespace Infrastructure.Identity
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
         {
-
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -27,6 +26,7 @@ namespace Infrastructure.Identity
     public static class UtcDateAnnotation
     {
         private const String IsUtcAnnotation = "IsUtc";
+
         private static readonly ValueConverter<DateTime, DateTime> UtcConverter =
           new ValueConverter<DateTime, DateTime>(v => v, v => DateTime.SpecifyKind(v, DateTimeKind.Utc));
 

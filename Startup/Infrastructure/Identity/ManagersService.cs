@@ -112,7 +112,7 @@ namespace Infrastructure.Identity
         public async Task<string> GenerateResetPasswordTokenAsync(AppUser user) =>
             await _userManager.GeneratePasswordResetTokenAsync(user);
 
-        public async Task<string> GetDisplayNameAsync(string userName) => 
+        public async Task<string> GetDisplayNameAsync(string userName) =>
             await _userManager.Users
                               .Where(x => x.UserName.Equals(userName))
                               .Select(x => SetDisplayName(x.FirstName, x.LastName))
@@ -192,7 +192,7 @@ namespace Infrastructure.Identity
 
             if (string.IsNullOrEmpty(firstName) && !string.IsNullOrEmpty(lastName))
                 displayName = lastName;
-            else if(!string.IsNullOrEmpty(firstName) && string.IsNullOrEmpty(lastName))
+            else if (!string.IsNullOrEmpty(firstName) && string.IsNullOrEmpty(lastName))
                 displayName = firstName;
             else if (!string.IsNullOrEmpty(firstName) && !string.IsNullOrEmpty(lastName))
                 displayName = firstName + " " + lastName;

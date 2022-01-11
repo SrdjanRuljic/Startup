@@ -43,10 +43,12 @@ namespace WebAPI._1_Startup
                     context.Response.StatusCode = (int)HttpStatusCode.BadRequest;
                     context.Response.AddArgumentnExcention(exception.Message);
                     break;
+
                 case (int)HttpStatusCode.NotFound:
                     context.Response.StatusCode = (int)HttpStatusCode.NotFound;
                     context.Response.AddNotFoundExcention(exception.Message);
                     break;
+
                 default:
                     context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
                     context.Response.AddApplicationExcention(exception.Message);

@@ -12,6 +12,5 @@ namespace WebAPI.Services
         {
             UserName = httpContextAccessor.HttpContext?.User?.FindFirstValue(ClaimTypes.NameIdentifier);
         }
-
     }
 }

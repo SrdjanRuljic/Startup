@@ -5,7 +5,7 @@ namespace Application.Auth.ForgotPassword
 {
     public static class ForgotPasswordCommandValidator
     {
-        public static bool IsValid(this ForgotPasswordCommand model, out string validationMessage) 
+        public static bool IsValid(this ForgotPasswordCommand model, out string validationMessage)
         {
             validationMessage = null;
             bool isValid = true;

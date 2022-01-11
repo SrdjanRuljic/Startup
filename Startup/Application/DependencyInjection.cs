@@ -30,7 +30,6 @@ namespace Application
                 };
                 options.SupportedCultures = supportedCultures;
                 options.SupportedUICultures = supportedCultures;
-
             });
 
             return services;

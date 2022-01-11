@@ -16,7 +16,7 @@ namespace Application.Auth.ForgotPassword
         private readonly IManagersService _managersService;
         private readonly IEmailSenderService _emailSenderService;
 
-        public ForgotPasswordCommandHandler(IManagersService managersService, 
+        public ForgotPasswordCommandHandler(IManagersService managersService,
                                             IEmailSenderService emailSenderService)
         {
             _managersService = managersService;

@@ -45,10 +45,10 @@ namespace WebAPI.Controllers
         {
             string displayName = await Mediator.Send(new GetDisplayNameQuery());
 
-            return Ok(new {displayName = displayName});
+            return Ok(new { displayName = displayName });
         }
 
-        #endregion
+        #endregion [GET]
 
         #region [POST]
 
@@ -72,7 +72,7 @@ namespace WebAPI.Controllers
             return Ok();
         }
 
-        #endregion
+        #endregion [POST]
 
         #region [PUT]
 
@@ -104,7 +104,7 @@ namespace WebAPI.Controllers
             return Ok();
         }
 
-        #endregion
+        #endregion [PUT]
 
         #region [DELETE]
 
@@ -121,6 +121,6 @@ namespace WebAPI.Controllers
             return Ok();
         }
 
-        #endregion
+        #endregion [DELETE]
     }
 }

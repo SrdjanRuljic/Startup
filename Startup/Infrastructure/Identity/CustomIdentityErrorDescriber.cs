@@ -6,7 +6,6 @@ namespace Infrastructure.Identity
     {
         public CustomIdentityErrorDescriber()
         {
-
         }
 
         public override IdentityError DefaultError()

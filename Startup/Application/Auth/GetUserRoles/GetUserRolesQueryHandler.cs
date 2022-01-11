@@ -17,6 +17,7 @@ namespace Application.Auth.GetUserRoles
             _managersService = managersService;
             _currentUserService = currentUserService;
         }
+
         public async Task<string[]> Handle(GetUserRolesQuery request, CancellationToken cancellationToken)
         {
             string[] roles = null;

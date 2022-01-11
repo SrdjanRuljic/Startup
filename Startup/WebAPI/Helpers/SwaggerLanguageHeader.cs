@@ -8,7 +8,7 @@ namespace WebAPI.Helpers
 {
     public class SwaggerLanguageHeader : IOperationFilter
     {
-        readonly IServiceProvider _serviceProvider;
+        private readonly IServiceProvider _serviceProvider;
 
         public SwaggerLanguageHeader(IServiceProvider serviceProvider)
         {
