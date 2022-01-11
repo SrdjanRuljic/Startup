@@ -75,6 +75,10 @@ export class UsersListComponent implements OnInit {
     this._router.navigate(['/users/form', id]);
   }
 
+  goToChangeUserPassword(id: string) {
+    this._router.navigate(['/users/change-user-password', id]);
+  }
+
   delete(id: string) {
     this._usersService.delete(id).subscribe((response) => {
       if (response == null) {

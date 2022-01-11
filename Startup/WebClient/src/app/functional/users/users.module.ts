@@ -7,6 +7,7 @@ import { UsersListComponent } from './users-list/users-list.component';
 import { UsersFormComponent } from './users-form/users-form.component';
 import { UpdateSelfComponent } from './update-self/update-self.component';
 import { ChangePasswordComponent } from './change-password/change-password.component';
+import { ChangeUserPasswordComponent } from './change-user-password/change-user-password.component';
 
 import { UsersRoutingModule } from './users-routing.module';
 
@@ -17,6 +18,7 @@ import { UsersRoutingModule } from './users-routing.module';
     UsersFormComponent,
     UpdateSelfComponent,
     ChangePasswordComponent,
+    ChangeUserPasswordComponent,
   ],
 })
 export class UsersModule {}

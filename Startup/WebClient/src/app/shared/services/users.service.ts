@@ -3,6 +3,8 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, map, Observable } from 'rxjs';
 import { AppGlobals } from 'src/app/core/app-globals';
 import { IUser, IUserWithRoles } from 'src/app/shared/models/user';
+import { IChangePassword } from '../models/change-password';
+import { IChangeUserPassword } from '../models/change-user-password';
 
 const DISPLAYNAME_KEY = 'display-name';
 
@@ -57,13 +59,13 @@ export class UsersService {
     );
   }
 
-  changePassword(model: any): Observable<any> {
+  changePassword(model: IChangePassword): Observable<any> {
     return this._http
       .put(this._usersUrl + '/change-password', model)
       .pipe(map((res) => res));
   }
 
-  changeUserPassword(model: any): Observable<any> {
+  changeUserPassword(model: IChangeUserPassword): Observable<any> {
     return this._http
       .put(this._usersUrl + '/change-user-password', model)
       .pipe(map((res) => res));
