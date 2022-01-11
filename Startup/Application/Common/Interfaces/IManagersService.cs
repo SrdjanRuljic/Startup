@@ -9,9 +9,9 @@ namespace Application.Common.Interfaces
     {
         Task<AppUser> AuthenticateAsync(string userName, string password);
 
-        Task<Result> ConfirmEmailAsync(AppUser user, string token);
-
         Task<Result> ChangePasswordAsync(AppUser user, string currentPassword, string newPassword);
+
+        Task<Result> ConfirmEmailAsync(AppUser user, string token);
 
         Task<Result> CreateRoleAsync(string roleName);
 
@@ -19,31 +19,31 @@ namespace Application.Common.Interfaces
 
         Task<Result> DeleteUserAsync(AppUser user);
 
-        Task<AppUser> FindByUserNameAsync(string userName);
-
-        Task<string> GetDisplayNameAsync(string userName);
-
-        Task<AppUser> FindByIdAsync(string id);
-
         Task<AppUser> FindByEmailAsync(string email);
 
         IQueryable<AppUser> FindById(string id);
 
-        Task<string[]> GetRoleAsync(AppUser user);
+        Task<AppUser> FindByIdAsync(string id);
 
-        IQueryable<AppUser> GetUsers();
+        Task<AppUser> FindByUserNameAsync(string userName);
 
         Task<string> GenerateEmailConfirmationTokenAsync(AppUser user);
 
         Task<string> GenerateResetPasswordTokenAsync(AppUser user);
 
-        Task<Result> ResetPasswordAsync(AppUser user, string token, string password);
+        Task<string> GetDisplayNameAsync(string userName);
+
+        Task<string[]> GetRoleAsync(AppUser user);
+
+        IQueryable<AppUser> GetUsers();
 
         Task<bool> IsThereAnyRoleAsync();
 
         Task<bool> IsThereAnyUserAsync();
 
         Task<bool> IsUserInRoleAsync(AppUser user, string role);
+
+        Task<Result> ResetPasswordAsync(AppUser user, string token, string password);
 
         Task<Result> UpdateUserAsync(AppUser user);
 

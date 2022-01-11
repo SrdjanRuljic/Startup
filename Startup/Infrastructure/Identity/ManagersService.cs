@@ -14,8 +14,8 @@ namespace Infrastructure.Identity
     public class ManagersService : IManagersService
     {
         private readonly RoleManager<IdentityRole> _roleManager;
-        private readonly UserManager<AppUser> _userManager;
         private readonly SignInManager<AppUser> _signInManager;
+        private readonly UserManager<AppUser> _userManager;
 
         public ManagersService(RoleManager<IdentityRole> roleManager,
                                UserManager<AppUser> userManager,
@@ -94,17 +94,17 @@ namespace Infrastructure.Identity
             return result.ToApplicationResult();
         }
 
-        public async Task<AppUser> FindByUserNameAsync(string userName) =>
-            await _userManager.FindByNameAsync(userName);
-
-        public async Task<AppUser> FindByIdAsync(string id) =>
-            await _userManager.FindByIdAsync(id);
-
         public async Task<AppUser> FindByEmailAsync(string email) =>
             await _userManager.FindByEmailAsync(email);
 
         public IQueryable<AppUser> FindById(string id) =>
             _userManager.Users.Where(x => x.Id.Equals(id));
+
+        public async Task<AppUser> FindByIdAsync(string id) =>
+            await _userManager.FindByIdAsync(id);
+
+        public async Task<AppUser> FindByUserNameAsync(string userName) =>
+                                    await _userManager.FindByNameAsync(userName);
 
         public async Task<string> GenerateEmailConfirmationTokenAsync(AppUser user) =>
             await _userManager.GenerateEmailConfirmationTokenAsync(user);
@@ -128,13 +128,6 @@ namespace Infrastructure.Identity
         public IQueryable<AppUser> GetUsers() =>
             _userManager.Users;
 
-        public async Task<Result> ResetPasswordAsync(AppUser user, string token, string password)
-        {
-            IdentityResult result = await _userManager.ResetPasswordAsync(user, token, password);
-
-            return result.ToApplicationResult();
-        }
-
         public async Task<bool> IsThereAnyRoleAsync() =>
             await _roleManager.Roles.AnyAsync();
 
@@ -143,6 +136,13 @@ namespace Infrastructure.Identity
 
         public async Task<bool> IsUserInRoleAsync(AppUser user, string role) =>
             await _userManager.IsInRoleAsync(user, role);
+
+        public async Task<Result> ResetPasswordAsync(AppUser user, string token, string password)
+        {
+            IdentityResult result = await _userManager.ResetPasswordAsync(user, token, password);
+
+            return result.ToApplicationResult();
+        }
 
         public async Task<Result> UpdateUserAsync(AppUser user)
         {
