@@ -2,7 +2,6 @@
 using Application.Exceptions;
 using AutoMapper;
 using Domain.Entities.Identity;
-using Domain.Exceptions;
 using MediatR;
 using System.Net;
 using System.Threading;

@@ -1,7 +1,7 @@
 ﻿using Application.Common.Interfaces;
 using Application.Common.Models;
+using Application.Exceptions;
 using Domain.Entities.Identity;
-using Domain.Exceptions;
 using MediatR;
 using System.Net;
 using System.Threading;

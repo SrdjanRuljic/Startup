@@ -1,5 +1,5 @@
 ﻿using Application.Common.Excentions;
-using Domain.Exceptions;
+using Application.Exceptions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using System;
