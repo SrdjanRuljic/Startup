@@ -14,9 +14,9 @@ namespace WebAPI.Services
         {
             get
             {
-                var clames = _httpContextAccessor.HttpContext?.User?.Identity as ClaimsIdentity;
+                ClaimsIdentity clames = _httpContextAccessor.HttpContext?.User?.Identity as ClaimsIdentity;
 
-                var userName = clames.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+                string userName = clames.FindFirst(ClaimTypes.NameIdentifier)?.Value;
 
                 return userName;
             }
