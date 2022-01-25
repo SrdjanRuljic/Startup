@@ -49,9 +49,10 @@ export class MenuComponent implements OnInit, OnDestroy {
       'Are you sure you want to log out?'
     );
     if (result) {
-      this._authService.logout();
-      this._usersService.displayName = '';
-      this.goToHome();
+      this._authService.logout().subscribe((response) => {
+        this._usersService.displayName = '';
+        this.goToHome();
+      });
     }
   }
 

@@ -1,11 +1,13 @@
 ﻿using Application.Auth.ConfirmEmail;
 using Application.Auth.ForgotPassword;
 using Application.Auth.GetUserRoles;
+using Application.Auth.Logout;
 using Application.Auth.Queries.Login;
 using Application.Auth.Register;
 using Application.Auth.ResetPassword;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace WebAPI.Controllers
@@ -29,8 +31,16 @@ namespace WebAPI.Controllers
 
         [HttpPost]
         [Route("confirm-email")]
-        [AllowAnonymous]
         public async Task<IActionResult> ConfirmEmail(ConfirmEmailCommand command)
+        {
+            await Mediator.Send(command);
+
+            return Ok();
+        }
+
+        [HttpPost]
+        [Route("forgot-password")]
+        public async Task<IActionResult> ForgotPassword(ForgotPasswordCommand command)
         {
             await Mediator.Send(command);
 
@@ -48,8 +58,16 @@ namespace WebAPI.Controllers
         }
 
         [HttpPost]
+        [Route("logout")]
+        public async Task<IActionResult> Logout()
+        {
+            await Mediator.Send(new LogoutQuery());
+
+            return Ok();
+        }
+
+        [HttpPost]
         [Route("register")]
-        [AllowAnonymous]
         public async Task<IActionResult> Register(RegisterCommand command)
         {
             await Mediator.Send(command);
@@ -58,18 +76,7 @@ namespace WebAPI.Controllers
         }
 
         [HttpPost]
-        [Route("forgot-password")]
-        [AllowAnonymous]
-        public async Task<IActionResult> ForgotPassword(ForgotPasswordCommand command)
-        {
-            await Mediator.Send(command);
-
-            return Ok();
-        }
-
-        [HttpPost]
         [Route("reset-password")]
-        [AllowAnonymous]
         public async Task<IActionResult> ResetPassword(ResetPasswordCommand command)
         {
             await Mediator.Send(command);
@@ -78,6 +85,5 @@ namespace WebAPI.Controllers
         }
 
         #endregion [POST]
-
     }
 }

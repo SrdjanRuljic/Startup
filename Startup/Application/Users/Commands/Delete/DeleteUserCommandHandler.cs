@@ -2,7 +2,6 @@
 using Application.Exceptions;
 using Domain.Entities.Identity;
 using MediatR;
-using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -22,7 +21,7 @@ namespace Application.Users.Commands.Delete
             AppUser user = await _managersService.FindByIdAsync(request.Id);
 
             if (user == null)
-                throw new HttpStatusCodeException(HttpStatusCode.NotFound, ErrorMessages.DataNotFound);
+                throw new NotFoundException(string.Format(Resources.Translation.EntityWasNotFound, nameof(AppUser), request.Id));
 
             await _managersService.DeleteUserAsync(user);
 

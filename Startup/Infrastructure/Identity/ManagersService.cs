@@ -2,10 +2,12 @@
 using Application.Common.Models;
 using Domain.Entities.Identity;
 using Infrastructure.Identity.Extensions;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using System.Transactions;
 
@@ -13,17 +15,23 @@ namespace Infrastructure.Identity
 {
     public class ManagersService : IManagersService
     {
+        private readonly IAuthorizationService _authorizationService;
         private readonly RoleManager<IdentityRole> _roleManager;
         private readonly SignInManager<AppUser> _signInManager;
+        private readonly IUserClaimsPrincipalFactory<AppUser> _userClaimsPrincipalFactory;
         private readonly UserManager<AppUser> _userManager;
 
         public ManagersService(RoleManager<IdentityRole> roleManager,
                                UserManager<AppUser> userManager,
-                               SignInManager<AppUser> signInManager)
+                               SignInManager<AppUser> signInManager,
+                               IUserClaimsPrincipalFactory<AppUser> userClaimsPrincipalFactory,
+                               IAuthorizationService authorizationService)
         {
             _roleManager = roleManager;
             _userManager = userManager;
             _signInManager = signInManager;
+            _authorizationService = authorizationService;
+            _userClaimsPrincipalFactory = userClaimsPrincipalFactory;
         }
 
         public async Task<AppUser> AuthenticateAsync(string userName, string password)
@@ -36,6 +44,20 @@ namespace Infrastructure.Identity
             SignInResult result = await _signInManager.PasswordSignInAsync(user.UserName, password, false, false);
 
             return result.Succeeded ? user : null;
+        }
+
+        public async Task<bool> AuthorizeAsync(string userName, string policyName)
+        {
+            AppUser user = _userManager.Users.SingleOrDefault(u => u.UserName == userName);
+
+            if (user == null)
+                return false;
+
+            ClaimsPrincipal principal = await _userClaimsPrincipalFactory.CreateAsync(user);
+
+            AuthorizationResult result = await _authorizationService.AuthorizeAsync(principal, policyName);
+
+            return result.Succeeded;
         }
 
         public async Task<Result> ChangePasswordAsync(AppUser user, string currentPassword, string newPassword)
@@ -128,8 +150,15 @@ namespace Infrastructure.Identity
         public IQueryable<AppUser> GetUsers() =>
             _userManager.Users;
 
+        public async Task<bool> IsInRoleAsync(string userName, string role)
+        {
+            AppUser user = _userManager.Users.SingleOrDefault(u => u.UserName == userName);
+
+            return user != null && await _userManager.IsInRoleAsync(user, role);
+        }
+
         public async Task<bool> IsThereAnyRoleAsync() =>
-            await _roleManager.Roles.AnyAsync();
+                    await _roleManager.Roles.AnyAsync();
 
         public async Task<bool> IsThereAnyUserAsync() =>
             await _userManager.Users.AnyAsync();
@@ -143,6 +172,9 @@ namespace Infrastructure.Identity
 
             return result.ToApplicationResult();
         }
+
+        public async Task SignOutAsync() =>
+            await _signInManager.SignOutAsync();
 
         public async Task<Result> UpdateUserAsync(AppUser user)
         {

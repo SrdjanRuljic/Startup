@@ -6,11 +6,25 @@ namespace WebAPI.Services
 {
     public class CurrentUserService : ICurrentUserService
     {
-        public string UserName { get; }
+        private readonly IHttpContextAccessor _httpContextAccessor;
+
+        //public string UserName => _httpContextAccessor.HttpContext?.User?.FindFirstValue(ClaimTypes.Name);
+
+        public string UserName
+        {
+            get
+            {
+                var clames = _httpContextAccessor.HttpContext?.User?.Identity as ClaimsIdentity;
+
+                var userName = clames.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+                return userName;
+            }
+        }
 
         public CurrentUserService(IHttpContextAccessor httpContextAccessor)
         {
-            UserName = httpContextAccessor.HttpContext?.User?.FindFirstValue(ClaimTypes.NameIdentifier);
+            _httpContextAccessor = httpContextAccessor;
         }
     }
 }

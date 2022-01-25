@@ -1,19 +1,15 @@
-﻿using Application.Common.Excentions;
-using Application.Common.Interfaces;
-using Application.Exceptions;
+﻿using Application.Common.Interfaces;
 using Domain.Entities.Identity;
 using Infrastructure.Auth;
 using Infrastructure.EmailSender;
 using Infrastructure.Identity;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using System;
-using System.Net;
 using System.Text;
 
 namespace Infrastructure
@@ -44,39 +40,26 @@ namespace Infrastructure
             services.Configure<IdentityOptions>(options =>
                 options.SignIn.RequireConfirmedEmail = true);
 
-            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-                    .AddJwtBearer(options =>
-                    {
-                        options.TokenValidationParameters = new TokenValidationParameters
-                        {
-                            ValidateIssuer = false,
-                            ValidIssuer = configuration["Jwt:Issuer"],
+            services.AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
+            .AddJwtBearer(options =>
+            {
+                options.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuer = false,
+                    ValidIssuer = configuration["Jwt:Issuer"],
 
-                            ValidateAudience = false,
-                            ValidAudience = configuration["Jwt:Audience"],
+                    ValidateAudience = false,
+                    ValidAudience = configuration["Jwt:Audience"],
 
-                            ValidateLifetime = true,
+                    ValidateLifetime = true,
 
-                            ValidateIssuerSigningKey = true,
-                            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["Jwt:Key"]))
-                        };
-
-                        options.Events = new JwtBearerEvents()
-                        {
-                            OnChallenge = async context =>
-                            {
-                                string message = ErrorMessages.Unauthorised;
-
-                                context.HandleResponse();
-
-                                context.Response.ContentType = "application/json";
-                                context.Response.StatusCode = (int)HttpStatusCode.Unauthorized;
-                                context.Response.AddUnauthorisedExcention(message);
-
-                                await context.Response.WriteAsync(message);
-                            }
-                        };
-                    });
+                    ValidateIssuerSigningKey = true,
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["Jwt:Key"]))
+                };
+            });
 
             services.AddAuthorization(options =>
             {

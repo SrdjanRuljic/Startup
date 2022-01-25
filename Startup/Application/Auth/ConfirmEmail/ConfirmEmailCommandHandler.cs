@@ -3,7 +3,6 @@ using Application.Common.Models;
 using Application.Exceptions;
 using Domain.Entities.Identity;
 using MediatR;
-using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -23,12 +22,12 @@ namespace Application.Auth.ConfirmEmail
             AppUser user = await _managersService.FindByUserNameAsync(request.UserName);
 
             if (user == null)
-                throw new HttpStatusCodeException(HttpStatusCode.NotFound, ErrorMessages.DataNotFound);
+                throw new NotFoundException(string.Format(Resources.Translation.EntityWasNotFound, nameof(AppUser), request.UserName));
 
             Result result = await _managersService.ConfirmEmailAsync(user, request.Token);
 
             if (!result.Succeeded)
-                throw new HttpStatusCodeException(HttpStatusCode.BadRequest, string.Concat(result.Errors));
+                throw new BadRequestException(string.Concat(result.Errors));
 
             return Unit.Value;
         }

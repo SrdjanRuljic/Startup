@@ -5,7 +5,6 @@ using Application.Exceptions;
 using Domain.Entities.Identity;
 using MediatR;
 using System;
-using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -13,17 +12,14 @@ namespace Application.Auth.Register
 {
     public class RegisterCommandHandler : IRequestHandler<RegisterCommand>
     {
-        private readonly IManagersService _managersService;
-        private readonly IJwtFactory _jwtFactory;
         private readonly IEmailSenderService _emailSenderService;
+        private readonly IManagersService _managersService;
 
-        public RegisterCommandHandler(IManagersService managersService,
-                                      IJwtFactory jwtFactory,
-                                      IEmailSenderService emailSenderService)
+        public RegisterCommandHandler(IEmailSenderService emailSenderService,
+                                      IManagersService managersService)
         {
-            _managersService = managersService;
-            _jwtFactory = jwtFactory;
             _emailSenderService = emailSenderService;
+            _managersService = managersService;
         }
 
         public async Task<Unit> Handle(RegisterCommand request, CancellationToken cancellationToken)
@@ -31,7 +27,7 @@ namespace Application.Auth.Register
             string errorMessage = null;
 
             if (!request.IsValid(out errorMessage))
-                throw new HttpStatusCodeException(HttpStatusCode.BadRequest, errorMessage);
+                throw new BadRequestException(errorMessage);
 
             request.Username = request.Username.ToLower();
 
@@ -52,7 +48,7 @@ namespace Application.Auth.Register
             Result result = await _managersService.CreateUserAsync(user, request.Password, new string[] { Domain.Enums.Roles.Basic.ToString() });
 
             if (!result.Succeeded)
-                throw new HttpStatusCodeException(HttpStatusCode.BadRequest, string.Concat(result.Errors));
+                throw new BadRequestException(string.Concat(result.Errors));
 
             string token = await _managersService.GenerateEmailConfirmationTokenAsync(user);
             string link = LinkMaker.CreateConfirmLink(user.UserName, request.ClientUri, token);

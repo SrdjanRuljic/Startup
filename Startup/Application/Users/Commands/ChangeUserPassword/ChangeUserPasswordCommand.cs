@@ -1,7 +1,9 @@
-﻿using MediatR;
+﻿using Application.Common.Security;
+using MediatR;
 
 namespace Application.Users.Commands.ChangeUserPassword
 {
+    [Authorize(Policy = "RequireAdminRole")]
     public class ChangeUserPasswordCommand : IRequest
     {
         public string Id { get; set; }

@@ -1,7 +1,9 @@
-﻿using MediatR;
+﻿using Application.Common.Security;
+using MediatR;
 
 namespace Application.Auth.ResetPassword
 {
+    [Authorize(Policy = "RequireAuthorization")]
     public class ResetPasswordCommand : IRequest
     {
         public string Password { get; set; }

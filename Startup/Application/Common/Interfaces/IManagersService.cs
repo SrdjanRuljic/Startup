@@ -9,6 +9,8 @@ namespace Application.Common.Interfaces
     {
         Task<AppUser> AuthenticateAsync(string userName, string password);
 
+        Task<bool> AuthorizeAsync(string userName, string policyName);
+
         Task<Result> ChangePasswordAsync(AppUser user, string currentPassword, string newPassword);
 
         Task<Result> ConfirmEmailAsync(AppUser user, string token);
@@ -37,6 +39,8 @@ namespace Application.Common.Interfaces
 
         IQueryable<AppUser> GetUsers();
 
+        Task<bool> IsInRoleAsync(string userName, string role);
+
         Task<bool> IsThereAnyRoleAsync();
 
         Task<bool> IsThereAnyUserAsync();
@@ -44,6 +48,8 @@ namespace Application.Common.Interfaces
         Task<bool> IsUserInRoleAsync(AppUser user, string role);
 
         Task<Result> ResetPasswordAsync(AppUser user, string token, string password);
+
+        Task SignOutAsync();
 
         Task<Result> UpdateUserAsync(AppUser user);
 

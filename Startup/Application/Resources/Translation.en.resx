@@ -150,6 +150,12 @@
   <data name="EmailRequired" xml:space="preserve">
     <value>Email is required.</value>
   </data>
+  <data name="EntityWasNotFound" xml:space="preserve">
+    <value>Entity "{0}" by ({1}) was not found.</value>
+  </data>
+  <data name="Forbidden" xml:space="preserve">
+    <value>Forbidden</value>
+  </data>
   <data name="IncorrectUsernameOrPassword" xml:space="preserve">
     <value>Incorrect username or password.</value>
   </data>

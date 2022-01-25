@@ -1,7 +1,9 @@
-﻿using MediatR;
+﻿using Application.Common.Security;
+using MediatR;
 
 namespace Application.Users.Commands.Update.Self
 {
+    [Authorize(Policy = "RequireAuthorization")]
     public class UpdateSelfCommand : IRequest
     {
         public string Id { get; set; }

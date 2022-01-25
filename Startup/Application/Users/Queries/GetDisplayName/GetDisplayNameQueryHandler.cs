@@ -1,5 +1,6 @@
 ﻿using Application.Common.Interfaces;
 using Application.Exceptions;
+using Domain.Entities.Identity;
 using MediatR;
 using System.Net;
 using System.Threading;
@@ -9,8 +10,8 @@ namespace Application.Users.Queries.GetDisplayName
 {
     public class GetDisplayNameQueryHandler : IRequestHandler<GetDisplayNameQuery, string>
     {
-        private readonly IManagersService _managersService;
         private readonly ICurrentUserService _currentUserService;
+        private readonly IManagersService _managersService;
 
         public GetDisplayNameQueryHandler(IManagersService managersService,
                                           ICurrentUserService currentUserService)
@@ -24,7 +25,7 @@ namespace Application.Users.Queries.GetDisplayName
             string displayName = await _managersService.GetDisplayNameAsync(_currentUserService.UserName);
 
             if (displayName == null)
-                throw new HttpStatusCodeException(HttpStatusCode.NotFound, ErrorMessages.DataNotFound);
+                throw new NotFoundException(string.Format(Resources.Translation.EntityWasNotFound, nameof(AppUser), _currentUserService.UserName));
 
             return displayName;
         }

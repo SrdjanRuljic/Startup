@@ -37,7 +37,7 @@ export class AuthService {
   login(model: ILogin): Observable<any> {
     return this._http.post(this._authUrl + '/' + 'login', model).pipe(
       map((res) => {
-        this.handleSuccess(res);
+        this.handleLoginSuccess(res);
       })
     );
   }
@@ -66,11 +66,12 @@ export class AuthService {
       .pipe(map((res) => res));
   }
 
-  logout(): void {
-    this.isAuthorized$.next(false);
-    localStorage.clear();
-
-    this._permissionsService.flushPermissions();
+  logout(): Observable<any> {
+    return this._http.post(this._authUrl + '/' + 'logout', null).pipe(
+      map((res) => {
+        this.handleLogoutSuccess(res);
+      })
+    );
   }
 
   getIsAuthorized$(): Observable<boolean> {
@@ -86,11 +87,18 @@ export class AuthService {
     localStorage.setItem(TOKEN_KEY, token);
   }
 
-  private handleSuccess(response: any) {
+  private handleLoginSuccess(response: any) {
     this.saveToken(response.auth_token);
     this.isAuthorized$.next(true);
 
     this.getAllUserRoles();
+  }
+
+  private handleLogoutSuccess(response: any) {
+    this.isAuthorized$.next(false);
+    localStorage.clear();
+
+    this._permissionsService.flushPermissions();
   }
 
   getIsAuthorized() {

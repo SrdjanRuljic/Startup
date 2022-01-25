@@ -3,7 +3,6 @@ using Application.Common.Models;
 using Application.Exceptions;
 using Domain.Entities.Identity;
 using MediatR;
-using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -23,17 +22,17 @@ namespace Application.Auth.ResetPassword
             string errorMessage = null;
 
             if (!request.IsValid(out errorMessage))
-                throw new HttpStatusCodeException(HttpStatusCode.BadRequest, errorMessage);
+                throw new BadRequestException(errorMessage);
 
             AppUser user = await _managersService.FindByEmailAsync(request.Email);
 
             if (user == null)
-                throw new HttpStatusCodeException(HttpStatusCode.BadRequest, ErrorMessages.DataNotFound);
+                throw new NotFoundException(string.Format(Resources.Translation.EntityWasNotFound, nameof(AppUser), request.Email));
 
             Result result = await _managersService.ResetPasswordAsync(user, request.Token, request.Password);
 
             if (!result.Succeeded)
-                throw new HttpStatusCodeException(HttpStatusCode.BadRequest, string.Concat(result.Errors));
+                throw new BadRequestException(string.Concat(result.Errors));
 
             return Unit.Value;
         }

@@ -3,7 +3,6 @@ using Application.Exceptions;
 using AutoMapper;
 using Domain.Entities.Identity;
 using MediatR;
-using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -11,8 +10,8 @@ namespace Application.Users.Queries.GetByUserName
 {
     public class GetByUserNameQueryHandler : IRequestHandler<GetByUserNameQuery, GetByUserNameViewModel>
     {
-        private readonly IManagersService _managersService;
         private readonly ICurrentUserService _currentUserService;
+        private readonly IManagersService _managersService;
         private readonly IMapper _mapper;
 
         public GetByUserNameQueryHandler(IManagersService managersService,
@@ -29,7 +28,7 @@ namespace Application.Users.Queries.GetByUserName
             AppUser user = await _managersService.FindByUserNameAsync(_currentUserService.UserName);
 
             if (user == null)
-                throw new HttpStatusCodeException(HttpStatusCode.NotFound, ErrorMessages.DataNotFound);
+                throw new NotFoundException(string.Format(Resources.Translation.EntityWasNotFound, nameof(AppUser), _currentUserService.UserName));
 
             GetByUserNameViewModel model = _mapper.Map<GetByUserNameViewModel>(user);
 

@@ -1,4 +1,5 @@
 ﻿using Application.Common.Interfaces;
+using Application.Exceptions;
 using Domain.Entities.Identity;
 using MediatR;
 using System.Threading;
@@ -24,8 +25,10 @@ namespace Application.Auth.GetUserRoles
 
             AppUser user = await _managersService.FindByUserNameAsync(_currentUserService.UserName);
 
-            if (user != null)
-                roles = await _managersService.GetRoleAsync(user);
+            if (user == null)
+                throw new NotFoundException(string.Format(Resources.Translation.EntityWasNotFound, nameof(AppUser), _currentUserService.UserName));
+
+            roles = await _managersService.GetRoleAsync(user);
 
             return roles;
         }

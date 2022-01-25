@@ -53,7 +53,6 @@ namespace WebAPI.Controllers
 
         #region [POST]
 
-        [Authorize(Policy = "RequireAdminRole")]
         [HttpPost]
         [Route("search")]
         public async Task<IActionResult> Search(SearchUsersQuery query)

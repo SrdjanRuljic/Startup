@@ -31,5 +31,12 @@ namespace Application.Common.Excentions
             respounse.Headers.Add("Access-Control-Expose-Headers", "Unauthorised-Exception");
             respounse.Headers.Add("Access-Control-Allow-Origin", "*");
         }
+
+        public static void AddForbiddenExcention(this HttpResponse respounse, string message)
+        {
+            respounse.Headers.Add("Forbidden-Exception", message);
+            respounse.Headers.Add("Access-Control-Expose-Headers", "Forbidden-Exception");
+            respounse.Headers.Add("Access-Control-Allow-Origin", "*");
+        }
     }
 }

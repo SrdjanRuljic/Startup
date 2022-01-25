@@ -5,7 +5,6 @@ using Application.Exceptions;
 using Domain.Entities.Identity;
 using MediatR;
 using System;
-using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -13,8 +12,8 @@ namespace Application.Users.Commands.Insert
 {
     public class InsertUserCommandHandler : IRequestHandler<InsertUserCommand>
     {
-        private readonly IManagersService _managersService;
         private readonly IEmailSenderService _emailSenderService;
+        private readonly IManagersService _managersService;
 
         public InsertUserCommandHandler(IManagersService managersService,
                                         IEmailSenderService emailSenderService)
@@ -28,7 +27,7 @@ namespace Application.Users.Commands.Insert
             string errorMessage = null;
 
             if (!request.IsValid(out errorMessage))
-                throw new HttpStatusCodeException(HttpStatusCode.BadRequest, errorMessage);
+                throw new BadRequestException(errorMessage);
 
             request.UserName = request.UserName.ToLower();
 
@@ -41,7 +40,7 @@ namespace Application.Users.Commands.Insert
             bool userExist = await _managersService.UserExistAsync(request.UserName, request.Email);
 
             if (userExist)
-                throw new HttpStatusCodeException(HttpStatusCode.BadRequest, ErrorMessages.UserExists);
+                throw new BadRequestException(ErrorMessages.UserExists);
 
             AppUser user = new AppUser
             {
@@ -57,7 +56,7 @@ namespace Application.Users.Commands.Insert
             Result result = await _managersService.CreateUserAsync(user, password, request.Roles);
 
             if (!result.Succeeded)
-                throw new HttpStatusCodeException(HttpStatusCode.BadRequest, string.Concat(result.Errors));
+                throw new BadRequestException(string.Concat(result.Errors));
 
             Message message = new Message(new string[] { user.Email }, "Password send", null, password);
 

@@ -8,8 +8,8 @@ namespace WebAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize(Policy = "RequireAuthorization")]
-    public class BaseController : ControllerBase
+    [Authorize]
+    public abstract class BaseController : ControllerBase
     {
         private IMediator _mediator;
 

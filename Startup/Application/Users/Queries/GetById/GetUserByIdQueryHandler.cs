@@ -3,7 +3,6 @@ using Application.Exceptions;
 using AutoMapper;
 using Domain.Entities.Identity;
 using MediatR;
-using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -26,7 +25,7 @@ namespace Application.Users.Queries.GetById
             AppUser user = await _managersService.FindByIdAsync(request.Id);
 
             if (user == null)
-                throw new HttpStatusCodeException(HttpStatusCode.NotFound, ErrorMessages.DataNotFound);
+                throw new NotFoundException(string.Format(Resources.Translation.EntityWasNotFound, nameof(AppUser), request.Id));
 
             GetUserByIdViewModel model = _mapper.Map<GetUserByIdViewModel>(user);
 

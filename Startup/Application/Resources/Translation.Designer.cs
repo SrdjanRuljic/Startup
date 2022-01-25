@@ -160,6 +160,24 @@ namespace Application.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Entity &quot;{0}&quot; by ({1}) was not found..
+        /// </summary>
+        public static string EntityWasNotFound {
+            get {
+                return ResourceManager.GetString("EntityWasNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Forbidden.
+        /// </summary>
+        public static string Forbidden {
+            get {
+                return ResourceManager.GetString("Forbidden", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Incorrect username or password..
         /// </summary>
         public static string IncorrectUsernameOrPassword {

@@ -1,7 +1,9 @@
-﻿using MediatR;
+﻿using Application.Common.Security;
+using MediatR;
 
 namespace Application.Users.Commands.Insert
 {
+    [Authorize(Policy = "RequireAdminRole")]
     public class InsertUserCommand : IRequest
     {
         public string Id { get; set; }

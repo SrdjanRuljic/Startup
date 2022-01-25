@@ -150,6 +150,12 @@
   <data name="EmailRequired" xml:space="preserve">
     <value>Mejl je neophodan.</value>
   </data>
+  <data name="EntityWasNotFound" xml:space="preserve">
+    <value>Entitet "{0}" po ({1}) nije pronađen.</value>
+  </data>
+  <data name="Forbidden" xml:space="preserve">
+    <value>Zabrana pristupa.</value>
+  </data>
   <data name="IncorrectUsernameOrPassword" xml:space="preserve">
     <value>Pogrešno korisničko ime ili lozinka.</value>
   </data>

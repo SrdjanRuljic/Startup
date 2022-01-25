@@ -4,7 +4,6 @@ using Application.Exceptions;
 using Domain.Entities.Identity;
 using MediatR;
 using System;
-using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -24,12 +23,12 @@ namespace Application.Users.Commands.Update.Update
             string errorMessage = null;
 
             if (!request.IsValid(out errorMessage))
-                throw new HttpStatusCodeException(HttpStatusCode.BadRequest, errorMessage);
+                throw new BadRequestException(errorMessage);
 
             AppUser user = await _managersService.FindByIdAsync(request.Id);
 
             if (user == null)
-                throw new HttpStatusCodeException(HttpStatusCode.NotFound, ErrorMessages.DataNotFound);
+                throw new NotFoundException(string.Format(Resources.Translation.EntityWasNotFound, nameof(AppUser), request.Id));
 
             if (String.IsNullOrEmpty(request.FirstName) || String.IsNullOrWhiteSpace(request.FirstName))
                 request.FirstName = null;
@@ -45,7 +44,7 @@ namespace Application.Users.Commands.Update.Update
             Result result = await _managersService.UpdateUserAsync(user, request.Roles);
 
             if (!result.Succeeded)
-                throw new HttpStatusCodeException(HttpStatusCode.BadRequest, string.Concat(result.Errors));
+                throw new BadRequestException(string.Concat(result.Errors));
 
             return Unit.Value;
         }
