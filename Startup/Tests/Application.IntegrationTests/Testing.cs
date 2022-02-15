@@ -49,6 +49,15 @@ namespace Application.IntegrationTests
             return await context.Set<TEntity>().CountAsync();
         }
 
+        public static async Task EnsureSeedAsync()
+        {
+            using IServiceScope scope = _scopeFactory.CreateScope();
+
+            IMediator mediator = scope.ServiceProvider.GetRequiredService<IMediator>();
+
+            await mediator.Send(new SeedDataCommand(), CancellationToken.None);
+        }
+
         public static async Task<TEntity> FindAsync<TEntity>(params object[] keyValues) where TEntity : class
         {
             using IServiceScope scope = _scopeFactory.CreateScope();
@@ -128,7 +137,7 @@ namespace Application.IntegrationTests
         }
 
         [OneTimeSetUp]
-        public async Task RunBeforeAnyTests()
+        public void RunBeforeAnyTests()
         {
             IConfigurationBuilder builder = new ConfigurationBuilder().SetBasePath(Directory.GetCurrentDirectory())
                                                                       .AddJsonFile("appsettings.json", true, true)
@@ -164,18 +173,16 @@ namespace Application.IntegrationTests
                 TablesToIgnore = new[] { "__EFMigrationsHistory" }
             };
 
-            await EnsureDatabase();
+            EnsureDatabase();
         }
 
-        private static async Task EnsureDatabase()
+        private static void EnsureDatabase()
         {
             using IServiceScope scope = _scopeFactory.CreateScope();
 
             ApplicationDbContext context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
-            context.Database.Migrate();
 
-            IMediator mediator = scope.ServiceProvider.GetRequiredService<IMediator>();
-            await mediator.Send(new SeedDataCommand(), CancellationToken.None);
+            context.Database.Migrate();
         }
     }
 }
