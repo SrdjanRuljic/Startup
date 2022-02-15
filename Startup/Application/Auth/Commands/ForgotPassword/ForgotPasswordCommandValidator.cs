@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Text.RegularExpressions;
 
-namespace Application.Auth.ForgotPassword
+namespace Application.Auth.Commands.ForgotPassword
 {
     public static class ForgotPasswordCommandValidator
     {

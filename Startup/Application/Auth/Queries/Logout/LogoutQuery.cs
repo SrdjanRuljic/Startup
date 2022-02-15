@@ -1,10 +1,10 @@
 ﻿using Application.Common.Security;
 using MediatR;
 
-namespace Application.Auth.GetUserRoles
+namespace Application.Auth.Queries.Logout
 {
     [Authorize(Policy = "RequireAuthorization")]
-    public class GetUserRolesQuery : IRequest<string[]>
+    public class LogoutQuery : IRequest
     {
     }
 }

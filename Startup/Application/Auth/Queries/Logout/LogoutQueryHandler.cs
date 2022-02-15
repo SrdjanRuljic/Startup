@@ -3,7 +3,7 @@ using MediatR;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Application.Auth.Logout
+namespace Application.Auth.Queries.Logout
 {
     public class LogoutQueryHandler : IRequestHandler<LogoutQuery>
     {

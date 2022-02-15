@@ -8,7 +8,7 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Application.Auth.Register
+namespace Application.Auth.Commands.Register
 {
     public class RegisterCommandHandler : IRequestHandler<RegisterCommand>
     {

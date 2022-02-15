@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Application.Auth.ConfirmEmail
+namespace Application.Auth.Commands.ConfirmEmail
 {
     public static class ConfirmEmailCommandValidator
     {

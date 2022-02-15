@@ -6,7 +6,7 @@ using MediatR;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Application.Auth.ConfirmEmail
+namespace Application.Auth.Commands.ConfirmEmail
 {
     public class ConfirmEmailCommandHandler : IRequestHandler<ConfirmEmailCommand>
     {

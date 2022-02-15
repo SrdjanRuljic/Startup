@@ -1,12 +1,11 @@
 ﻿using System;
-using System.Linq;
 using System.Text.RegularExpressions;
 
-namespace Application.Auth.Register
+namespace Application.Auth.Commands.ResetPassword
 {
-    public static class RegisterCommandValidator
+    public static class ResetPasswordCommandValidator
     {
-        public static bool IsValid(this RegisterCommand model, out string validationMessage)
+        public static bool IsValid(this ResetPasswordCommand model, out string validationMessage)
         {
             validationMessage = null;
             bool isValid = true;
@@ -14,18 +13,6 @@ namespace Application.Auth.Register
             if (model == null)
             {
                 validationMessage = Resources.Translation.ModelCanNotBeNull;
-                isValid = false;
-            }
-
-            if (String.IsNullOrWhiteSpace(model.Username))
-            {
-                validationMessage += Resources.Translation.UsernameRequired;
-                isValid = false;
-            }
-
-            if (!model.Username.All(x => Char.IsLetterOrDigit(x) || x == '-' || x == '.' || x == '_' || x == '@' || x == '+'))
-            {
-                validationMessage += string.Format(Resources.Translation.InvalidUserName, model.Username);
                 isValid = false;
             }
 
@@ -47,6 +34,12 @@ namespace Application.Auth.Register
                 isValid = false;
             }
 
+            if (String.Compare(model.Password, model.ConfirmedPassword) != 0)
+            {
+                validationMessage += Resources.Translation.PasswordMismatch;
+                isValid = false;
+            }
+
             if (String.IsNullOrWhiteSpace(model.Email))
             {
                 validationMessage += Resources.Translation.EmailRequired;
@@ -62,13 +55,6 @@ namespace Application.Auth.Register
             return isValid;
         }
 
-        private static bool IsValidPassword(this string password)
-        {
-            string pattern = @"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[#$^+=!*()@%&]).{6,}$";
-
-            return Regex.IsMatch(password, pattern);
-        }
-
         private static bool IsValidEmail(this string email)
         {
             string pattern = @"^(?!\.)(""([^""\r\\]|\\[""\r\\])*""|" +
@@ -77,6 +63,13 @@ namespace Application.Auth.Register
             Regex regex = new Regex(pattern, RegexOptions.IgnoreCase);
 
             return regex.IsMatch(email);
+        }
+
+        private static bool IsValidPassword(this string password)
+        {
+            string pattern = @"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[#$^+=!*()@%&]).{6,}$";
+
+            return Regex.IsMatch(password, pattern);
         }
     }
 }

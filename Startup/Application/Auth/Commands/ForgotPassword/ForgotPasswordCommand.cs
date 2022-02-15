@@ -1,10 +1,10 @@
 ﻿using MediatR;
 
-namespace Application.Auth.ForgotPassword
+namespace Application.Auth.Commands.ForgotPassword
 {
     public class ForgotPasswordCommand : IRequest
     {
-        public string Email { get; set; }
         public string ClientUri { get; set; }
+        public string Email { get; set; }
     }
 }

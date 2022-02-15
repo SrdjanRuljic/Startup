@@ -1,13 +1,12 @@
-﻿using Application.Auth.ConfirmEmail;
-using Application.Auth.ForgotPassword;
-using Application.Auth.GetUserRoles;
-using Application.Auth.Logout;
+﻿using Application.Auth.Commands.ConfirmEmail;
+using Application.Auth.Commands.ForgotPassword;
+using Application.Auth.Queries.GetUserRoles;
+using Application.Auth.Queries.Logout;
 using Application.Auth.Queries.Login;
-using Application.Auth.Register;
-using Application.Auth.ResetPassword;
+using Application.Auth.Commands.Register;
+using Application.Auth.Commands.ResetPassword;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace WebAPI.Controllers

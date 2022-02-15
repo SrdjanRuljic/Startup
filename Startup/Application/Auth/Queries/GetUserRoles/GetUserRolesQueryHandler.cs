@@ -5,12 +5,12 @@ using MediatR;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Application.Auth.GetUserRoles
+namespace Application.Auth.Queries.GetUserRoles
 {
     public class GetUserRolesQueryHandler : IRequestHandler<GetUserRolesQuery, string[]>
     {
-        private readonly IManagersService _managersService;
         private readonly ICurrentUserService _currentUserService;
+        private readonly IManagersService _managersService;
 
         public GetUserRolesQueryHandler(IManagersService managersService,
                                         ICurrentUserService currentUserService)
