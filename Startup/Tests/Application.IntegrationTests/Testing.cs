@@ -1,7 +1,6 @@
 ﻿using Application.Common.Interfaces;
 using Application.System.Commands.SeedData;
 using Domain.Entities.Identity;
-using Infrastructure.Auth;
 using Infrastructure.Identity;
 using Infrastructure.Identity.Extensions;
 using MediatR;
@@ -14,10 +13,8 @@ using Moq;
 using NUnit.Framework;
 using Respawn;
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using WebAPI;
