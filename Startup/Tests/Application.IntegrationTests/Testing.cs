@@ -1,5 +1,7 @@
 ﻿using Application.Common.Interfaces;
+using Application.System.Commands.SeedData;
 using Domain.Entities.Identity;
+using Infrastructure.Auth;
 using Infrastructure.Identity;
 using Infrastructure.Identity.Extensions;
 using MediatR;
@@ -16,6 +18,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using WebAPI;
 
@@ -128,7 +131,7 @@ namespace Application.IntegrationTests
         }
 
         [OneTimeSetUp]
-        public void RunBeforeAnyTests()
+        public async Task RunBeforeAnyTests()
         {
             IConfigurationBuilder builder = new ConfigurationBuilder().SetBasePath(Directory.GetCurrentDirectory())
                                                                       .AddJsonFile("appsettings.json", true, true)
@@ -155,6 +158,7 @@ namespace Application.IntegrationTests
 
             // Register testing version
             services.AddTransient(provider => Mock.Of<ICurrentUserService>(s => s.UserName == _currentUserUserName));
+            services.AddTransient(provider => Mock.Of<IJwtFactory>());
 
             _scopeFactory = services.BuildServiceProvider().GetRequiredService<IServiceScopeFactory>();
 
@@ -163,16 +167,18 @@ namespace Application.IntegrationTests
                 TablesToIgnore = new[] { "__EFMigrationsHistory" }
             };
 
-            EnsureDatabase();
+            await EnsureDatabase();
         }
 
-        private static void EnsureDatabase()
+        private static async Task EnsureDatabase()
         {
             using IServiceScope scope = _scopeFactory.CreateScope();
 
             ApplicationDbContext context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
-
             context.Database.Migrate();
+
+            IMediator mediator = scope.ServiceProvider.GetRequiredService<IMediator>();
+            await mediator.Send(new SeedDataCommand(), CancellationToken.None);
         }
     }
 }

@@ -17,11 +17,26 @@ namespace Application.IntegrationTests.Auth.Queries
         [Test]
         public void ShouldRequireMinimumFields()
         {
-            var query = new LoginQuery();
+            LoginQuery query = new LoginQuery();
 
             FluentActions.Invoking(() =>
                 SendAsync(query)).Should()
                                  .ThrowAsync<BadRequestException>();
+        }
+
+        [Test]
+        public async Task ShouldReturnToken()
+        {
+            LoginQuery query = new LoginQuery()
+            {
+                Username = "admin",
+                Password = "Administrator_123!"
+            };
+
+            object result = await SendAsync(query);
+
+            result.Should()
+                  .NotBeNull();
         }
     }
 }
