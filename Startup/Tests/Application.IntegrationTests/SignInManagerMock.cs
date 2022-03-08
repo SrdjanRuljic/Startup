@@ -6,7 +6,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using System.Threading.Tasks;
 
-namespace Application.IntegrationTests.Auth
+namespace Application.IntegrationTests
 {
     public class SignInManagerMock : SignInManager<AppUser>
     {

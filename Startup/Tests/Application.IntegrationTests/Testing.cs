@@ -1,5 +1,4 @@
 ﻿using Application.Common.Interfaces;
-using Application.IntegrationTests.Auth;
 using Application.System.Commands.SeedData;
 using Domain.Entities.Identity;
 using Infrastructure.Identity;
