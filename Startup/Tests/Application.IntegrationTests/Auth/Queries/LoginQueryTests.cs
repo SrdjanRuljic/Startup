@@ -11,92 +11,33 @@ namespace Application.IntegrationTests.Auth.Queries
     public class LoginQueryTests : TestBase
     {
         [Test]
-        public void ShouldRequireMinimumFields()
-        {
-            LoginQuery query = new LoginQuery();
-
-            FluentActions.Invoking(() =>
-                SendAsync(query)).Should()
-                                 .ThrowAsync<BadRequestException>();
-        }
-
-        #region [Test Password validation]
-
-        [Test]
-        public void ShouldRequirePasswordMinLenght()
+        public async Task ShouldRequireMinimumFields()
         {
             LoginQuery query = new LoginQuery()
             {
-                Username = "preo",
-                Password = "Pero_1!"
+                Username = "",
+                Password = ""
             };
 
-            FluentActions.Invoking(() =>
+            await FluentActions.Invoking(() =>
                 SendAsync(query)).Should()
                                  .ThrowAsync<BadRequestException>();
         }
-
-        [Test]
-        public void ShouldRequirePasswordToContainsLower()
-        {
-            LoginQuery query = new LoginQuery()
-            {
-                Username = "preo",
-                Password = "PERO_123!"
-            };
-
-            FluentActions.Invoking(() =>
-                SendAsync(query)).Should()
-                                 .ThrowAsync<BadRequestException>();
-        }
-
-        [Test]
-        public void ShouldRequirePasswordToContainsNumbers()
-        {
-            LoginQuery query = new LoginQuery()
-            {
-                Username = "preo",
-                Password = "Pero_!"
-            };
-
-            FluentActions.Invoking(() =>
-                SendAsync(query)).Should()
-                                 .ThrowAsync<BadRequestException>();
-        }
-
-        [Test]
-        public void ShouldRequirePasswordToContainsspecialCharacters()
-        {
-            LoginQuery query = new LoginQuery()
-            {
-                Username = "preo",
-                Password = "Pero123"
-            };
-
-            FluentActions.Invoking(() =>
-                SendAsync(query)).Should()
-                                 .ThrowAsync<BadRequestException>();
-        }
-
-        [Test]
-        public void ShouldRequirePasswordToContainsUpper()
-        {
-            LoginQuery query = new LoginQuery()
-            {
-                Username = "preo",
-                Password = "pero_123!"
-            };
-
-            FluentActions.Invoking(() =>
-                SendAsync(query)).Should()
-                                 .ThrowAsync<BadRequestException>();
-        }
-
-        #endregion [Test Password validation]
 
         [Test]
         public async Task ShouldReturnToken()
         {
+            await EnsureSeedAsync();
+
+            LoginQuery query = new LoginQuery()
+            {
+                Username = "admin",
+                Password = "Administrator_123!"
+            };
+
+            object result = await SendAsync(query);
+
+            result.Should().NotBeNull();
         }
     }
 }

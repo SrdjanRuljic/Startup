@@ -1,4 +1,5 @@
 ﻿using Application.Common.Interfaces;
+using Application.IntegrationTests.Auth;
 using Application.System.Commands.SeedData;
 using Domain.Entities.Identity;
 using Infrastructure.Identity;
@@ -165,6 +166,7 @@ namespace Application.IntegrationTests
             // Register testing version
             services.AddTransient(provider => Mock.Of<ICurrentUserService>(s => s.UserName == _currentUserUserName));
             services.AddTransient(provider => Mock.Of<IJwtFactory>());
+            services.AddTransient<SignInManager<AppUser>, SignInManagerMock>();
 
             _scopeFactory = services.BuildServiceProvider().GetRequiredService<IServiceScopeFactory>();
 
