@@ -33,101 +33,25 @@ namespace Application.IntegrationTests.Auth.Commands
         }
 
         [Test]
-        public void ShouldRequireMinimumFields()
-        {
-            RegisterCommand command = new RegisterCommand();
-
-            FluentActions.Invoking(() =>
-                SendAsync(command)).Should()
-                                   .ThrowAsync<BadRequestException>();
-        }
-
-        #region [Test Password validation]
-
-        [Test]
-        public void ShouldRequirePasswordMinLenght()
+        public async Task ShouldRequireMinimumFields()
         {
             RegisterCommand command = new RegisterCommand()
             {
-                ClientUri = "http://localhost:4200//confirm-email",
-                Email = "perog@mail.com",
-                Username = "preo",
-                Password = "Pero_1!"
+                ClientUri = "",
+                Email = "",
+                Username = "",
+                Password = ""
             };
 
-            FluentActions.Invoking(() =>
+            await FluentActions.Invoking(() =>
                 SendAsync(command)).Should()
                                    .ThrowAsync<BadRequestException>();
         }
 
-        [Test]
-        public void ShouldRequirePasswordToContainsLower()
-        {
-            RegisterCommand command = new RegisterCommand()
-            {
-                ClientUri = "http://localhost:4200//confirm-email",
-                Email = "perog@mail.com",
-                Username = "preo",
-                Password = "PERO_123!"
-            };
-
-            FluentActions.Invoking(() =>
-                SendAsync(command)).Should()
-                                   .ThrowAsync<BadRequestException>();
-        }
+        #region [Test Email validation]
 
         [Test]
-        public void ShouldRequirePasswordToContainsNumbers()
-        {
-            RegisterCommand command = new RegisterCommand()
-            {
-                ClientUri = "http://localhost:4200//confirm-email",
-                Email = "perog@mail.com",
-                Username = "preo",
-                Password = "Pero_!"
-            };
-
-            FluentActions.Invoking(() =>
-                SendAsync(command)).Should()
-                                   .ThrowAsync<BadRequestException>();
-        }
-
-        [Test]
-        public void ShouldRequirePasswordToContainsspecialCharacters()
-        {
-            RegisterCommand command = new RegisterCommand()
-            {
-                ClientUri = "http://localhost:4200//confirm-email",
-                Email = "perog@mail.com",
-                Username = "preo",
-                Password = "Pero123"
-            };
-
-            FluentActions.Invoking(() =>
-                SendAsync(command)).Should()
-                                   .ThrowAsync<BadRequestException>();
-        }
-
-        [Test]
-        public void ShouldRequirePasswordToContainsUpper()
-        {
-            RegisterCommand command = new RegisterCommand()
-            {
-                ClientUri = "http://localhost:4200//confirm-email",
-                Email = "perog@mail.com",
-                Username = "preo",
-                Password = "pero_123!"
-            };
-
-            FluentActions.Invoking(() =>
-                SendAsync(command)).Should()
-                                   .ThrowAsync<BadRequestException>();
-        }
-
-        #endregion [Test Password validation]
-
-        [Test]
-        public void ShouldRequireSpecificEmailFormat()
+        public async Task ShouldRequireSpecificEmailFormat()
         {
             RegisterCommand command = new RegisterCommand()
             {
@@ -137,9 +61,155 @@ namespace Application.IntegrationTests.Auth.Commands
                 Password = "Pero_123!"
             };
 
-            FluentActions.Invoking(() =>
+            await FluentActions.Invoking(() =>
                 SendAsync(command)).Should()
                                    .ThrowAsync<BadRequestException>();
         }
+
+        [Test]
+        public async Task ShouldRequireUniqueEmail()
+        {
+            await EnsureSeedAsync();
+
+            RegisterCommand command = new RegisterCommand()
+            {
+                ClientUri = "http://localhost:4200//confirm-email",
+                Email = "admin@gmail.com",
+                Username = "preo",
+                Password = "Pero_123!"
+            };
+
+            await FluentActions.Invoking(() =>
+                SendAsync(command)).Should()
+                                   .ThrowAsync<BadRequestException>();
+        }
+
+        #endregion [Test Email validation]
+
+        #region [Test Password validation]
+
+        [Test]
+        public async Task ShouldRequirePasswordMinLenght()
+        {
+            await EnsureSeedAsync();
+
+            RegisterCommand command = new RegisterCommand()
+            {
+                ClientUri = "http://localhost:4200//confirm-email",
+                Email = "perog@mail.com",
+                Username = "preo",
+                Password = "Pe_1!"
+            };
+
+            await FluentActions.Invoking(() =>
+                SendAsync(command)).Should()
+                                   .ThrowAsync<BadRequestException>();
+        }
+
+        [Test]
+        public async Task ShouldRequirePasswordToContainsLower()
+        {
+            RegisterCommand command = new RegisterCommand()
+            {
+                ClientUri = "http://localhost:4200//confirm-email",
+                Email = "perog@mail.com",
+                Username = "preo",
+                Password = "PERO_123!"
+            };
+
+            await FluentActions.Invoking(() =>
+                SendAsync(command)).Should()
+                                   .ThrowAsync<BadRequestException>();
+        }
+
+        [Test]
+        public async Task ShouldRequirePasswordToContainsNumbers()
+        {
+            RegisterCommand command = new RegisterCommand()
+            {
+                ClientUri = "http://localhost:4200//confirm-email",
+                Email = "perog@mail.com",
+                Username = "preo",
+                Password = "Pero_!"
+            };
+
+            await FluentActions.Invoking(() =>
+                SendAsync(command)).Should()
+                                   .ThrowAsync<BadRequestException>();
+        }
+
+        [Test]
+        public async Task ShouldRequirePasswordToContainsSpecialCharacters()
+        {
+            RegisterCommand command = new RegisterCommand()
+            {
+                ClientUri = "http://localhost:4200//confirm-email",
+                Email = "perog@mail.com",
+                Username = "preo",
+                Password = "Pero123"
+            };
+
+            await FluentActions.Invoking(() =>
+                SendAsync(command)).Should()
+                                   .ThrowAsync<BadRequestException>();
+        }
+
+        [Test]
+        public async Task ShouldRequirePasswordToContainsUpper()
+        {
+            RegisterCommand command = new RegisterCommand()
+            {
+                ClientUri = "http://localhost:4200//confirm-email",
+                Email = "perog@mail.com",
+                Username = "preo",
+                Password = "pero_123!"
+            };
+
+            await FluentActions.Invoking(() =>
+                SendAsync(command)).Should()
+                                   .ThrowAsync<BadRequestException>();
+        }
+
+        #endregion [Test Password validation]
+
+        #region [Test Username validation]
+
+        [Test]
+        public async Task ShouldRequireUniqueUsername()
+        {
+            await EnsureSeedAsync();
+
+            RegisterCommand command = new RegisterCommand()
+            {
+                ClientUri = "http://localhost:4200//confirm-email",
+                Email = "perog@mail.com",
+                Username = "admin",
+                Password = "Pero_123!"
+            };
+
+            await FluentActions.Invoking(() =>
+                SendAsync(command)).Should()
+                                   .ThrowAsync<BadRequestException>();
+        }
+
+        [Test]
+        public async Task ShouldRequireUsernameNotToContainsSpecialCharacters()
+        {
+            await EnsureSeedAsync();
+
+            RegisterCommand command = new RegisterCommand()
+            {
+                ClientUri = "http://localhost:4200//confirm-email",
+                Email = "perog@mail.com",
+                Username = "preo&",
+                Password = "Pero_123!"
+            };
+
+            await FluentActions.Invoking(() =>
+                SendAsync(command)).Should()
+                                   .ThrowAsync<BadRequestException>();
+        }
+
+        #endregion [Test Username validation]
     }
 }
