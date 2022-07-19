@@ -1,5 +1,5 @@
 using Application.System.Commands.SeedData;
-using Infrastructure.Identity;
+using Infrastructure;
 using MediatR;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -14,6 +14,13 @@ namespace WebAPI
 {
     public class Program
     {
+        public static IHostBuilder CreateHostBuilder(string[] args) =>
+            Host.CreateDefaultBuilder(args)
+                .ConfigureWebHostDefaults(webBuilder =>
+                {
+                    webBuilder.UseStartup<Startup>();
+                });
+
         public static async Task Main(string[] args)
         {
             IHost host = CreateHostBuilder(args).Build();
@@ -39,12 +46,5 @@ namespace WebAPI
 
             host.Run();
         }
-
-        public static IHostBuilder CreateHostBuilder(string[] args) =>
-            Host.CreateDefaultBuilder(args)
-                .ConfigureWebHostDefaults(webBuilder =>
-                {
-                    webBuilder.UseStartup<Startup>();
-                });
     }
 }

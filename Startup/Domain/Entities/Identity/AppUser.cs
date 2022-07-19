@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using System.Collections.Generic;
 
 namespace Domain.Entities.Identity
 {
@@ -6,5 +7,8 @@ namespace Domain.Entities.Identity
     {
         public string FirstName { get; set; }
         public string LastName { get; set; }
+
+        public ICollection<Message> MessagesRecived { get; set; }
+        public ICollection<Message> MessagesSent { get; set; }
     }
 }

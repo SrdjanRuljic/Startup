@@ -1,7 +1,7 @@
 ﻿using Application.Common.Interfaces;
 using Application.System.Commands.SeedData;
 using Domain.Entities.Identity;
-using Infrastructure.Identity;
+using Infrastructure;
 using Infrastructure.Identity.Extensions;
 using MediatR;
 using Microsoft.AspNetCore.Hosting;
@@ -155,8 +155,7 @@ namespace Application.IntegrationTests
 
             startup.ConfigureServices(services);
 
-            // Replace service registration for ICurrentUserService
-            // Remove existing registration
+            // Replace service registration for ICurrentUserService Remove existing registration
             ServiceDescriptor currentUserServiceDescriptor = services.FirstOrDefault(d => d.ServiceType == typeof(ICurrentUserService));
 
             if (currentUserServiceDescriptor != null)
