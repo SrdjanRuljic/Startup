@@ -177,6 +177,9 @@
   <data name="LoginAlreadyAssociated" xml:space="preserve">
     <value>Korisnik sa ovom prijavom već postoji.</value>
   </data>
+  <data name="MessageYourselfValidation" xml:space="preserve">
+    <value>Ne možete sami sebi poslati poruku. </value>
+  </data>
   <data name="ModelCanNotBeNull" xml:space="preserve">
     <value>Model ne može biti nepostojeći.</value>
   </data>
@@ -209,6 +212,9 @@
   </data>
   <data name="PasswordTooShort" xml:space="preserve">
     <value>Lozinke moraju imati najmanje {0} znakova.</value>
+  </data>
+  <data name="RecipientUserNameRequired" xml:space="preserve">
+    <value>Korisničko ime primaoca poruke je neophodno. </value>
   </data>
   <data name="TokenRequired" xml:space="preserve">
     <value>Token je neophodan.</value>

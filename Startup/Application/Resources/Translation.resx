@@ -177,6 +177,9 @@
   <data name="LoginAlreadyAssociated" xml:space="preserve">
     <value>A user with this login already exists.</value>
   </data>
+  <data name="MessageYourselfValidation" xml:space="preserve">
+    <value>You cannot send meesage to yourself.</value>
+  </data>
   <data name="ModelCanNotBeNull" xml:space="preserve">
     <value>Model can not be null.</value>
   </data>
@@ -209,6 +212,9 @@
   </data>
   <data name="PasswordTooShort" xml:space="preserve">
     <value>Passwords must be at least {0} characters.</value>
+  </data>
+  <data name="RecipientUserNameRequired" xml:space="preserve">
+    <value>Recipient username is required.</value>
   </data>
   <data name="TokenRequired" xml:space="preserve">
     <value>Token is required.</value>
