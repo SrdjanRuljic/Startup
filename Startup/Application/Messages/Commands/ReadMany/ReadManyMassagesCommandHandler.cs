@@ -32,9 +32,7 @@ namespace Application.Messages.Commands.ReadMany
 
             List<Message> unreadMessages = await _context.Messages
                                                          .Where(x => x.Recipient.UserName == _currentUserService.UserName &&
-                                                                     x.Sender.UserName == request.RecipientUserName ||
-                                                                     x.Recipient.UserName == request.RecipientUserName &&
-                                                                     x.Sender.UserName == _currentUserService.UserName)
+                                                                     x.Sender.UserName == request.RecipientUserName)
                                                          .Where(x => x.DateRead == null)
                                                          .ToListAsync();
 
