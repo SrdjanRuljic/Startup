@@ -57,8 +57,10 @@ export class MessagesListComponent implements OnInit {
   }
 
   pageChanged(event: any) {
-    this.searchModel.pageNumber = event.page;
-    this.search();
+    if (this.searchModel.pageNumber !== event.page) {
+      this.searchModel.pageNumber = event.page;
+      this.search();
+    }
   }
 
   onSearchChange() {
