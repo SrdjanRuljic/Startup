@@ -37,7 +37,7 @@ export class MessagesListComponent implements OnInit {
   }
 
   initSearchModel() {
-    this.searchModel.container = 'Unread';
+    this.searchModel.container = 'Outbox';
     this.searchModel.pageNumber = 1;
     this.searchModel.pageSize = 10;
   }
