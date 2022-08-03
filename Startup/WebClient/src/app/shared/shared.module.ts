@@ -10,6 +10,7 @@ import { PaginationModule } from 'ngx-bootstrap/pagination';
 import { NgxPermissionsModule } from 'ngx-permissions';
 import { ConfirmationModalModule } from './confirmation-modal/confirmation-modal.module';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
+import { TimeagoModule } from 'ngx-timeago';
 
 import { AuthService } from './services/auth.service';
 import { UsersService } from './services/users.service';
@@ -29,9 +30,10 @@ import { ConfirmationModalService } from './services/confirmation-modal.service'
     NgxPermissionsModule.forRoot(),
     ConfirmationModalModule,
     BsDropdownModule.forRoot(),
+    TimeagoModule.forRoot(),
   ],
   declarations: [MenuComponent],
-  exports: [MenuComponent, NgxPermissionsModule],
+  exports: [MenuComponent, NgxPermissionsModule, TimeagoModule],
   providers: [AuthService, UsersService, ConfirmationModalService],
 })
 export class SharedModule {}
