@@ -62,7 +62,7 @@
                 <strong>{{ item.senderUserName | titlecase }}</strong>
               </div>
             </td>
-            <td>{{ item.messageSent }}</td>
+            <td>{{ item.messageSent | timeago }}</td>
             <td>
               <button class="btn btn-default btn-sm float-right">
                 <i class="bi bi-trash" title="Delete"></i>

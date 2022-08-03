@@ -6,9 +6,10 @@ import { PaginationModule } from 'ngx-bootstrap/pagination';
 import { MessagesListComponent } from './messages-list/messages-list.component';
 
 import { MessagesRoutingModule } from './messages-routing.module';
+import { TimeAgoExtPipe } from 'src/app/shared/pipes/time-ago-ext.pipe';
 
 @NgModule({
   imports: [CommonModule, MessagesRoutingModule, PaginationModule, FormsModule],
-  declarations: [MessagesListComponent],
+  declarations: [MessagesListComponent, TimeAgoExtPipe],
 })
 export class MessagesModule {}
