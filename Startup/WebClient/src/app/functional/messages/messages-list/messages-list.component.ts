@@ -37,7 +37,7 @@ export class MessagesListComponent implements OnInit {
   }
 
   initSearchModel() {
-    this.searchModel.container = 'Outbox';
+    this.searchModel.container = 'Unread';
     this.searchModel.pageNumber = 1;
     this.searchModel.pageSize = 10;
   }
@@ -63,11 +63,8 @@ export class MessagesListComponent implements OnInit {
     }
   }
 
-  onSearchChange() {
-    if (this.searchModel.container.length > 1) {
-      this.search();
-    } else if (this.searchModel.container.length == 0) {
-      this.resetSearch();
-    }
+  onSearchChange(container: string) {
+    this.searchModel.container = container;
+    this.search();
   }
 }

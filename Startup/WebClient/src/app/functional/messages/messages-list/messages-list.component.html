@@ -4,25 +4,19 @@
       <div class="btn-group mt-2" name="container">
         <button
           class="btn btn-default btn-lg"
-          btnRadio="Unread"
-          [(ngModel)]="searchModel.container"
-          (click)="search()"
+          (click)="onSearchChange('Unread')"
         >
           <i class="bi bi-envelope" title="Unread"></i>
         </button>
         <button
           class="btn btn-default btn-lg"
-          btnRadio="Inbox"
-          [(ngModel)]="searchModel.container"
-          (click)="search()"
+          (click)="onSearchChange('Inbox')"
         >
           <i class="bi bi-envelope-open" title="Inbox"></i>
         </button>
         <button
           class="btn btn-default btn-lg"
-          btnRadio="Outbox"
-          [(ngModel)]="searchModel.container"
-          (click)="search()"
+          (click)="onSearchChange('Outbox')"
         >
           <i class="bi bi-envelope-check" title="Outbox"></i>
         </button>
@@ -47,7 +41,7 @@
             <td>
               <div *ngIf="searchModel.container === 'Outbox'">
                 <img
-                  class="mr-2"
+                  class="img-circle rounded-circle mr-2"
                   src="{{ item.recipientPhotoUrl || './assets/user.png' }}"
                   alt="{{ item.recipientUserName }}"
                 />
@@ -55,7 +49,7 @@
               </div>
               <div *ngIf="searchModel.container !== 'Outbox'">
                 <img
-                  class="mr-2"
+                  class="img-circle rounded-circle mr-2"
                   src="{{ item.senderPhotoUrl || './assets/user.png' }}"
                   alt="{{ item.senderUserName }}"
                 />
