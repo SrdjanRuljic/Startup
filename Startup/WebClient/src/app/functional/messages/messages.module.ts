@@ -3,11 +3,12 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { PaginationModule } from 'ngx-bootstrap/pagination';
 import { TimeagoModule } from 'ngx-timeago';
+//import { TimeAgoExtPipe } from 'src/app/shared/pipes/time-ago-ext.pipe';
 
 import { MessagesListComponent } from './messages-list/messages-list.component';
 
 import { MessagesRoutingModule } from './messages-routing.module';
-//import { TimeAgoExtPipe } from 'src/app/shared/pipes/time-ago-ext.pipe';
+import { InterlocutorsListComponent } from './interlocutors-list/interlocutors-list.component';
 
 @NgModule({
   imports: [
@@ -17,6 +18,9 @@ import { MessagesRoutingModule } from './messages-routing.module';
     FormsModule,
     TimeagoModule,
   ],
-  declarations: [MessagesListComponent /*TimeAgoExtPipe*/],
+  declarations: [
+    MessagesListComponent,
+    InterlocutorsListComponent /*TimeAgoExtPipe*/,
+  ],
 })
 export class MessagesModule {}

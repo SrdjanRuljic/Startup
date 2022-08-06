@@ -16,4 +16,10 @@ export class MessagesService {
       .post(this._messagesUrl + '/' + 'search', model)
       .pipe(map((res) => res));
   }
+
+  searchInterlocutors(model: any): Observable<any> {
+    return this._http
+      .post(this._messagesUrl + '/' + 'search-interlocutors', model)
+      .pipe(map((res) => res));
+  }
 }

@@ -3,6 +3,7 @@ using Application.Messages.Commands.Insert;
 using Application.Messages.Commands.ReadMany;
 using Application.Messages.Queries.GetThread;
 using Application.Messages.Queries.Search;
+using Application.Messages.Queries.SearchInterlocutors;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -50,6 +51,15 @@ namespace WebAPI.Controllers
             PaginationResultViewModel<SearchMessagesQueryViewModel> messages = await Mediator.Send(query);
 
             return Ok(messages);
+        }
+
+        [HttpPost]
+        [Route("search-interlocutors")]
+        public async Task<IActionResult> SearchInterlocutors(SearchInterlocutorsQuery query)
+        {
+            PaginationResultViewModel<SearchInterlocutorsViewModel> interlocutors = await Mediator.Send(query);
+
+            return Ok(interlocutors);
         }
 
         #endregion [POST]

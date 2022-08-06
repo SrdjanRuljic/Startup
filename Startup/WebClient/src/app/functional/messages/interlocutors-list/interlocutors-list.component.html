@@ -1,0 +1,64 @@
+<div class="h-100">
+  <div class="d-flex justify-content-center h-100">
+    <div class="col-12 col-md-9 col-lg-7 col-xl-6">
+      <h2 class="mt-2 mb-5">
+        <span class="text-uppercase">Interlocutors</span>
+      </h2>
+
+      <div class="row">
+        <div class="form-group col-md-6">
+          <div>
+            <input
+              type="text"
+              [(ngModel)]="searchModel.term"
+              class="form-control"
+              id="term"
+              name="term"
+              autocomplete="off"
+              (input)="onSearchChange()"
+              placeholder="Search..."
+            />
+          </div>
+        </div>
+      </div>
+
+      <table class="table table-hover mt-3">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Username</th>
+            <th scope="col">First Name</th>
+            <th scope="col">Last Name</th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of interlocutors; let i = index">
+            <th scope="row">
+              {{ i + 1 + (searchModel.pageNumber - 1) * searchModel.pageSize }}
+            </th>
+            <td>{{ item.userName }}</td>
+            <td>{{ item.firstName }}</td>
+            <td>{{ item.lastName }}</td>
+            <td></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div *ngIf="pagination.totalCount > searchModel.pageSize" class="mt-3">
+        <pagination
+          [boundaryLinks]="true"
+          [totalItems]="pagination.totalCount"
+          [itemsPerPage]="searchModel.pageSize"
+          [(ngModel)]="searchModel.pageNumber"
+          (pageChanged)="pageChanged($event)"
+          previousText="&lsaquo;"
+          nextText="&rsaquo;"
+          firstText="&laquo;"
+          lastText="&raquo;"
+        >
+        </pagination>
+      </div>
+    </div>
+  </div>
+</div>
