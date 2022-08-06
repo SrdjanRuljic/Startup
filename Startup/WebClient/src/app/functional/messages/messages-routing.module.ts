@@ -4,6 +4,7 @@ import { AuthGuard } from 'src/app/core/auth.guard';
 
 import { MessagesListComponent } from './messages-list/messages-list.component';
 import { InterlocutorsListComponent } from './interlocutors-list/interlocutors-list.component';
+import { ConversationComponent } from './conversation/conversation.component';
 
 const messageRoutes: Routes = [
   {
@@ -16,6 +17,11 @@ const messageRoutes: Routes = [
     path: 'interlocutors',
     component: InterlocutorsListComponent,
     pathMatch: 'full',
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'conversation/:username',
+    component: ConversationComponent,
     canActivate: [AuthGuard],
   },
 ];

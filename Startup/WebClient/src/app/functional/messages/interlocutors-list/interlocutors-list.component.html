@@ -40,7 +40,17 @@
             <td>{{ item.userName }}</td>
             <td>{{ item.firstName }}</td>
             <td>{{ item.lastName }}</td>
-            <td></td>
+            <td>
+              <button
+                class="btn btn-default btn-sm float-right"
+                (click)="goToConversation(item.userName)"
+              >
+                <i
+                  class="bi bi-chat-dots"
+                  title="Conversation with {{ item.userName }}"
+                ></i>
+              </button>
+            </td>
           </tr>
         </tbody>
       </table>

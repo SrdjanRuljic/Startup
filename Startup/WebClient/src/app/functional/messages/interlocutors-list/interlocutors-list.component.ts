@@ -72,4 +72,8 @@ export class InterlocutorsListComponent implements OnInit {
       this.resetSearch();
     }
   }
+
+  goToConversation(username: string) {
+    this._router.navigate(['/conversation', username]);
+  }
 }
