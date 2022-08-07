@@ -29,10 +29,10 @@ namespace Application.Messages.Queries.SearchInterlocutors
                                                                                 x.Sender.UserName == _currentUserService.UserName)
                                                                     .Select(x => new SearchInterlocutorsViewModel()
                                                                     {
-                                                                        Id = x.Sender.UserName == _currentUserService.UserName ? x.Sender.Id : x.Recipient.Id,
-                                                                        UserName = x.Sender.UserName == _currentUserService.UserName ? x.Sender.UserName : x.Recipient.UserName,
-                                                                        FirstName = x.Sender.FirstName == _currentUserService.UserName ? x.Sender.FirstName : x.Recipient.FirstName,
-                                                                        LastName = x.Sender.LastName == _currentUserService.UserName ? x.Sender.LastName : x.Recipient.LastName,
+                                                                        Id = x.Sender.UserName == _currentUserService.UserName ? x.Recipient.Id : x.Sender.Id,
+                                                                        UserName = x.Sender.UserName == _currentUserService.UserName ? x.Recipient.UserName : x.Sender.UserName,
+                                                                        FirstName = x.Sender.FirstName == _currentUserService.UserName ? x.Recipient.FirstName : x.Sender.FirstName,
+                                                                        LastName = x.Sender.LastName == _currentUserService.UserName ? x.Recipient.LastName : x.Sender.LastName,
                                                                     }).Distinct();
 
             PaginatedList<SearchInterlocutorsViewModel> paginatedList = await PaginatedList<SearchInterlocutorsViewModel>.CreateAsync(list,
