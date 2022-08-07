@@ -22,4 +22,10 @@ export class MessagesService {
       .post(this._messagesUrl + '/' + 'search-interlocutors', model)
       .pipe(map((res) => res));
   }
+
+  thread(username: any): Observable<any> {
+    return this._http
+      .get(this._messagesUrl + '/' + 'thread/' + username)
+      .pipe(map((res) => res));
+  }
 }

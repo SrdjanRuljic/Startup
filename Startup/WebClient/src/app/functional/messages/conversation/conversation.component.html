@@ -2,7 +2,7 @@
   <div class="d-flex justify-content-center h-100">
     <div class="col-12 col-md-9 col-lg-7 col-xl-6">
       <h2 class="mt-2 mb-5">
-        <span class="text-uppercase">Conversation with </span>
+        <span class="text-uppercase">Conversation with {{ username }}</span>
         <button
           type="button"
           class="btn btn-default btn-lg float-right"
@@ -11,6 +11,67 @@
           <i class="bi bi-chevron-double-left" title="Back"></i>
         </button>
       </h2>
+
+      <div class="card">
+        <div class="card-body">
+          <div *ngIf="messages?.length === 0">No messages yet...</div>
+          <ul *ngIf="messages.length > 0" class="chat">
+            <li *ngFor="let item of messages">
+              <div>
+                <span class="chat-img float-right">
+                  <img
+                    class="img-circle"
+                    src="{{ item.senderPhotoUrl || './assets/user.png' }}"
+                    alt="{{ item.senderUserName }}"
+                  />
+                </span>
+                <div class="chat-body">
+                  <div class="header">
+                    <small class="text-muted">
+                      <span class="bi bi-clock">
+                        {{ item.messageSent | timeago }}
+                      </span>
+                      <span
+                        class="text-danger"
+                        *ngIf="
+                          !item.dateRead && item.senderUserName !== username
+                        "
+                      >
+                        (unread)
+                      </span>
+                      <span
+                        class="text-success"
+                        *ngIf="
+                          item.dateRead && item.senderUserName !== username
+                        "
+                      >
+                        (read {{ item.dateRead | timeago }})
+                      </span>
+                    </small>
+                  </div>
+                  <p>
+                    <b>{{ item.content }}</b>
+                  </p>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </div>
+        <div class="card-footer">
+          <form>
+            <div class="input-group">
+              <input
+                type="text"
+                class="form-control input-sm"
+                placeholder="Send a message"
+              />
+              <div class="input-group-append">
+                <button class="btn btn-default" type="submit">Send</button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
     </div>
   </div>
 </div>

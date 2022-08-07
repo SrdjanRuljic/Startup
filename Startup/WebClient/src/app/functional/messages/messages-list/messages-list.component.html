@@ -41,7 +41,7 @@
             <td>
               <div *ngIf="searchModel.container === 'Outbox'">
                 <img
-                  class="img-circle rounded-circle mr-2"
+                  class="img-circle mr-2"
                   src="{{ item.recipientPhotoUrl || './assets/user.png' }}"
                   alt="{{ item.recipientUserName }}"
                 />
@@ -49,7 +49,7 @@
               </div>
               <div *ngIf="searchModel.container !== 'Outbox'">
                 <img
-                  class="img-circle rounded-circle mr-2"
+                  class="img-circle mr-2"
                   src="{{ item.senderPhotoUrl || './assets/user.png' }}"
                   alt="{{ item.senderUserName }}"
                 />
