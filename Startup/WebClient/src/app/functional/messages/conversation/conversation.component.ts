@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+import { IMessage } from 'src/app/shared/models/message';
 import { ConfirmationModalService } from 'src/app/shared/services/confirmation-modal.service';
 import { MessagesService } from 'src/app/shared/services/messages.service';
 
@@ -12,6 +13,7 @@ import { MessagesService } from 'src/app/shared/services/messages.service';
 export class ConversationComponent implements OnInit {
   username: string = '';
   messages: any[];
+  model: IMessage;
 
   constructor(
     private _router: Router,
@@ -21,13 +23,18 @@ export class ConversationComponent implements OnInit {
     private _confirmationModalService: ConfirmationModalService
   ) {
     this.messages = [];
+    this.model = {
+      content: '',
+      recipientUserName: '',
+    };
   }
 
   ngOnInit() {
     this._route.params.subscribe((params) => {
       this.username = params['username'];
       if (this.username != '0') {
-        this.getThread(this.username);
+        this.getThread();
+        this.model.recipientUserName = this.username;
       }
     });
   }
@@ -36,9 +43,26 @@ export class ConversationComponent implements OnInit {
     this._router.navigate(['/interlocutors']);
   }
 
-  getThread(username: string) {
-    this._messagesService.thread(username).subscribe((response) => {
+  getThread() {
+    this._messagesService.thread(this.username).subscribe((response) => {
       this.messages = response;
     });
+  }
+
+  save() {
+    if (this.contentValidation()) {
+      this.insert();
+    }
+  }
+
+  insert() {
+    this._messagesService.insert(this.model).subscribe((response) => {
+      this.model.content = '';
+      this.getThread();
+    });
+  }
+
+  contentValidation() {
+    return !!!(this.model.content == '' || this.model.content.length < 1);
   }
 }

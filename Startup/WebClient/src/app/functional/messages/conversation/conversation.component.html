@@ -58,9 +58,16 @@
           </ul>
         </div>
         <div class="card-footer">
-          <form>
+          <form name="form" (ngSubmit)="f.valid && save()" #f="ngForm">
             <div class="input-group">
               <input
+                [(ngModel)]="model.content"
+                [ngClass]="{
+                  'is-invalid': f.submitted && !contentValidation()
+                }"
+                id="content"
+                name="content"
+                autocomplete="off"
                 type="text"
                 class="form-control input-sm"
                 placeholder="Send a message"
@@ -68,6 +75,14 @@
               <div class="input-group-append">
                 <button class="btn btn-default" type="submit">Send</button>
               </div>
+            </div>
+            <div class="form-outline">
+              <small
+                *ngIf="f.submitted && !contentValidation()"
+                class="text-danger"
+              >
+                Any content is required
+              </small>
             </div>
           </form>
         </div>

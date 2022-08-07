@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { map, Observable } from 'rxjs';
 import { AppGlobals } from 'src/app/core/app-globals';
+import { IMessage } from '../models/message';
 
 @Injectable({
   providedIn: 'root',
@@ -27,5 +28,9 @@ export class MessagesService {
     return this._http
       .get(this._messagesUrl + '/' + 'thread/' + username)
       .pipe(map((res) => res));
+  }
+
+  insert(model: IMessage): Observable<any> {
+    return this._http.post(this._messagesUrl, model).pipe(map((res) => res));
   }
 }
