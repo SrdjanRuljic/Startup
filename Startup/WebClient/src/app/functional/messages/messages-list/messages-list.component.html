@@ -58,7 +58,10 @@
             </td>
             <td>{{ item.messageSent | timeago }}</td>
             <td>
-              <button class="btn btn-default btn-sm float-right">
+              <button
+                class="btn btn-default btn-sm float-right"
+                (click)="openConfirmationModal(item.id)"
+              >
                 <i class="bi bi-trash" title="Delete"></i>
               </button>
             </td>

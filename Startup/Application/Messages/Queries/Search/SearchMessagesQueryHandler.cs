@@ -32,9 +32,13 @@ namespace Application.Messages.Queries.Search
 
             query = request.Container switch
             {
-                "Inbox" => query.Where(x => x.Recipient.UserName == _currentUserService.UserName),
-                "Outbox" => query.Where(x => x.Sender.UserName == _currentUserService.UserName),
-                _ => query.Where(x => x.Recipient.UserName == _currentUserService.UserName && x.DateRead == null)
+                "Inbox" => query.Where(x => x.Recipient.UserName == _currentUserService.UserName && 
+                                            x.RecipientDeleted == false),
+                "Outbox" => query.Where(x => x.Sender.UserName == _currentUserService.UserName && 
+                                             x.SenderDeleted == false),
+                _ => query.Where(x => x.Recipient.UserName == _currentUserService.UserName && 
+                                      x.RecipientDeleted == false && 
+                                      x.DateRead == null)
             };
 
             IQueryable<SearchMessagesQueryViewModel> list = query.ProjectTo<SearchMessagesQueryViewModel>(_mapper.ConfigurationProvider);

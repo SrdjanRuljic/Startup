@@ -1,4 +1,5 @@
 ﻿using Application.Common.Pagination.Models;
+using Application.Messages.Commands.Delete;
 using Application.Messages.Commands.Insert;
 using Application.Messages.Commands.ReadMany;
 using Application.Messages.Queries.GetThread;
@@ -63,5 +64,21 @@ namespace WebAPI.Controllers
         }
 
         #endregion [POST]
+
+        #region [DELETE]
+
+        [HttpDelete]
+        [Route("{id}")]
+        public async Task<IActionResult> Delete(long id)
+        {
+            await Mediator.Send(new DeleteMessageCommand
+            {
+                Id = id
+            });
+
+            return Ok();
+        }
+
+        #endregion [DELETE]
     }
 }

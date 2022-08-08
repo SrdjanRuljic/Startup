@@ -33,4 +33,10 @@ export class MessagesService {
   insert(model: IMessage): Observable<any> {
     return this._http.post(this._messagesUrl, model).pipe(map((res) => res));
   }
+
+  delete(id: number): Observable<any> {
+    return this._http
+      .delete(this._messagesUrl + '/' + id)
+      .pipe(map((res) => res));
+  }
 }

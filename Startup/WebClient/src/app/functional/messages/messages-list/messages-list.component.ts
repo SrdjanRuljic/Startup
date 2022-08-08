@@ -67,4 +67,22 @@ export class MessagesListComponent implements OnInit {
     this.searchModel.container = container;
     this.search();
   }
+
+  async openConfirmationModal(id: number) {
+    const result = await this._confirmationModalService.confirm(
+      'Are you sure you want to delete message?'
+    );
+    if (result) {
+      this.delete(id);
+    }
+  }
+
+  delete(id: number) {
+    this._messagesService.delete(id).subscribe((response) => {
+      if (response == null) {
+        this._toastrService.success('Message successfully deleted.');
+        this.search();
+      }
+    });
+  }
 }

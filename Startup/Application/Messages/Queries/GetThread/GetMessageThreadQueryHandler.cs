@@ -29,9 +29,11 @@ namespace Application.Messages.Queries.GetThread
         {
             List<GetMessageThreadQueryViewModel> messages = await _context.Messages
                                                                           .Where(x => x.Recipient.UserName == _currentUserService.UserName &&
+                                                                                      x.RecipientDeleted == false &&
                                                                                       x.Sender.UserName == request.RecipientUserName ||
                                                                                       x.Recipient.UserName == request.RecipientUserName &&
-                                                                                      x.Sender.UserName == _currentUserService.UserName)
+                                                                                      x.Sender.UserName == _currentUserService.UserName &&
+                                                                                      x.SenderDeleted == false)
                                                                           .OrderBy(x => x.MessageSent)
                                                                           .ProjectTo<GetMessageThreadQueryViewModel>(_mapper.ConfigurationProvider)
                                                                           .ToListAsync();
