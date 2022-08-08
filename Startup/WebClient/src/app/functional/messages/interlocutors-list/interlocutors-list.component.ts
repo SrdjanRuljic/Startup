@@ -76,4 +76,13 @@ export class InterlocutorsListComponent implements OnInit {
   goToConversation(username: string) {
     this._router.navigate(['/conversation', username]);
   }
+
+  async openConfirmationModal(username: string) {
+    const result = await this._confirmationModalService.confirm(
+      'Are you sure you want to start new conversation with ' + username + '?'
+    );
+    if (result) {
+      this.goToConversation(username);
+    }
+  }
 }

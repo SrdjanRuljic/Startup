@@ -3,6 +3,14 @@
     <div class="col-12 col-md-9 col-lg-7 col-xl-6">
       <h2 class="mt-2 mb-5">
         <span class="text-uppercase">Interlocutors</span>
+        <button
+          type="button"
+          class="btn btn-default btn-lg float-right"
+          [disabled]="searchModel.term === ''"
+          (click)="openConfirmationModal(searchModel.term)"
+        >
+          <i class="bi bi-person-plus" title="Star new conversation"></i>
+        </button>
       </h2>
 
       <div class="row">
