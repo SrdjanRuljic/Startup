@@ -34,6 +34,7 @@
         <thead>
           <tr>
             <th scope="col">#</th>
+            <th scope="col">Is online</th>
             <th scope="col">Username</th>
             <th scope="col">First Name</th>
             <th scope="col">Last Name</th>
@@ -45,6 +46,17 @@
             <th scope="row">
               {{ i + 1 + (searchModel.pageNumber - 1) * searchModel.pageSize }}
             </th>
+            <td>
+              <span
+                [class.is-online]="
+                  (_presenceService.onlineUsers$ | async)?.includes(
+                    item.username
+                  )
+                "
+              >
+                <i class="bi bi-chat-dots"></i>
+              </span>
+            </td>
             <td>{{ item.userName }}</td>
             <td>{{ item.firstName }}</td>
             <td>{{ item.lastName }}</td>

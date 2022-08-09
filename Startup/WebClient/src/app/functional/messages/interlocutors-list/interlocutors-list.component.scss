@@ -1,0 +1,13 @@
+.is-online {
+  animation: bi-blink 1.5s linear infinite;
+  color: green;
+}
+
+@keyframes bi-blink {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0, 4;
+  }
+}
