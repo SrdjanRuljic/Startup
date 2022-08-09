@@ -27,7 +27,7 @@ export class AuthService {
     private _appGlobals: AppGlobals,
     private _http: HttpClient,
     private _permissionsService: NgxPermissionsService,
-    private _presence: PresenceService
+    private _presenceService: PresenceService
   ) {}
 
   register(model: IRegister): Observable<any> {
@@ -95,7 +95,7 @@ export class AuthService {
 
     this.getAllUserRoles();
 
-    this._presence.createHubConnection(response.auth_token);
+    this._presenceService.createHubConnection(response.auth_token);
   }
 
   private handleLogoutSuccess(response: any) {
@@ -103,7 +103,8 @@ export class AuthService {
     localStorage.clear();
 
     this._permissionsService.flushPermissions();
-    this._presence.stopHubConnection();
+
+    this._presenceService.stopHubConnection();
   }
 
   getIsAuthorized() {

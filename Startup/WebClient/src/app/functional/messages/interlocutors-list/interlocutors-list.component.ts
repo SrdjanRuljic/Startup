@@ -5,6 +5,7 @@ import { InterlocutorSearchModel } from 'src/app/shared/models/interlocutors-sea
 import { IPagination } from 'src/app/shared/models/pagination';
 import { ConfirmationModalService } from 'src/app/shared/services/confirmation-modal.service';
 import { MessagesService } from 'src/app/shared/services/messages.service';
+import { PresenceService } from 'src/app/shared/services/presence.service';
 
 @Component({
   selector: 'app-interlocutors-list',
@@ -20,7 +21,8 @@ export class InterlocutorsListComponent implements OnInit {
     private _router: Router,
     private _toastrService: ToastrService,
     private _messagesService: MessagesService,
-    private _confirmationModalService: ConfirmationModalService
+    private _confirmationModalService: ConfirmationModalService,
+    public _presenceService: PresenceService
   ) {
     this.interlocutors = [];
     this.searchModel = new InterlocutorSearchModel(1, 10, '');

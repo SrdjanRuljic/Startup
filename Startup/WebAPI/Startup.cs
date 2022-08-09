@@ -72,7 +72,8 @@ namespace WebAPI
             services.AddInfrastructure(Configuration);
             services.AddPersistence(Configuration);
             services.AddScoped<ICurrentUserService, CurrentUserService>();
-            services.AddHttpContextAccessor();            
+            services.AddSingleton<PresenceTracker>();
+            services.AddHttpContextAccessor();
             services.AddCors(options =>
             {
                 options.AddPolicy(MyAllowSpecificOrigins,
