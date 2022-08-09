@@ -9,6 +9,7 @@ import { ILogin } from '../models/login';
 import { IConfirmEmail } from '../models/confirm-email';
 import { IForgotPassword } from '../models/forgot-password';
 import { IResetPassword } from '../models/reset-password';
+import { PresenceService } from './presence.service';
 
 const TOKEN_KEY = 'auth-token';
 const PERMISSIONS_KEY = 'permissions';
@@ -17,7 +18,7 @@ const PERMISSIONS_KEY = 'permissions';
   providedIn: 'root',
 })
 export class AuthService {
-  private _authUrl = this._appGlobals.WebApiUrl + 'api/auth';
+  private _authUrl = this._appGlobals.WebApiUrl + 'auth';
   private _jwtHelper = new JwtHelperService();
 
   private isAuthorized$ = new BehaviorSubject<boolean>(this.getIsAuthorized());
@@ -25,7 +26,8 @@ export class AuthService {
   constructor(
     private _appGlobals: AppGlobals,
     private _http: HttpClient,
-    private _permissionsService: NgxPermissionsService
+    private _permissionsService: NgxPermissionsService,
+    private _presence: PresenceService
   ) {}
 
   register(model: IRegister): Observable<any> {
@@ -92,6 +94,8 @@ export class AuthService {
     this.isAuthorized$.next(true);
 
     this.getAllUserRoles();
+
+    this._presence.createHubConnection(response.auth_token);
   }
 
   private handleLogoutSuccess(response: any) {
@@ -99,6 +103,7 @@ export class AuthService {
     localStorage.clear();
 
     this._permissionsService.flushPermissions();
+    this._presence.stopHubConnection();
   }
 
   getIsAuthorized() {

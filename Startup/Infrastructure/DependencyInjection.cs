@@ -11,6 +11,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace Infrastructure
 {
@@ -60,6 +61,23 @@ namespace Infrastructure
 
                     ValidateIssuerSigningKey = true,
                     IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["Jwt:Key"]))
+                };
+
+                options.Events = new JwtBearerEvents
+                {
+                    OnMessageReceived = context =>
+                    {
+                        var accesToken = context.Request.Query["auth_token"];
+
+                        var path = context.HttpContext.Request.Path;
+
+                        if (!string.IsNullOrEmpty(accesToken) && path.StartsWithSegments("/hubs"))
+                        {
+                            context.Token = accesToken;
+                        }
+
+                        return Task.CompletedTask;
+                    }
                 };
             });
 

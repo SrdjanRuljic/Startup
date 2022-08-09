@@ -8,7 +8,7 @@ import { IMessage } from '../models/message';
   providedIn: 'root',
 })
 export class MessagesService {
-  private _messagesUrl = this._appGlobals.WebApiUrl + 'api/messages';
+  private _messagesUrl = this._appGlobals.WebApiUrl + 'messages';
 
   constructor(private _appGlobals: AppGlobals, private _http: HttpClient) {}
 
