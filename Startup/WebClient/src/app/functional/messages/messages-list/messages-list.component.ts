@@ -80,8 +80,11 @@ export class MessagesListComponent implements OnInit {
   delete(id: number) {
     this._messagesService.delete(id).subscribe((response) => {
       if (response == null) {
+        this.messages.splice(
+          this.messages.findIndex((x) => x.id === id),
+          1
+        );
         this._toastrService.success('Message successfully deleted.');
-        this.search();
       }
     });
   }

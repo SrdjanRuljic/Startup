@@ -2,6 +2,7 @@
 using Application.Common.Models;
 using Application.Exceptions;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,18 +25,22 @@ namespace Application.Messages.Commands.Delete
 
         public async Task<Unit> Handle(DeleteMessageCommand request, CancellationToken cancellationToken)
         {
-            Domain.Entities.Message message = await _context.Messages.FindAsync(request.Id);
+            Domain.Entities.Message message = await _context.Messages
+                                                            .Include(x => x.Sender)
+                                                            .Include(x => x.Sender)
+                                                            .Where(x => x.Id == request.Id)
+                                                            .FirstOrDefaultAsync();
 
             if (message == null)
                 throw new NotFoundException(string.Format(Resources.Translation.EntityWasNotFound, nameof(Domain.Entities.Message), request.Id));
 
-            if (message.Sender.UserName != _currentUserService.UserName && message.Recipient.UserName != _currentUserService.UserName)
+            if (message.Sender?.UserName != _currentUserService.UserName && message.Recipient?.UserName != _currentUserService.UserName)
                 throw new UnauthorizedAccessException(ErrorMessages.Unauthorised);
 
-            if (message.Sender.UserName == _currentUserService.UserName)
+            if (message.Sender?.UserName == _currentUserService.UserName)
                 message.SenderDeleted = true;
 
-            if (message.Recipient.UserName == _currentUserService.UserName)
+            if (message.Recipient?.UserName == _currentUserService.UserName)
                 message.RecipientDeleted = true;
 
             if (message.SenderDeleted && message.RecipientDeleted)
