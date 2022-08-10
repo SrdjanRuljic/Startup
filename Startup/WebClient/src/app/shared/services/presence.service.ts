@@ -21,21 +21,23 @@ export class PresenceService {
 
   createHubConnection(token: any) {
     this.hubConnection = new HubConnectionBuilder()
-      .configureLogging(signalR.LogLevel.Debug)
       .withUrl(this._presenceHubUrl, {
         accessTokenFactory: () => token,
       })
       .withAutomaticReconnect()
       .build();
 
-    this.hubConnection.start().catch((error) => console.log(error));
+    this.hubConnection
+      .start()
+      .then(() => console.log('Connection started'))
+      .catch((error) => console.log(error.toString()));
 
     this.hubConnection.on('UserIsOnline', (username) => {
-      this._toastrService.info(username + 'has connected');
+      this._toastrService.info(username + ' has connected');
     });
 
     this.hubConnection.on('UserIsOffline', (username) => {
-      this._toastrService.error(username + 'has disconnected');
+      this._toastrService.error(username + ' has disconnected');
     });
 
     this.hubConnection.on('GetOnlineUsers', (usernames: string[]) => {
@@ -44,6 +46,6 @@ export class PresenceService {
   }
 
   stopHubConnection() {
-    this.hubConnection.stop().catch((error) => console.log(error));
+    this.hubConnection?.stop().catch((error) => console.log(error.toString()));
   }
 }
