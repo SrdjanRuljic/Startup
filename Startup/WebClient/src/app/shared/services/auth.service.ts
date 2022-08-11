@@ -92,18 +92,14 @@ export class AuthService {
   private handleLoginSuccess(response: any) {
     this.saveToken(response.auth_token);
     this.isAuthorized$.next(true);
-
     this.getAllUserRoles();
-
     this._presenceService.createHubConnection(response.auth_token);
   }
 
   private handleLogoutSuccess(response: any) {
     this.isAuthorized$.next(false);
     localStorage.clear();
-
     this._permissionsService.flushPermissions();
-
     this._presenceService.stopHubConnection();
   }
 

@@ -67,13 +67,13 @@ namespace Infrastructure
                 {
                     OnMessageReceived = context =>
                     {
-                        var accesToken = context.Request.Query["auth_token"];
+                        var accessToken = context.Request.Query["access_token"];
 
                         var path = context.HttpContext.Request.Path;
 
-                        if (!string.IsNullOrEmpty(accesToken) && path.StartsWithSegments("/hubs"))
+                        if (!string.IsNullOrEmpty(accessToken) && path.StartsWithSegments("/hubs"))
                         {
-                            context.Token = accesToken;
+                            context.Token = accessToken;
                         }
 
                         return Task.CompletedTask;

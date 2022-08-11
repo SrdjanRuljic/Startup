@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace WebAPI.SignalR
 {
+    [Authorize]
     public class PresenceHub : Hub
     {
         private readonly PresenceTracker _tracker;
