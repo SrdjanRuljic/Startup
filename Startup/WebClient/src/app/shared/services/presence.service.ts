@@ -46,6 +46,8 @@ export class PresenceService {
   }
 
   stopHubConnection() {
-    this.hubConnection?.stop().catch((error) => console.log(error.toString()));
+    if (this.hubConnection) {
+      this.hubConnection.stop();
+    }
   }
 }
