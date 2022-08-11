@@ -47,23 +47,19 @@
               {{ i + 1 + (searchModel.pageNumber - 1) * searchModel.pageSize }}
             </th>
             <td>
-              <span
-                *ngIf="
-                  (_presenceService.onlineUsers$ | async)?.includes(
-                    item.username
-                  )
-                "
-              >
-                Online now
-              </span>
-              <span
-                *ngIf="
-                  !(_presenceService.onlineUsers$ | async)?.includes(
-                    item.username
-                  )
-                "
-              >
-                Offline
+              <span>
+                <ng-container
+                  *ngIf="
+                    (_presenceService.onlineUsers$ | async)?.includes(
+                      item.userName
+                    );
+                    else elseOffline
+                  "
+                >
+                  Online
+                </ng-container>
+
+                <ng-template #elseOffline> Offline </ng-template>
               </span>
             </td>
             <td>{{ item.userName }}</td>
