@@ -1,4 +1,5 @@
 ﻿using Application.Common.Interfaces;
+using Application.Messages;
 using Domain.Entities;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.SignalR;
@@ -9,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace WebAPI.SignalR
 {
-    public class MessageHub : Hub
+    public class MessageHub : Hub, IMessageHub
     {
         public override async Task OnConnectedAsync()
         {
@@ -25,9 +26,9 @@ namespace WebAPI.SignalR
             await base.OnDisconnectedAsync(exception);
         }
 
-        public async Task SendMessage(Message message)
+        public async Task SendMessage(MessageViewModel message)
         {
-            var groupName = GetGroupName(message.Sender.UserName, message.Recipient?.UserName);
+            var groupName = GetGroupName(message.SenderUserName, message.RecipientUserName);
 
             await Clients.Group(groupName).SendAsync("NewMessage", message);
         }

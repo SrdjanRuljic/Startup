@@ -1,9 +1,10 @@
-﻿using System.Threading.Tasks;
+﻿using Application.Messages;
+using System.Threading.Tasks;
 
 namespace Application.Common.Interfaces
 {
     public interface IMessageHub
     {
-        Task SendMessage();
+        Task SendMessage(MessageViewModel message);
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Application.Common.Pagination.Models;
+using Application.Messages;
 using Application.Messages.Commands.Delete;
 using Application.Messages.Commands.Insert;
 using Application.Messages.Commands.ReadMany;
@@ -24,7 +25,7 @@ namespace WebAPI.Controllers
                 RecipientUserName = username
             });
 
-            IEnumerable<GetMessageThreadQueryViewModel> messages = await Mediator.Send(new GetMessageThreadQuery()
+            IEnumerable<MessageViewModel> messages = await Mediator.Send(new GetMessageThreadQuery()
             {
                 RecipientUserName = username
             });

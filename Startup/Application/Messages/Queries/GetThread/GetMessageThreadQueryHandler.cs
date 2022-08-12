@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Application.Messages.Queries.GetThread
 {
-    public class GetMessageThreadQueryHandler : IRequestHandler<GetMessageThreadQuery, IEnumerable<GetMessageThreadQueryViewModel>>
+    public class GetMessageThreadQueryHandler : IRequestHandler<GetMessageThreadQuery, IEnumerable<MessageViewModel>>
     {
         private readonly IApplicationDbContext _context;
         private readonly ICurrentUserService _currentUserService;
@@ -25,18 +25,18 @@ namespace Application.Messages.Queries.GetThread
             _mapper = mapper;
         }
 
-        public async Task<IEnumerable<GetMessageThreadQueryViewModel>> Handle(GetMessageThreadQuery request, CancellationToken cancellationToken)
+        public async Task<IEnumerable<MessageViewModel>> Handle(GetMessageThreadQuery request, CancellationToken cancellationToken)
         {
-            List<GetMessageThreadQueryViewModel> messages = await _context.Messages
-                                                                          .Where(x => x.Recipient.UserName == _currentUserService.UserName &&
-                                                                                      x.RecipientDeleted == false &&
-                                                                                      x.Sender.UserName == request.RecipientUserName ||
-                                                                                      x.Recipient.UserName == request.RecipientUserName &&
-                                                                                      x.Sender.UserName == _currentUserService.UserName &&
-                                                                                      x.SenderDeleted == false)
-                                                                          .OrderBy(x => x.MessageSent)
-                                                                          .ProjectTo<GetMessageThreadQueryViewModel>(_mapper.ConfigurationProvider)
-                                                                          .ToListAsync();
+            List<MessageViewModel> messages = await _context.Messages
+                                                            .Where(x => x.Recipient.UserName == _currentUserService.UserName &&
+                                                                        x.RecipientDeleted == false &&
+                                                                        x.Sender.UserName == request.RecipientUserName ||
+                                                                        x.Recipient.UserName == request.RecipientUserName &&
+                                                                        x.Sender.UserName == _currentUserService.UserName &&
+                                                                        x.SenderDeleted == false)
+                                                            .OrderBy(x => x.MessageSent)
+                                                            .ProjectTo<MessageViewModel>(_mapper.ConfigurationProvider)
+                                                            .ToListAsync();
 
             return messages;
         }

@@ -13,14 +13,17 @@ namespace Application.Messages.Commands.Insert
         private readonly IApplicationDbContext _context;
         private readonly ICurrentUserService _currentUserService;
         private readonly IManagersService _managersService;
+        private readonly IMediator _mediator;
 
         public InsertMessageCommandHandler(IApplicationDbContext context,
                                            ICurrentUserService currentUserService,
-                                           IManagersService managersService)
+                                           IManagersService managersService,
+                                           IMediator mediator)
         {
             _context = context;
             _currentUserService = currentUserService;
             _managersService = managersService;
+            _mediator = mediator;
         }
 
         public async Task<long> Handle(InsertMessageCommand request, CancellationToken cancellationToken)
@@ -50,6 +53,23 @@ namespace Application.Messages.Commands.Insert
             await _context.Messages.AddAsync(message);
 
             await _context.SaveChangesAsync(cancellationToken);
+
+            await _mediator.Publish(new SendMessageNotification()
+            {
+                Message = new MessageViewModel()
+                {
+                    Content = message.Content,
+                    DateRead = message.DateRead,
+                    Id = message.Id,
+                    MessageSent = message.MessageSent,
+                    RecipientId = message.Recipient.Id,
+                    RecipientPhotoUrl = null,
+                    RecipientUserName = message.Recipient.UserName,
+                    SenderId = message.Sender.Id,
+                    SenderPhotoUrl = null,
+                    SenderUserName = message.Sender.UserName,
+                }
+            }, cancellationToken);
 
             return message.Id;
         }

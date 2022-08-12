@@ -5,7 +5,7 @@ using System.Collections.Generic;
 namespace Application.Messages.Queries.GetThread
 {
     [Authorize(Policy = "RequireAuthorization")]
-    public class GetMessageThreadQuery : IRequest<IEnumerable<GetMessageThreadQueryViewModel>>
+    public class GetMessageThreadQuery : IRequest<IEnumerable<MessageViewModel>>
     {
         public string RecipientUserName { get; set; }
     }
