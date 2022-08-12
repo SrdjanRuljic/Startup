@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { IMessage } from 'src/app/shared/models/message';
+import { AuthService } from 'src/app/shared/services/auth.service';
 import { ConfirmationModalService } from 'src/app/shared/services/confirmation-modal.service';
 import { MessagesService } from 'src/app/shared/services/messages.service';
 
@@ -10,7 +11,7 @@ import { MessagesService } from 'src/app/shared/services/messages.service';
   templateUrl: './conversation.component.html',
   styleUrls: ['./conversation.component.scss'],
 })
-export class ConversationComponent implements OnInit {
+export class ConversationComponent implements OnInit, OnDestroy {
   username: string = '';
   messages: any[];
   model: IMessage;
@@ -20,7 +21,8 @@ export class ConversationComponent implements OnInit {
     private _route: ActivatedRoute,
     private _toastrService: ToastrService,
     private _messagesService: MessagesService,
-    private _confirmationModalService: ConfirmationModalService
+    private _confirmationModalService: ConfirmationModalService,
+    private _authService: AuthService
   ) {
     this.messages = [];
     this.model = {
@@ -29,12 +31,22 @@ export class ConversationComponent implements OnInit {
     };
   }
 
+  ngOnDestroy(): void {
+    this._messagesService.stopHubConnection();
+  }
+
   ngOnInit() {
     this._route.params.subscribe((params) => {
       this.username = params['username'];
       if (this.username != '0') {
-        this.getThread();
+        const token = this._authService.getToken();
         this.model.recipientUserName = this.username;
+
+        this.getThread();
+        this._messagesService.createHubConnection(
+          token as string,
+          this.username
+        );
       }
     });
   }

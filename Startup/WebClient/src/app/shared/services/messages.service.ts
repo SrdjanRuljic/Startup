@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { HubConnection, HubConnectionBuilder } from '@microsoft/signalr';
 import { map, Observable } from 'rxjs';
 import { AppGlobals } from 'src/app/core/app-globals';
 import { IMessage } from '../models/message';
@@ -9,8 +10,27 @@ import { IMessage } from '../models/message';
 })
 export class MessagesService {
   private _messagesUrl = this._appGlobals.WebApiUrl + 'messages';
+  private _messageHubUrl = this._appGlobals.HubUrl + 'message';
+  private hubConnection!: HubConnection;
 
   constructor(private _appGlobals: AppGlobals, private _http: HttpClient) {}
+
+  createHubConnection(token: string, recipientUserName: string) {
+    this.hubConnection = new HubConnectionBuilder()
+      .withUrl(this._messageHubUrl + '?recipient=' + recipientUserName, {
+        accessTokenFactory: () => token,
+      })
+      .withAutomaticReconnect()
+      .build();
+
+    this.hubConnection.start();
+  }
+
+  stopHubConnection() {
+    if (this.hubConnection) {
+      this.hubConnection.stop();
+    }
+  }
 
   search(model: any): Observable<any> {
     return this._http

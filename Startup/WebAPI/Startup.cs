@@ -30,8 +30,10 @@ namespace WebAPI
         /// <summary>
         /// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         /// </summary>
-        /// <param name="app"></param>
-        /// <param name="env"></param>
+        /// <param name="app">
+        /// </param>
+        /// <param name="env">
+        /// </param>
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
@@ -59,20 +61,25 @@ namespace WebAPI
             {
                 endpoints.MapControllers();
                 endpoints.MapHub<PresenceHub>("hubs/presence");
+                endpoints.MapHub<MessageHub>("hubs/message");
             });
         }
 
         /// <summary>
         /// This method gets called by the runtime. Use this method to add services to the container.
         /// </summary>
-        /// <param name="services"></param>
+        /// <param name="services">
+        /// </param>
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddApplication();
             services.AddInfrastructure(Configuration);
             services.AddPersistence(Configuration);
+
             services.AddScoped<ICurrentUserService, CurrentUserService>();
+
             services.AddSingleton<PresenceTracker>();
+
             services.AddHttpContextAccessor();
             services.AddCors(options =>
             {

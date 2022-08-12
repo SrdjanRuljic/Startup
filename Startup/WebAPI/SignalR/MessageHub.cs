@@ -1,0 +1,51 @@
+﻿using Application.Common.Interfaces;
+using Domain.Entities;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.SignalR;
+using System;
+using System.Collections.Generic;
+using System.Security.Claims;
+using System.Threading.Tasks;
+
+namespace WebAPI.SignalR
+{
+    public class MessageHub : Hub
+    {
+        public override async Task OnConnectedAsync()
+        {
+            HttpContext httpContext = Context.GetHttpContext();
+            string recipientUserName = httpContext.Request.Query["recipient"].ToString();
+            string groupName = GetGroupName(GetUserName(), recipientUserName);
+
+            await Groups.AddToGroupAsync(Context.ConnectionId, groupName);
+        }
+
+        public override async Task OnDisconnectedAsync(Exception exception)
+        {
+            await base.OnDisconnectedAsync(exception);
+        }
+
+        public async Task SendMessage(Message message)
+        {
+            var groupName = GetGroupName(message.Sender.UserName, message.Recipient?.UserName);
+
+            await Clients.Group(groupName).SendAsync("NewMessage", message);
+        }
+
+        private string GetGroupName(string caller, string other)
+        {
+            var stringCompare = string.CompareOrdinal(caller, other) < 0;
+
+            return stringCompare ? $"{caller}-{other}" : $"{other}-{caller}";
+        }
+
+        private string GetUserName()
+        {
+            ClaimsIdentity clames = Context?.User?.Identity as ClaimsIdentity;
+
+            string userName = clames.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+            return userName;
+        }
+    }
+}
