@@ -20,7 +20,7 @@ export class ConversationComponent implements OnInit, OnDestroy {
     private _router: Router,
     private _route: ActivatedRoute,
     private _toastrService: ToastrService,
-    private _messagesService: MessagesService,
+    public _messagesService: MessagesService,
     private _confirmationModalService: ConfirmationModalService,
     private _authService: AuthService
   ) {

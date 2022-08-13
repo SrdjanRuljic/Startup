@@ -77,6 +77,7 @@ namespace WebAPI
             services.AddPersistence(Configuration);
 
             services.AddScoped<ICurrentUserService, CurrentUserService>();
+            services.AddSingleton<IMessageHub, MessageHub>();
 
             services.AddSingleton<PresenceTracker>();
 

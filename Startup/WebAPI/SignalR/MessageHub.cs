@@ -12,13 +12,20 @@ namespace WebAPI.SignalR
 {
     public class MessageHub : Hub, IMessageHub
     {
+        private readonly IHubContext<MessageHub> _context;
+
+        public MessageHub(IHubContext<MessageHub> context)
+        {
+            _context = context;
+        }
+
         public override async Task OnConnectedAsync()
         {
             HttpContext httpContext = Context.GetHttpContext();
             string recipientUserName = httpContext.Request.Query["recipient"].ToString();
             string groupName = GetGroupName(GetUserName(), recipientUserName);
 
-            await Groups.AddToGroupAsync(Context.ConnectionId, groupName);
+            await _context.Groups.AddToGroupAsync(Context.ConnectionId, groupName);
         }
 
         public override async Task OnDisconnectedAsync(Exception exception)
@@ -30,7 +37,7 @@ namespace WebAPI.SignalR
         {
             var groupName = GetGroupName(message.SenderUserName, message.RecipientUserName);
 
-            await Clients.Group(groupName).SendAsync("NewMessage", message);
+            await _context.Clients.Group(groupName).SendAsync("NewMessage", message);
         }
 
         private string GetGroupName(string caller, string other)

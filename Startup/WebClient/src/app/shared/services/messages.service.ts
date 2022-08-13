@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { HubConnection, HubConnectionBuilder } from '@microsoft/signalr';
-import { map, Observable } from 'rxjs';
+import { BehaviorSubject, map, Observable, take } from 'rxjs';
 import { AppGlobals } from 'src/app/core/app-globals';
 import { IMessage } from '../models/message';
 
@@ -12,6 +12,8 @@ export class MessagesService {
   private _messagesUrl = this._appGlobals.WebApiUrl + 'messages';
   private _messageHubUrl = this._appGlobals.HubUrl + 'message';
   private hubConnection!: HubConnection;
+  private messagesThreadSources = new BehaviorSubject<any[]>([]);
+  messagesThread$ = this.messagesThreadSources.asObservable();
 
   constructor(private _appGlobals: AppGlobals, private _http: HttpClient) {}
 
@@ -24,6 +26,12 @@ export class MessagesService {
       .build();
 
     this.hubConnection.start();
+
+    this.hubConnection.on('NewMessage', (message) => {
+      this.messagesThread$.pipe(take(1)).subscribe((messages) => {
+        this.messagesThreadSources.next([...messages, message]);
+      });
+    });
   }
 
   stopHubConnection() {
@@ -45,9 +53,11 @@ export class MessagesService {
   }
 
   thread(username: any): Observable<any> {
-    return this._http
-      .get(this._messagesUrl + '/' + 'thread/' + username)
-      .pipe(map((res) => res));
+    return this._http.get(this._messagesUrl + '/' + 'thread/' + username).pipe(
+      map((res: any) => {
+        this.messagesThreadSources.next(res);
+      })
+    );
   }
 
   insert(model: IMessage): Observable<any> {
