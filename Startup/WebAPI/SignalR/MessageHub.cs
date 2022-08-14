@@ -1,22 +1,25 @@
 ﻿using Application.Common.Interfaces;
 using Application.Messages;
-using Domain.Entities;
+using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.SignalR;
 using System;
-using System.Collections.Generic;
 using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace WebAPI.SignalR
 {
+    [Authorize]
     public class MessageHub : Hub, IMessageHub
     {
         private readonly IHubContext<MessageHub> _context;
+        private readonly ISender _mediator;
 
-        public MessageHub(IHubContext<MessageHub> context)
+        public MessageHub(IHubContext<MessageHub> context, ISender mediator)
         {
             _context = context;
+            _mediator = mediator;
         }
 
         public override async Task OnConnectedAsync()
@@ -25,7 +28,7 @@ namespace WebAPI.SignalR
             string recipientUserName = httpContext.Request.Query["recipient"].ToString();
             string groupName = GetGroupName(GetUserName(), recipientUserName);
 
-            await _context.Groups.AddToGroupAsync(Context.ConnectionId, groupName);
+            await _context.Groups.AddToGroupAsync(Context.ConnectionId, groupName);       
         }
 
         public override async Task OnDisconnectedAsync(Exception exception)

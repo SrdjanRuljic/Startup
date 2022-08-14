@@ -1,9 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ToastrService } from 'ngx-toastr';
 import { IMessage } from 'src/app/shared/models/message';
 import { AuthService } from 'src/app/shared/services/auth.service';
-import { ConfirmationModalService } from 'src/app/shared/services/confirmation-modal.service';
 import { MessagesService } from 'src/app/shared/services/messages.service';
 
 @Component({
@@ -13,18 +11,14 @@ import { MessagesService } from 'src/app/shared/services/messages.service';
 })
 export class ConversationComponent implements OnInit, OnDestroy {
   username: string = '';
-  messages: any[];
   model: IMessage;
 
   constructor(
     private _router: Router,
     private _route: ActivatedRoute,
-    private _toastrService: ToastrService,
     public _messagesService: MessagesService,
-    private _confirmationModalService: ConfirmationModalService,
     private _authService: AuthService
   ) {
-    this.messages = [];
     this.model = {
       content: '',
       recipientUserName: '',
@@ -56,9 +50,7 @@ export class ConversationComponent implements OnInit, OnDestroy {
   }
 
   getThread() {
-    this._messagesService.thread(this.username).subscribe((response) => {
-      this.messages = response;
-    });
+    this._messagesService.thread(this.username).subscribe((response) => {});
   }
 
   save() {
