@@ -27,6 +27,10 @@ export class MessagesService {
 
     this.hubConnection.start();
 
+    this.hubConnection.on('ReciveMessageThread', (messages) => {
+      this.messagesThreadSources.next(messages);
+    });
+
     this.hubConnection.on('NewMessage', (message) => {
       this.messagesThread$.pipe(take(1)).subscribe((messages) => {
         this.messagesThreadSources.next([...messages, message]);
@@ -50,18 +54,6 @@ export class MessagesService {
     return this._http
       .post(this._messagesUrl + '/' + 'search-interlocutors', model)
       .pipe(map((res) => res));
-  }
-
-  thread(username: any): Observable<any> {
-    return this._http.get(this._messagesUrl + '/' + 'thread/' + username).pipe(
-      map((res: any) => {
-        this.messagesThreadSources.next(res);
-      })
-    );
-  }
-
-  insert(model: IMessage): Observable<any> {
-    return this._http.post(this._messagesUrl, model).pipe(map((res) => res));
   }
 
   async sendMessage(model: IMessage) {

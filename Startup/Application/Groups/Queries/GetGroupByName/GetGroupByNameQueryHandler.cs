@@ -20,6 +20,11 @@ namespace Application.Groups.Queries.GetGroupByName
 
         public async Task<Group> Handle(GetGroupByNameQuery request, CancellationToken cancellationToken)
         {
+            string errorMessage = null;
+
+            if (!request.IsValid(out errorMessage))
+                throw new BadRequestException(errorMessage);
+
             return await _context.Groups
                                  .Include(x => x.Connections)
                                  .Where(x => x.Name == request.Name)

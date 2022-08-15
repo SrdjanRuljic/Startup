@@ -36,7 +36,6 @@ export class ConversationComponent implements OnInit, OnDestroy {
         const token = this._authService.getToken();
         this.model.recipientUserName = this.username;
 
-        this.getThread();
         this._messagesService.createHubConnection(
           token as string,
           this.username
@@ -49,22 +48,11 @@ export class ConversationComponent implements OnInit, OnDestroy {
     this._router.navigate(['/interlocutors']);
   }
 
-  getThread() {
-    this._messagesService.thread(this.username).subscribe((response) => {});
-  }
-
   save() {
     if (this.contentValidation()) {
       this.sendMessage();
     }
   }
-
-  // insert() {
-  //   this._messagesService.insert(this.model).subscribe((response) => {
-  //     this.model.content = '';
-  //     this.getThread();
-  //   });
-  // }
 
   sendMessage() {
     this._messagesService.sendMessage(this.model).then(() => {

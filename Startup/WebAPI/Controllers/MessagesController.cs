@@ -1,40 +1,15 @@
 ﻿using Application.Common.Pagination.Models;
-using Application.Messages;
 using Application.Messages.Commands.Delete;
 using Application.Messages.Commands.Insert;
-using Application.Messages.Commands.ReadMany;
-using Application.Messages.Queries.GetThread;
 using Application.Messages.Queries.Search;
 using Application.Messages.Queries.SearchInterlocutors;
 using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace WebAPI.Controllers
 {
     public class MessagesController : BaseController
     {
-        #region [GET]
-
-        [HttpGet]
-        [Route("thread/{username}")]
-        public async Task<IActionResult> Thread(string username)
-        {
-            bool markAsReaded = await Mediator.Send(new ReadManyMassagesCommand()
-            {
-                RecipientUserName = username
-            });
-
-            IEnumerable<MessageViewModel> messages = await Mediator.Send(new GetMessageThreadQuery()
-            {
-                RecipientUserName = username
-            });
-
-            return Ok(messages);
-        }
-
-        #endregion [GET]
-
         #region [POST]
 
         [HttpPost]

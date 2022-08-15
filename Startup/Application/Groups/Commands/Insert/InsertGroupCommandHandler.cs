@@ -1,4 +1,5 @@
 ﻿using Application.Common.Interfaces;
+using Application.Exceptions;
 using Domain.Entities;
 using MediatR;
 using System.Threading;
@@ -17,6 +18,11 @@ namespace Application.Groups.Commands.Insert
 
         public async Task<bool> Handle(InsertGroupCommand request, CancellationToken cancellationToken)
         {
+            string errorMessage = null;
+
+            if (!request.IsValid(out errorMessage))
+                throw new BadRequestException(errorMessage);
+
             Group group = new Group(request.Name);
 
             group.Connections.Add(new Connection(request.ConnectionId, request.UserName));
