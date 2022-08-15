@@ -21,13 +21,20 @@ namespace WebAPI.SignalR
     [Authorize]
     public class MessageHub : Hub
     {
-        private readonly IHubContext<MessageHub> _context;
         private readonly ISender _mediator;
+        private readonly IHubContext<MessageHub> _messageHubContext;
+        private readonly IHubContext<PresenceHub> _presenceHubContext;
+        private readonly PresenceTracker _trucker;
 
-        public MessageHub(IHubContext<MessageHub> context, ISender mediator)
+        public MessageHub(ISender mediator,
+                          IHubContext<MessageHub> messageHubContext,
+                          IHubContext<PresenceHub> presenceHubContext,
+                          PresenceTracker trucker)
         {
-            _context = context;
             _mediator = mediator;
+            _messageHubContext = messageHubContext;
+            _presenceHubContext = presenceHubContext;
+            _trucker = trucker;
         }
 
         public override async Task OnConnectedAsync()
@@ -36,7 +43,7 @@ namespace WebAPI.SignalR
             string recipientUserName = httpContext.Request.Query["recipient"].ToString();
             string groupName = GetGroupName(GetUserName(), recipientUserName);
 
-            await _context.Groups.AddToGroupAsync(Context.ConnectionId, groupName);
+            await _messageHubContext.Groups.AddToGroupAsync(Context.ConnectionId, groupName);
 
             await AddToGroup(groupName);
 
@@ -57,7 +64,7 @@ namespace WebAPI.SignalR
                 RecipientUserName = recipientUserName
             });
 
-            await _context.Clients.Groups(groupName).SendAsync("ReciveMessageThread", messages);
+            await _messageHubContext.Clients.Groups(groupName).SendAsync("ReciveMessageThread", messages);
         }
 
         public override async Task OnDisconnectedAsync(Exception exception)
@@ -94,9 +101,19 @@ namespace WebAPI.SignalR
             }
 
             if (group?.Connections.Any(x => x.UserName == message.RecipientUserName) == true)
+            {
                 message.DateRead = DateTime.UtcNow;
+            }
+            else
+            {
+                var connections = await _trucker.GetConnectionsForUser(message.RecipientUserName);
+                if (connections != null)
+                {
+                    await _presenceHubContext.Clients.Clients(connections).SendAsync("NewMessageRecived", message.SenderUserName);
+                }
+            }
 
-            await _context.Clients.Group(groupName).SendAsync("NewMessage", message);
+            await _messageHubContext.Clients.Group(groupName).SendAsync("NewMessage", message);
         }
 
         private async Task<bool> AddToGroup(string groupName)

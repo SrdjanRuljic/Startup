@@ -54,5 +54,16 @@ namespace WebAPI.SignalR
 
             return Task.CompletedTask;
         }
+
+        public Task<List<string>> GetConnectionsForUser(string userName)
+        {
+            List<string> connectionIds;
+            lock (OnlineUsers)
+            {
+                connectionIds = OnlineUsers.GetValueOrDefault(userName);
+            }
+
+            return Task.FromResult(connectionIds);
+        }
     }
 }
