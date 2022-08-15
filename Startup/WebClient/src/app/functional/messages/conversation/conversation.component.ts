@@ -23,6 +23,7 @@ export class ConversationComponent implements OnInit, OnDestroy {
       content: '',
       recipientUserName: '',
     };
+    this._router.routeReuseStrategy.shouldReuseRoute = () => false;
   }
 
   ngOnDestroy(): void {
