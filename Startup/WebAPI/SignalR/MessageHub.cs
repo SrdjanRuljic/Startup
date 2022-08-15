@@ -116,20 +116,21 @@ namespace WebAPI.SignalR
             await _messageHubContext.Clients.Group(groupName).SendAsync("NewMessage", message);
         }
 
-        private async Task<bool> AddToGroup(string groupName)
+        private async Task<Group> AddToGroup(string groupName)
         {
-            bool idAdded = false;
+            bool isAdded = false;
+            Group group = null;
 
             try
             {
-                Group group = await _mediator.Send(new GetGroupByNameQuery()
+                group = await _mediator.Send(new GetGroupByNameQuery()
                 {
                     Name = groupName,
                 });
 
                 if (group == null)
                 {
-                    idAdded = await _mediator.Send(new InsertGroupCommand()
+                    isAdded = await _mediator.Send(new InsertGroupCommand()
                     {
                         ConnectionId = Context.ConnectionId,
                         Name = groupName,
@@ -142,7 +143,7 @@ namespace WebAPI.SignalR
                 throw new HubException(exception.Message);
             }
 
-            return idAdded;
+            return isAdded ? ;
         }
 
         private string GetGroupName(string caller, string other)
