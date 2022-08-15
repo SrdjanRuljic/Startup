@@ -58,6 +58,8 @@ namespace Infrastructure
 
     public class ApplicationDbContext : IdentityDbContext<AppUser>, IApplicationDbContext
     {
+        public DbSet<Connection> Connections { get; set; }
+        public DbSet<Group> Groups { get; set; }
         public DbSet<Message> Messages { get; set; }
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)

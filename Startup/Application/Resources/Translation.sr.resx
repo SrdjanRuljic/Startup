@@ -123,6 +123,9 @@
   <data name="ConcurrencyFailure" xml:space="preserve">
     <value>Оптимистички неуспјех паралелности, објекат је измјењен.</value>
   </data>
+  <data name="ConnectionIdRequired" xml:space="preserve">
+    <value>Ид конекције је неопходан. </value>
+  </data>
   <data name="CurrentPasswordMustContain" xml:space="preserve">
     <value>Тренутна лозинка мора садржати велика и мала слова, бројеве и специјалне знакове.</value>
   </data>
@@ -155,6 +158,9 @@
   </data>
   <data name="Forbidden" xml:space="preserve">
     <value>Забрана приступа. </value>
+  </data>
+  <data name="GroupNameRequired" xml:space="preserve">
+    <value> Назив групе је неопходан. </value>
   </data>
   <data name="IncorrectUsernameOrPassword" xml:space="preserve">
     <value>Погрешно корисничко име или лозинка.</value>

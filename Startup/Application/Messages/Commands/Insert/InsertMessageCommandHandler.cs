@@ -1,5 +1,6 @@
 ﻿using Application.Common.Interfaces;
 using Application.Exceptions;
+using AutoMapper;
 using Domain.Entities;
 using Domain.Entities.Identity;
 using MediatR;
@@ -8,25 +9,25 @@ using System.Threading.Tasks;
 
 namespace Application.Messages.Commands.Insert
 {
-    public class InsertMessageCommandHandler : IRequestHandler<InsertMessageCommand, long>
+    public class InsertMessageCommandHandler : IRequestHandler<InsertMessageCommand, MessageViewModel>
     {
         private readonly IApplicationDbContext _context;
         private readonly ICurrentUserService _currentUserService;
         private readonly IManagersService _managersService;
-        private readonly IMediator _mediator;
+        private readonly IMapper _mapper;
 
         public InsertMessageCommandHandler(IApplicationDbContext context,
                                            ICurrentUserService currentUserService,
                                            IManagersService managersService,
-                                           IMediator mediator)
+                                           IMapper mapper)
         {
             _context = context;
             _currentUserService = currentUserService;
             _managersService = managersService;
-            _mediator = mediator;
+            _mapper = mapper;
         }
 
-        public async Task<long> Handle(InsertMessageCommand request, CancellationToken cancellationToken)
+        public async Task<MessageViewModel> Handle(InsertMessageCommand request, CancellationToken cancellationToken)
         {
             string errorMessage = null;
 
@@ -54,24 +55,7 @@ namespace Application.Messages.Commands.Insert
 
             await _context.SaveChangesAsync(cancellationToken);
 
-            await _mediator.Publish(new SendMessageNotification()
-            {
-                Message = new MessageViewModel()
-                {
-                    Content = message.Content,
-                    DateRead = message.DateRead,
-                    Id = message.Id,
-                    MessageSent = message.MessageSent,
-                    RecipientId = message.Recipient.Id,
-                    RecipientPhotoUrl = null,
-                    RecipientUserName = message.Recipient.UserName,
-                    SenderId = message.Sender.Id,
-                    SenderPhotoUrl = null,
-                    SenderUserName = message.Sender.UserName,
-                }
-            }, cancellationToken);
-
-            return message.Id;
+            return _mapper.Map<MessageViewModel>(message);
         }
     }
 }

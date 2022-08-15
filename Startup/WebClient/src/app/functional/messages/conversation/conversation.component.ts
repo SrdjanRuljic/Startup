@@ -55,14 +55,20 @@ export class ConversationComponent implements OnInit, OnDestroy {
 
   save() {
     if (this.contentValidation()) {
-      this.insert();
+      this.sendMessage();
     }
   }
 
-  insert() {
-    this._messagesService.insert(this.model).subscribe((response) => {
+  // insert() {
+  //   this._messagesService.insert(this.model).subscribe((response) => {
+  //     this.model.content = '';
+  //     this.getThread();
+  //   });
+  // }
+
+  sendMessage() {
+    this._messagesService.sendMessage(this.model).then(() => {
       this.model.content = '';
-      this.getThread();
     });
   }
 

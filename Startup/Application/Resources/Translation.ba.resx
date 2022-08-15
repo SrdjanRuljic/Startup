@@ -123,6 +123,9 @@
   <data name="ConcurrencyFailure" xml:space="preserve">
     <value>Optimistički neuspjeh paralelnosti, objekt je izmijenjen.</value>
   </data>
+  <data name="ConnectionIdRequired" xml:space="preserve">
+    <value>Id konekcije je neophodan. </value>
+  </data>
   <data name="CurrentPasswordMustContain" xml:space="preserve">
     <value>Trenutna lozinka mora sadržati velika i mala slova, brojeve i specijalne znakоve.</value>
   </data>
@@ -155,6 +158,9 @@
   </data>
   <data name="Forbidden" xml:space="preserve">
     <value>Zabrana pristupa.</value>
+  </data>
+  <data name="GroupNameRequired" xml:space="preserve">
+    <value>Naziv grupe je neophodan. </value>
   </data>
   <data name="IncorrectUsernameOrPassword" xml:space="preserve">
     <value>Pogrešno korisničko ime ili lozinka.</value>

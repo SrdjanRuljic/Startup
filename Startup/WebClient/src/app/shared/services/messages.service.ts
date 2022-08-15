@@ -64,6 +64,14 @@ export class MessagesService {
     return this._http.post(this._messagesUrl, model).pipe(map((res) => res));
   }
 
+  async sendMessage(model: IMessage) {
+    return this.hubConnection.invoke(
+      'SendMessage',
+      model.recipientUserName,
+      model.content
+    );
+  }
+
   delete(id: number): Observable<any> {
     return this._http
       .delete(this._messagesUrl + '/' + id)

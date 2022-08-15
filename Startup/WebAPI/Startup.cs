@@ -3,7 +3,6 @@ using Application.Common.Interfaces;
 using Infrastructure;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http.Connections;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -77,7 +76,7 @@ namespace WebAPI
             services.AddPersistence(Configuration);
 
             services.AddScoped<ICurrentUserService, CurrentUserService>();
-            services.AddSingleton<IMessageHub, MessageHub>();
+            //services.AddSingleton<IMessageHub, MessageHub>();
 
             services.AddSingleton<PresenceTracker>();
 

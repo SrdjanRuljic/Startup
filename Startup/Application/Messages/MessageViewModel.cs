@@ -2,10 +2,6 @@
 using AutoMapper;
 using Domain.Entities;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Application.Messages
 {
@@ -27,6 +23,7 @@ namespace Application.Messages
             profile.CreateMap<Message, MessageViewModel>()
                    .ForMember(dest => dest.RecipientUserName, opt => opt.MapFrom(src => src.Recipient.UserName))
                    .ForMember(dest => dest.SenderUserName, opt => opt.MapFrom(src => src.Sender.UserName));
+
             profile.CreateMap<DateTime, DateTime>().ConvertUsing(d => DateTime.SpecifyKind(d, DateTimeKind.Utc));
         }
     }

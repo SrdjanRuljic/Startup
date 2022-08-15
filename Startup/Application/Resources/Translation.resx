@@ -123,6 +123,9 @@
   <data name="ConcurrencyFailure" xml:space="preserve">
     <value>Optimistic concurrency failure, object has been modified.</value>
   </data>
+  <data name="ConnectionIdRequired" xml:space="preserve">
+    <value>Connection id is required.</value>
+  </data>
   <data name="CurrentPasswordMustContain" xml:space="preserve">
     <value>A current password must contain uppercase and lowercase letters, numbers, and special characters.</value>
   </data>
@@ -155,6 +158,9 @@
   </data>
   <data name="Forbidden" xml:space="preserve">
     <value>Forbidden</value>
+  </data>
+  <data name="GroupNameRequired" xml:space="preserve">
+    <value>Group name is required.</value>
   </data>
   <data name="IncorrectUsernameOrPassword" xml:space="preserve">
     <value>Incorrect username or password.</value>
