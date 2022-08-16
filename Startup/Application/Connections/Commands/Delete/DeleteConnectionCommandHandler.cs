@@ -1,12 +1,14 @@
 ﻿using Application.Common.Interfaces;
 using Domain.Entities;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace Application.Connections.Commands.Delete
 {
-    public class DeleteConnectionCommandHandler : IRequestHandler<DeleteConnectionCommand>
+    public class DeleteConnectionCommandHandler : IRequestHandler<DeleteConnectionCommand, Group>
     {
         private readonly IApplicationDbContext _context;
 
@@ -15,15 +17,22 @@ namespace Application.Connections.Commands.Delete
             _context = context;
         }
 
-        public async Task<Unit> Handle(DeleteConnectionCommand request, CancellationToken cancellationToken)
+        public async Task<Group> Handle(DeleteConnectionCommand request, CancellationToken cancellationToken)
         {
-            Connection connection = await _context.Connections.FindAsync(request.Id);
+            Group group = await _context.Groups
+                                        .Include(x => x.Connections)
+                                        .Where(x => x.Connections.Any(x => x.Id == request.Id))
+                                        .FirstOrDefaultAsync();
+
+            Connection connection = group.Connections
+                                         .Where(x => x.Id == request.Id)
+                                         .FirstOrDefault();
 
             _context.Connections.Remove(connection);
 
             await _context.SaveChangesAsync(cancellationToken);
 
-            return Unit.Value;
+            return group;
         }
     }
 }

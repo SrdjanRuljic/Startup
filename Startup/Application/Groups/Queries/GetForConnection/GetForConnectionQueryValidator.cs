@@ -1,10 +1,10 @@
 ﻿using System;
 
-namespace Application.Groups.Commands.Insert
+namespace Application.Groups.Queries.GetForConnection
 {
-    public static class InsertGroupCommandValidator
+    public static class GetForConnectionQueryValidator
     {
-        public static bool IsValid(this InsertGroupCommand model, out string validationMessage)
+        public static bool IsValid(this GetForConnectionQuery model, out string validationMessage)
         {
             validationMessage = null;
             bool isValid = true;
@@ -15,9 +15,9 @@ namespace Application.Groups.Commands.Insert
                 isValid = false;
             }
 
-            if (String.IsNullOrWhiteSpace(model.Name))
+            if (String.IsNullOrWhiteSpace(model.ConnectionId))
             {
-                validationMessage += Resources.Translation.GroupNameRequired;
+                validationMessage += Resources.Translation.ConnectionIdRequired;
                 isValid = false;
             }
 

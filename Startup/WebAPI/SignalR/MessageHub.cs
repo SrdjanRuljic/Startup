@@ -1,5 +1,6 @@
 ﻿using Application.Connections.Commands.Delete;
 using Application.Groups.Commands.Insert;
+using Application.Groups.Queries.GetForConnection;
 using Application.Groups.Queries.GetGroupByName;
 using Application.Messages;
 using Application.Messages.Commands.Insert;
@@ -45,7 +46,9 @@ namespace WebAPI.SignalR
 
             await _messageHubContext.Groups.AddToGroupAsync(Context.ConnectionId, groupName);
 
-            await AddToGroup(groupName);
+            Group group = await AddToGroup(groupName);
+
+            await _messageHubContext.Clients.Group(group.Name).SendAsync("UpdatedGroup", group);
 
             try
             {
@@ -64,12 +67,14 @@ namespace WebAPI.SignalR
                 RecipientUserName = recipientUserName
             });
 
-            await _messageHubContext.Clients.Groups(groupName).SendAsync("ReciveMessageThread", messages);
+            await _messageHubContext.Clients.Client(Context.ConnectionId).SendAsync("ReciveMessageThread", messages);
         }
 
         public override async Task OnDisconnectedAsync(Exception exception)
         {
-            await RemoveFromGroup();
+            Group group = await RemoveFromGroup();
+
+            await _messageHubContext.Clients.Group(group.Name).SendAsync("UpdatedGroup", group);
 
             await base.OnDisconnectedAsync(exception);
         }
@@ -116,33 +121,25 @@ namespace WebAPI.SignalR
             await _messageHubContext.Clients.Group(groupName).SendAsync("NewMessage", message);
         }
 
-        private async Task<bool> AddToGroup(string groupName)
+        private async Task<Group> AddToGroup(string groupName)
         {
-            bool idAdded = false;
+            Group group = null;
 
             try
             {
-                Group group = await _mediator.Send(new GetGroupByNameQuery()
+                group = await _mediator.Send(new InsertGroupCommand()
                 {
+                    ConnectionId = Context.ConnectionId,
                     Name = groupName,
+                    UserName = GetUserName()
                 });
-
-                if (group == null)
-                {
-                    idAdded = await _mediator.Send(new InsertGroupCommand()
-                    {
-                        ConnectionId = Context.ConnectionId,
-                        Name = groupName,
-                        UserName = GetUserName()
-                    });
-                }
             }
             catch (Exception exception)
             {
                 throw new HubException(exception.Message);
             }
 
-            return idAdded;
+            return group;
         }
 
         private string GetGroupName(string caller, string other)
@@ -161,12 +158,14 @@ namespace WebAPI.SignalR
             return userName;
         }
 
-        private async Task RemoveFromGroup()
+        private async Task<Group> RemoveFromGroup()
         {
-            await _mediator.Send(new DeleteConnectionCommand()
+            Group group = await _mediator.Send(new DeleteConnectionCommand()
             {
                 Id = Context.ConnectionId
             });
+
+            return group;
         }
     }
 }

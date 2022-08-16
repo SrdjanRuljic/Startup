@@ -16,5 +16,12 @@
             Id = id;
             UserName = userName;
         }
+
+        public Connection(string id, string userName, string groupName)
+        {
+            Id = id;
+            UserName = userName;
+            GroupName = groupName;
+        }
     }
 }
