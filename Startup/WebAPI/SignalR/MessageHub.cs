@@ -53,7 +53,7 @@ namespace WebAPI.SignalR
             if (group == null)
                 throw new HubException("Faild to join group!");
 
-            await Clients.Group(groupName).SendAsync("UpdatedGroup", group);
+            //await Clients.Group(groupName).SendAsync("UpdatedGroup", group);
 
             try
             {
@@ -85,7 +85,7 @@ namespace WebAPI.SignalR
             if (group == null)
                 throw new HubException("Faild to remove from group!");
 
-            await Clients.Group(group.Name).SendAsync("UpdatedGroup", group);
+            //await Clients.Group(group.Name).SendAsync("UpdatedGroup", group);
 
             await base.OnDisconnectedAsync(exception);
         }
@@ -132,27 +132,6 @@ namespace WebAPI.SignalR
             await Clients.Group(groupName).SendAsync("NewMessage", message);
         }
 
-        private async Task<Group> AddToGroup(string groupName)
-        {
-            Group group = null;
-
-            try
-            {
-                group = await _mediator.Send(new InsertGroupCommand()
-                {
-                    ConnectionId = Context.ConnectionId,
-                    Name = groupName,
-                    UserName = GetUserName()
-                });
-            }
-            catch (Exception exception)
-            {
-                throw new HubException(exception.Message);
-            }
-
-            return group;
-        }
-
         private string GetGroupName(string caller, string other)
         {
             var stringCompare = string.CompareOrdinal(caller, other) < 0;
@@ -167,16 +146,6 @@ namespace WebAPI.SignalR
             string userName = clames.FindFirst(ClaimTypes.NameIdentifier)?.Value;
 
             return userName;
-        }
-
-        private async Task<Group> RemoveFromGroup()
-        {
-            Group group = await _mediator.Send(new DeleteConnectionCommand()
-            {
-                Id = Context.ConnectionId
-            });
-
-            return group;
         }
     }
 }

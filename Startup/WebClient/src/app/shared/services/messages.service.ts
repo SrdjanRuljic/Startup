@@ -38,18 +38,18 @@ export class MessagesService {
       });
     });
 
-    this.hubConnection.on('UpdatedGroup', (group: IGroup) => {
-      if (group.connections.some((x) => x.username === recipientUserName)) {
-        this.messagesThread$.pipe(take(1)).subscribe((messages) => {
-          messages.forEach((message) => {
-            if (!message.dateRead) {
-              message.dateRead = new Date(Date.now());
-            }
-          });
-          this.messagesThreadSources.next([...messages]);
-        });
-      }
-    });
+    // this.hubConnection.on('UpdatedGroup', (group: IGroup) => {
+    //   if (group.connections.some((x) => x.username === recipientUserName)) {
+    //     this.messagesThread$.pipe(take(1)).subscribe((messages) => {
+    //       messages.forEach((message) => {
+    //         if (!message.dateRead) {
+    //           message.dateRead = new Date(Date.now());
+    //         }
+    //       });
+    //       this.messagesThreadSources.next([...messages]);
+    //     });
+    //   }
+    // });
   }
 
   stopHubConnection() {
