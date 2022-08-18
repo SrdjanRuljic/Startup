@@ -30,9 +30,7 @@ namespace Application.Connections.Commands.Delete
 
             _context.Connections.Remove(connection);
 
-            await _context.SaveChangesAsync(cancellationToken);
-
-            return group;
+            return await _context.SaveChangesAsync(cancellationToken) > 0 ? group : null;
         }
     }
 }

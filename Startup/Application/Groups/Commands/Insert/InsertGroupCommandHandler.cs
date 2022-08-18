@@ -24,33 +24,29 @@ namespace Application.Groups.Commands.Insert
             string errorMessage = null;
 
             if (!request.IsValid(out errorMessage))
-                throw new BadRequestException(errorMessage);
+                return null;
 
             Group group = await _context.Groups
                                         .Include(x => x.Connections)
                                         .Where(x => x.Name == request.Name)
                                         .FirstOrDefaultAsync();
 
+            Connection connection = new Connection(request.ConnectionId, request.UserName);
+
             if (group == null)
             {
                 group = new Group(request.Name);
-
-                group.Connections.Add(new Connection(request.ConnectionId, request.UserName));
 
                 await _context.Groups.AddAsync(group);
             }
             else
             {
-                Connection connection = new Connection(request.ConnectionId, request.UserName, group.Name);
-
-                group.Connections.Add(connection);
-
-                await _context.Connections.AddAsync(connection);
+                _context.Groups.Update(group);
             }
 
-            await _context.SaveChangesAsync(cancellationToken);
+            group.Connections.Add(connection);
 
-            return group;
+            return await _context.SaveChangesAsync(cancellationToken) > 0 ? group : null;
         }
     }
 }

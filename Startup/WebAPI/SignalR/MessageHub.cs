@@ -23,17 +23,14 @@ namespace WebAPI.SignalR
     public class MessageHub : Hub
     {
         private readonly ISender _mediator;
-        private readonly IHubContext<MessageHub> _messageHubContext;
         private readonly IHubContext<PresenceHub> _presenceHubContext;
         private readonly PresenceTracker _trucker;
 
         public MessageHub(ISender mediator,
-                          IHubContext<MessageHub> messageHubContext,
                           IHubContext<PresenceHub> presenceHubContext,
                           PresenceTracker trucker)
         {
             _mediator = mediator;
-            _messageHubContext = messageHubContext;
             _presenceHubContext = presenceHubContext;
             _trucker = trucker;
         }
@@ -44,11 +41,19 @@ namespace WebAPI.SignalR
             string recipientUserName = httpContext.Request.Query["recipient"].ToString();
             string groupName = GetGroupName(GetUserName(), recipientUserName);
 
-            await _messageHubContext.Groups.AddToGroupAsync(Context.ConnectionId, groupName);
+            await Groups.AddToGroupAsync(Context.ConnectionId, groupName);
 
-            Group group = await AddToGroup(groupName);
+            Group group = await _mediator.Send(new InsertGroupCommand()
+            {
+                ConnectionId = Context.ConnectionId,
+                Name = groupName,
+                UserName = GetUserName()
+            });
 
-            await _messageHubContext.Clients.Group(group.Name).SendAsync("UpdatedGroup", group);
+            if (group == null)
+                throw new HubException("Faild to join group!");
+
+            await Clients.Group(groupName).SendAsync("UpdatedGroup", group);
 
             try
             {
@@ -67,14 +72,20 @@ namespace WebAPI.SignalR
                 RecipientUserName = recipientUserName
             });
 
-            await _messageHubContext.Clients.Client(Context.ConnectionId).SendAsync("ReciveMessageThread", messages);
+            await Clients.Caller.SendAsync("ReciveMessageThread", messages);
         }
 
         public override async Task OnDisconnectedAsync(Exception exception)
         {
-            Group group = await RemoveFromGroup();
+            Group group = await _mediator.Send(new DeleteConnectionCommand()
+            {
+                Id = Context.ConnectionId
+            });
 
-            await _messageHubContext.Clients.Group(group.Name).SendAsync("UpdatedGroup", group);
+            if (group == null)
+                throw new HubException("Faild to remove from group!");
+
+            await Clients.Group(group.Name).SendAsync("UpdatedGroup", group);
 
             await base.OnDisconnectedAsync(exception);
         }
@@ -118,7 +129,7 @@ namespace WebAPI.SignalR
                 }
             }
 
-            await _messageHubContext.Clients.Group(groupName).SendAsync("NewMessage", message);
+            await Clients.Group(groupName).SendAsync("NewMessage", message);
         }
 
         private async Task<Group> AddToGroup(string groupName)
