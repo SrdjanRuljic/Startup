@@ -53,7 +53,7 @@ namespace WebAPI.SignalR
             if (group == null)
                 throw new HubException("Faild to join group!");
 
-            //await Clients.Group(groupName).SendAsync("UpdatedGroup", group);
+            await Clients.Group(groupName).SendAsync("UpdatedGroup", group);
 
             try
             {
@@ -85,7 +85,7 @@ namespace WebAPI.SignalR
             if (group == null)
                 throw new HubException("Faild to remove from group!");
 
-            //await Clients.Group(group.Name).SendAsync("UpdatedGroup", group);
+            await Clients.Group(group.Name).SendAsync("UpdatedGroup", group);
 
             await base.OnDisconnectedAsync(exception);
         }

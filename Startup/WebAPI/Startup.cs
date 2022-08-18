@@ -7,7 +7,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
+using Newtonsoft.Json;
 using Persistence;
+using System;
 using System.Collections.Generic;
 using WebAPI._1_Startup;
 using WebAPI.Helpers;
@@ -76,7 +78,6 @@ namespace WebAPI
             services.AddPersistence(Configuration);
 
             services.AddScoped<ICurrentUserService, CurrentUserService>();
-            //services.AddSingleton<IMessageHub, MessageHub>();
 
             services.AddSingleton<PresenceTracker>();
 
@@ -92,7 +93,11 @@ namespace WebAPI
                            .WithOrigins("http://localhost:4200");
                 });
             });
-            services.AddSignalR();
+            services.AddSignalR()
+                    .AddNewtonsoftJsonProtocol(options =>
+                    {
+                        options.PayloadSerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
+                    });
             services.AddControllers();
             services.AddSwaggerGen(options =>
             {
