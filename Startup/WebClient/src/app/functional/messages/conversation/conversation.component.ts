@@ -1,4 +1,5 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { NgForm } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { IMessage } from 'src/app/shared/models/message';
 import { AuthService } from 'src/app/shared/services/auth.service';
@@ -10,6 +11,7 @@ import { MessagesService } from 'src/app/shared/services/messages.service';
   styleUrls: ['./conversation.component.scss'],
 })
 export class ConversationComponent implements OnInit, OnDestroy {
+  @ViewChild('f', { static: false }) form!: NgForm;
   username: string = '';
   model: IMessage;
 
@@ -57,11 +59,11 @@ export class ConversationComponent implements OnInit, OnDestroy {
 
   sendMessage() {
     this._messagesService.sendMessage(this.model).then(() => {
-      this.model.content = '';
+      this.form.resetForm();
     });
   }
 
   contentValidation() {
-    return !!!(this.model.content == '' || this.model.content.length < 1);
+    return !!!(this.model.content === '' || this.model.content);
   }
 }
