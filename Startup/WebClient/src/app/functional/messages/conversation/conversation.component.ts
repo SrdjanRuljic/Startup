@@ -64,6 +64,6 @@ export class ConversationComponent implements OnInit, OnDestroy {
   }
 
   contentValidation() {
-    return !!!(this.model.content === '' || this.model.content);
+    return !!!(this.model.content === '');
   }
 }
