@@ -1,4 +1,5 @@
-﻿using Application.Common.Behaviours;
+﻿using Application.Auth.Commands.Register.Notification;
+using Application.Common.Behaviours;
 using Application.Common.Interfaces;
 using Application.Common.Models;
 using Application.Exceptions;
@@ -12,14 +13,13 @@ namespace Application.Auth.Commands.Register
 {
     public class RegisterCommandHandler : IRequestHandler<RegisterCommand>
     {
-        private readonly IEmailSenderService _emailSenderService;
         private readonly IManagersService _managersService;
+        private readonly IMediator _mediator;
 
-        public RegisterCommandHandler(IEmailSenderService emailSenderService,
-                                      IManagersService managersService)
+        public RegisterCommandHandler(IManagersService managersService, IMediator mediator)
         {
-            _emailSenderService = emailSenderService;
             _managersService = managersService;
+            _mediator = mediator;
         }
 
         public async Task<Unit> Handle(RegisterCommand request, CancellationToken cancellationToken)
@@ -55,7 +55,11 @@ namespace Application.Auth.Commands.Register
 
             Message message = new Message(new string[] { user.Email }, "Email confirmation", link, null);
 
-            await _emailSenderService.SendConfirmationEmailAsync(message);
+            await _mediator.Publish(new SendConfirmationEmailNotification()
+            {
+                Email = user.Email,
+                Link = link,
+            });
 
             return Unit.Value;
         }

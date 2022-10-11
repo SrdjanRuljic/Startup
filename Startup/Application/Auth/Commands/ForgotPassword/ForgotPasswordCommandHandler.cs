@@ -1,4 +1,6 @@
-﻿using Application.Common.Behaviours;
+﻿using Application.Auth.Commands.ForgotPassword.Notification;
+using Application.Auth.Commands.Register.Notification;
+using Application.Common.Behaviours;
 using Application.Common.Interfaces;
 using Application.Common.Models;
 using Application.Exceptions;
@@ -11,14 +13,13 @@ namespace Application.Auth.Commands.ForgotPassword
 {
     public class ForgotPasswordCommandHandler : IRequestHandler<ForgotPasswordCommand>
     {
-        private readonly IEmailSenderService _emailSenderService;
         private readonly IManagersService _managersService;
+        private readonly IMediator _mediator;
 
-        public ForgotPasswordCommandHandler(IManagersService managersService,
-                                            IEmailSenderService emailSenderService)
+        public ForgotPasswordCommandHandler(IManagersService managersService, IMediator mediator)
         {
             _managersService = managersService;
-            _emailSenderService = emailSenderService;
+            _mediator = mediator;
         }
 
         public async Task<Unit> Handle(ForgotPasswordCommand request, CancellationToken cancellationToken)
@@ -36,9 +37,11 @@ namespace Application.Auth.Commands.ForgotPassword
             string token = await _managersService.GenerateResetPasswordTokenAsync(user);
             string link = LinkMaker.CreateResetPasswordLink(user.Email, request.ClientUri, token);
 
-            Message message = new Message(new string[] { user.Email }, "Reset password request", link, null);
-
-            await _emailSenderService.SendResetPasswordEmailAsync(message);
+            await _mediator.Publish(new SendResetPasswordEmailNotification()
+            {
+                Email = user.Email,
+                Link = link,
+            });
 
             return Unit.Value;
         }

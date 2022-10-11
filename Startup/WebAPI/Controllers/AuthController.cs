@@ -40,6 +40,7 @@ namespace WebAPI.Controllers
 
         [HttpPost]
         [Route("forgot-password")]
+        [AllowAnonymous]
         public async Task<IActionResult> ForgotPassword(ForgotPasswordCommand command)
         {
             await Mediator.Send(command);
@@ -78,6 +79,7 @@ namespace WebAPI.Controllers
 
         [HttpPost]
         [Route("register")]
+        [AllowAnonymous]
         public async Task<IActionResult> Register(RegisterCommand command)
         {
             await Mediator.Send(command);
