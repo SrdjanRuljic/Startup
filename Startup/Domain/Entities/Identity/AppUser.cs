@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using System.Collections.Generic;
 
 namespace Domain.Entities.Identity
 {
@@ -6,5 +7,7 @@ namespace Domain.Entities.Identity
     {
         public string FirstName { get; set; }
         public string LastName { get; set; }
+        public virtual ICollection<RefreshToken> RefreshTokens { get; set; }
+        public virtual ICollection<AppUserRole> UserRoles { get; set; }
     }
 }

@@ -165,6 +165,9 @@
   <data name="InvalidEmail" xml:space="preserve">
     <value>Мејл '{0}' је неважећи.</value>
   </data>
+  <data name="InvalidRefreshToken" xml:space="preserve">
+    <value>Токен за освежавање није важећи. </value>
+  </data>
   <data name="InvalidRoleName" xml:space="preserve">
     <value>Назив улоге '{0}' је неважећи.</value>
   </data>

@@ -6,7 +6,8 @@ namespace Application.Auth
     {
         public static object GenerateJwt(string username, string[] roles, IJwtFactory jwtFactory) => new
         {
-            auth_token = jwtFactory.GenerateEncodedToken(username, roles)
+            auth_token = jwtFactory.GenerateEncodedToken(username, roles),
+            refresh_token = jwtFactory.GenerateEncodedToken()
         };
     }
 }

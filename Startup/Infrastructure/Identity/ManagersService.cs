@@ -16,12 +16,12 @@ namespace Infrastructure.Identity
     public class ManagersService : IManagersService
     {
         private readonly IAuthorizationService _authorizationService;
-        private readonly RoleManager<IdentityRole> _roleManager;
+        private readonly RoleManager<AppRole> _roleManager;
         private readonly SignInManager<AppUser> _signInManager;
         private readonly IUserClaimsPrincipalFactory<AppUser> _userClaimsPrincipalFactory;
         private readonly UserManager<AppUser> _userManager;
 
-        public ManagersService(RoleManager<IdentityRole> roleManager,
+        public ManagersService(RoleManager<AppRole> roleManager,
                                UserManager<AppUser> userManager,
                                SignInManager<AppUser> signInManager,
                                IUserClaimsPrincipalFactory<AppUser> userClaimsPrincipalFactory,
@@ -76,7 +76,7 @@ namespace Infrastructure.Identity
 
         public async Task<Result> CreateRoleAsync(string roleName)
         {
-            IdentityResult result = await _roleManager.CreateAsync(new IdentityRole()
+            IdentityResult result = await _roleManager.CreateAsync(new AppRole()
             {
                 Name = roleName
             });
@@ -140,7 +140,7 @@ namespace Infrastructure.Identity
                               .Select(x => SetDisplayName(x.FirstName, x.LastName))
                               .FirstOrDefaultAsync();
 
-        public async Task<string[]> GetRoleAsync(AppUser user)
+        public async Task<string[]> GetRolesAsync(AppUser user)
         {
             IList<string> list = await _userManager.GetRolesAsync(user);
 
@@ -193,7 +193,7 @@ namespace Infrastructure.Identity
 
                 if (result.Succeeded)
                 {
-                    string[] currentRoles = await GetRoleAsync(user);
+                    string[] currentRoles = await GetRolesAsync(user);
 
                     result = await _userManager.RemoveFromRolesAsync(user, currentRoles);
 

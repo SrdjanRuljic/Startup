@@ -1,13 +1,14 @@
 ﻿using Application.Auth.Commands.ConfirmEmail;
 using Application.Auth.Commands.ForgotPassword;
 using Application.Auth.Queries.GetUserRoles;
-using Application.Auth.Queries.Logout;
-using Application.Auth.Queries.Login;
 using Application.Auth.Commands.Register;
 using Application.Auth.Commands.ResetPassword;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
+using Application.Auth.Commands.Login;
+using Application.Auth.Commands.Logout;
+using Application.Auth.Commands.Refresh;
 
 namespace WebAPI.Controllers
 {
@@ -49,9 +50,9 @@ namespace WebAPI.Controllers
         [HttpPost]
         [Route("login")]
         [AllowAnonymous]
-        public async Task<IActionResult> Login(LoginQuery query)
+        public async Task<IActionResult> Login(LoginCommand command)
         {
-            object token = await Mediator.Send(query);
+            object token = await Mediator.Send(command);
 
             return Ok(token);
         }
@@ -60,9 +61,19 @@ namespace WebAPI.Controllers
         [Route("logout")]
         public async Task<IActionResult> Logout()
         {
-            await Mediator.Send(new LogoutQuery());
+            await Mediator.Send(new LogoutCommand());
 
             return Ok();
+        }
+
+        [HttpPost]
+        [Route("refresh-token")]
+        [AllowAnonymous]
+        public async Task<IActionResult> RefreshToken(RefreshTokenCommand command)
+        {
+            object result = await Mediator.Send(command);
+
+            return Ok(result);
         }
 
         [HttpPost]

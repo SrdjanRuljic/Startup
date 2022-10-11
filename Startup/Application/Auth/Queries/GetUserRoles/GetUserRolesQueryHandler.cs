@@ -28,7 +28,7 @@ namespace Application.Auth.Queries.GetUserRoles
             if (user == null)
                 throw new NotFoundException(string.Format(Resources.Translation.EntityWasNotFound, nameof(AppUser), _currentUserService.UserName));
 
-            roles = await _managersService.GetRoleAsync(user);
+            roles = await _managersService.GetRolesAsync(user);
 
             return roles;
         }
