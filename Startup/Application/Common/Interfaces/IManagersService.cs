@@ -35,7 +35,7 @@ namespace Application.Common.Interfaces
 
         Task<string> GetDisplayNameAsync(string userName);
 
-        Task<string[]> GetRoleAsync(AppUser user);
+        Task<string[]> GetRolesAsync(AppUser user);
 
         IQueryable<AppUser> GetUsers();
 

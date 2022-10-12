@@ -10,5 +10,7 @@ namespace Domain.Entities.Identity
 
         public ICollection<Message> MessagesRecived { get; set; }
         public ICollection<Message> MessagesSent { get; set; }
+        public virtual ICollection<RefreshToken> RefreshTokens { get; set; }
+        public virtual ICollection<AppUserRole> UserRoles { get; set; }
     }
 }

@@ -29,7 +29,7 @@ namespace Application.Users.Queries.GetById
 
             GetUserByIdViewModel model = _mapper.Map<GetUserByIdViewModel>(user);
 
-            model.Roles = await _managersService.GetRoleAsync(user);
+            model.Roles = await _managersService.GetRolesAsync(user);
 
             return model;
         }

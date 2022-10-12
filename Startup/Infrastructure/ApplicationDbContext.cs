@@ -2,13 +2,19 @@
 using Domain.Entities;
 using Domain.Entities.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
+using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata;
+using Domain.Entities;
+using System.Threading;
+using Infrastructure.Identity;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Text.RegularExpressions;
 
 namespace Infrastructure
 {
@@ -56,8 +62,16 @@ namespace Infrastructure
           ((Boolean?)property.FindAnnotation(IsUtcAnnotation)?.Value) ?? true;
     }
 
-    public class ApplicationDbContext : IdentityDbContext<AppUser>, IApplicationDbContext
+    public class ApplicationDbContext : IdentityDbContext<AppUser,
+                                                          AppRole,
+                                                          string,
+                                                          IdentityUserClaim<string>,
+                                                          AppUserRole,
+                                                          IdentityUserLogin<string>,
+                                                          IdentityRoleClaim<string>,
+                                                          IdentityUserToken<string>>, IApplicationDbContext
     {
+        public DbSet<RefreshToken> RefreshTokens { get; set; }
         public DbSet<Connection> Connections { get; set; }
         public DbSet<Group> Groups { get; set; }
         public DbSet<Message> Messages { get; set; }
