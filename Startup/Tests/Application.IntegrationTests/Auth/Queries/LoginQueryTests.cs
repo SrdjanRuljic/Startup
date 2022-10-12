@@ -1,4 +1,4 @@
-﻿using Application.Auth.Queries.Login;
+﻿using Application.Auth.Commands.Login;
 using Application.Exceptions;
 using FluentAssertions;
 using NUnit.Framework;
@@ -13,7 +13,7 @@ namespace Application.IntegrationTests.Auth.Queries
         [Test]
         public async Task ShouldRequireMinimumFields()
         {
-            LoginQuery query = new LoginQuery()
+            LoginCommand query = new LoginCommand()
             {
                 Username = "",
                 Password = ""
@@ -29,7 +29,7 @@ namespace Application.IntegrationTests.Auth.Queries
         {
             await EnsureSeedAsync();
 
-            LoginQuery query = new LoginQuery()
+            LoginCommand query = new LoginCommand()
             {
                 Username = "admin",
                 Password = "Administrator_123!"

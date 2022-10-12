@@ -5,16 +5,11 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
-using Domain.Entities;
 using System.Threading;
-using Infrastructure.Identity;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using System;
-using System.Threading;
-using System.Threading.Tasks;
-using System.Text.RegularExpressions;
 
 namespace Infrastructure
 {
@@ -71,10 +66,13 @@ namespace Infrastructure
                                                           IdentityRoleClaim<string>,
                                                           IdentityUserToken<string>>, IApplicationDbContext
     {
-        public DbSet<RefreshToken> RefreshTokens { get; set; }
         public DbSet<Connection> Connections { get; set; }
+
         public DbSet<Group> Groups { get; set; }
+
         public DbSet<Message> Messages { get; set; }
+
+        public DbSet<RefreshToken> RefreshTokens { get; set; }
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
