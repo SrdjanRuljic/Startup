@@ -31,8 +31,8 @@ namespace Application.Messages.Queries.SearchInterlocutors
                                                                     {
                                                                         Id = x.Sender.UserName == _currentUserService.UserName ? x.Recipient.Id : x.Sender.Id,
                                                                         UserName = x.Sender.UserName == _currentUserService.UserName ? x.Recipient.UserName : x.Sender.UserName,
-                                                                        FirstName = x.Sender.FirstName == _currentUserService.UserName ? x.Recipient.FirstName : x.Sender.FirstName,
-                                                                        LastName = x.Sender.LastName == _currentUserService.UserName ? x.Recipient.LastName : x.Sender.LastName,
+                                                                        FirstName = x.Sender.UserName == _currentUserService.UserName ? x.Recipient.FirstName : x.Sender.FirstName,
+                                                                        LastName = x.Sender.UserName == _currentUserService.UserName ? x.Recipient.LastName : x.Sender.LastName,
                                                                     }).Distinct();
 
             PaginatedList<SearchInterlocutorsViewModel> paginatedList = await PaginatedList<SearchInterlocutorsViewModel>.CreateAsync(list,
