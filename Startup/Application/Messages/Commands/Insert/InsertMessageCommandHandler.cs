@@ -47,13 +47,16 @@ namespace Application.Messages.Commands.Insert
             Message message = new Message()
             {
                 Content = request.Content,
-                Sender = sender,
-                Recipient = recipient
+                SenderId = sender.Id,
+                RecipientId = recipient.Id,
             };
 
             await _context.Messages.AddAsync(message);
 
             await _context.SaveChangesAsync(cancellationToken);
+
+            message.Sender = sender;
+            message.Recipient = recipient;
 
             return _mapper.Map<MessageViewModel>(message);
         }

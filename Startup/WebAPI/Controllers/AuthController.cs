@@ -31,6 +31,7 @@ namespace WebAPI.Controllers
 
         [HttpPost]
         [Route("confirm-email")]
+        [AllowAnonymous]
         public async Task<IActionResult> ConfirmEmail(ConfirmEmailCommand command)
         {
             await Mediator.Send(command);
