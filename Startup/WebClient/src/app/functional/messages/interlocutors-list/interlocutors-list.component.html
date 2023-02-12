@@ -7,7 +7,15 @@
           type="button"
           class="btn btn-default btn-lg float-right"
           [disabled]="searchModel.term === ''"
-          (click)="openConfirmationModal(searchModel.term)"
+          (click)="openConfirmationModal(searchModel.term, groupChat)"
+        >
+          <i class="bi bi-people" title="Star new group conversation"></i>
+        </button>
+        <button
+          type="button"
+          class="btn btn-default btn-lg float-right"
+          [disabled]="searchModel.term === ''"
+          (click)="openConfirmationModal(searchModel.term, user2UserChat)"
         >
           <i class="bi bi-person-plus" title="Star new conversation"></i>
         </button>

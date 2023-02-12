@@ -10,6 +10,7 @@ import { MessagesListComponent } from './messages-list/messages-list.component';
 import { MessagesRoutingModule } from './messages-routing.module';
 import { InterlocutorsListComponent } from './interlocutors-list/interlocutors-list.component';
 import { ConversationComponent } from './conversation/conversation.component';
+import { GroupConversationComponent } from './group-conversation/group-conversation.component';
 
 @NgModule({
   imports: [
@@ -23,6 +24,7 @@ import { ConversationComponent } from './conversation/conversation.component';
     MessagesListComponent,
     InterlocutorsListComponent,
     ConversationComponent /*TimeAgoExtPipe*/,
+    GroupConversationComponent,
   ],
 })
 export class MessagesModule {}

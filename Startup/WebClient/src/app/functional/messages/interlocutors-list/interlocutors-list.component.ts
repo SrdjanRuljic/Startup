@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+import { CHATTYPE } from 'src/app/shared/enums/chat-types';
 import { InterlocutorSearchModel } from 'src/app/shared/models/interlocutors-search';
 import { IPagination } from 'src/app/shared/models/pagination';
 import { ConfirmationModalService } from 'src/app/shared/services/confirmation-modal.service';
@@ -16,6 +17,8 @@ export class InterlocutorsListComponent implements OnInit {
   interlocutors: any[];
   searchModel: InterlocutorSearchModel;
   pagination: IPagination;
+  groupChat = CHATTYPE.GROUP;
+  user2UserChat = CHATTYPE.USER2USER;
 
   constructor(
     private _router: Router,
@@ -78,13 +81,26 @@ export class InterlocutorsListComponent implements OnInit {
   goToConversation(username: string) {
     this._router.navigate(['/conversation', username]);
   }
+  goToGroupConversation(name: string) {
+    this._router.navigate(['/group-conversation', name]);
+  }
 
-  async openConfirmationModal(username: string) {
+  async openConfirmationModal(name: string, type: string) {
     const result = await this._confirmationModalService.confirm(
-      'Are you sure you want to start new conversation with ' + username + '?'
+      'Are you sure you want to start new conversation with ' + name + '?'
     );
     if (result) {
-      this.goToConversation(username);
+      switch (type) {
+        case this.groupChat:
+          this.goToGroupConversation(name);
+          break;
+        case this.user2UserChat:
+          this.goToConversation(name);
+          break;
+        default:
+          this.goToConversation(name);
+          break;
+      }
     }
   }
 }
