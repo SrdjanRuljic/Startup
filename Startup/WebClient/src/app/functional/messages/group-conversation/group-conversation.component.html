@@ -15,8 +15,74 @@
       <div class="card">
         <div class="card-body">
           <div>No messages yet...</div>
-          <ul class="chat"></ul>
+          <ul class="chat">
+            <li *ngFor="let item of _chatGroupService.messagesThread$ | async">
+              <div>
+                <span class="chat-img float-right">
+                  <img
+                    class="img-circle"
+                    src="{{ item.senderPhotoUrl || './assets/user.png' }}"
+                    alt="{{ item.senderUserName }}"
+                  />
+                </span>
+                <div class="chat-body">
+                  <div class="header">
+                    <small class="text-muted">
+                      <span class="bi bi-clock">
+                        {{ item.messageSent | timeago }}
+                      </span>
+                      <span
+                        class="text-danger"
+                        *ngIf="!item.dateRead && item.senderUserName !== name"
+                      >
+                        (unread)
+                      </span>
+                      <span
+                        class="text-success"
+                        *ngIf="item.dateRead && item.senderUserName !== name"
+                      >
+                        (read {{ item.dateRead | timeago }})
+                      </span>
+                    </small>
+                  </div>
+                  <p>
+                    <b>{{ item.content }}</b>
+                  </p>
+                </div>
+              </div>
+            </li>
+          </ul>
         </div>
+      </div>
+
+      <div class="card-footer">
+        <form name="form" (ngSubmit)="f.valid && save()" #f="ngForm">
+          <div class="input-group">
+            <input
+              [(ngModel)]="model.content"
+              [ngClass]="{
+                'is-invalid': f.submitted && !contentValidation()
+              }"
+              id="content"
+              name="content"
+              autocomplete="off"
+              type="text"
+              class="form-control input-sm"
+              placeholder="Send a message"
+            />
+            <div class="input-group-append">
+              <button class="btn btn-default" type="submit">Send</button>
+            </div>
+          </div>
+          <div class="form-outline">
+            <small
+              *ngIf="f.submitted && !contentValidation()"
+              class="text-danger"
+            >
+              Any content is required
+            </small>
+          </div>
+        </form>
       </div>
     </div>
   </div>
