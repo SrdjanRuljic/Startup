@@ -26,4 +26,8 @@ export class GroupConversationComponent implements OnInit {
       }
     });
   }
+
+  goToInterlocutors() {
+    this._router.navigate(['/interlocutors']);
+  }
 }
