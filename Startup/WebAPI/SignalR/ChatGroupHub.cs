@@ -19,13 +19,13 @@ using System.Linq;
 namespace WebAPI.SignalR
 {
     [Authorize]
-    public class ChatGroupHab : Hub
+    public class ChatGroupHub : Hub
     {
         private readonly ISender _mediator;
         private readonly IHubContext<PresenceHub> _presenceHubContext;
         private readonly PresenceTracker _trucker;
 
-        public ChatGroupHab(ISender mediator, IHubContext<PresenceHub> presenceHubContext, PresenceTracker trucker)
+        public ChatGroupHub(ISender mediator, IHubContext<PresenceHub> presenceHubContext, PresenceTracker trucker)
         {
             _mediator = mediator;
             _presenceHubContext = presenceHubContext;
