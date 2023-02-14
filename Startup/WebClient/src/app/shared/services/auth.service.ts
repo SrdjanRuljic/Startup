@@ -11,6 +11,7 @@ import { IForgotPassword } from '../models/forgot-password';
 import { IResetPassword } from '../models/reset-password';
 
 const TOKEN_KEY = 'auth-token';
+const REFRESH_TOKEN_KEY = 'refresh-token';
 const PERMISSIONS_KEY = 'permissions';
 
 @Injectable({
@@ -32,6 +33,20 @@ export class AuthService {
     return this._http
       .post(this._authUrl + '/' + 'register', model)
       .pipe(map((res) => res));
+  }
+
+  refreshToken(): Observable<any> {
+    let refreshToken = this.getRefreshToken();
+
+    return this._http
+      .post(this._authUrl + '/' + 'refresh-token', {
+        refreshToken: refreshToken,
+      })
+      .pipe(
+        map((res) => {
+          this.handleLoginSuccess(res);
+        })
+      );
   }
 
   login(model: ILogin): Observable<any> {
@@ -82,13 +97,24 @@ export class AuthService {
     return localStorage.getItem(TOKEN_KEY);
   }
 
+  getRefreshToken(): string | null {
+    return localStorage.getItem(REFRESH_TOKEN_KEY);
+  }
+
   private saveToken(token: string): void {
     localStorage.removeItem(TOKEN_KEY);
     localStorage.setItem(TOKEN_KEY, token);
   }
 
+  private saveRefreshToken(token: string): void {
+    localStorage.removeItem(REFRESH_TOKEN_KEY);
+    localStorage.setItem(REFRESH_TOKEN_KEY, token);
+  }
+
   private handleLoginSuccess(response: any) {
     this.saveToken(response.auth_token);
+    this.saveRefreshToken(response.refresh_token);
+
     this.isAuthorized$.next(true);
 
     this.getAllUserRoles();
