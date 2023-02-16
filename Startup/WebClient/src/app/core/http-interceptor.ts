@@ -7,14 +7,21 @@ import {
   HTTP_INTERCEPTORS,
   HttpErrorResponse,
 } from '@angular/common/http';
-import { Observable, throwError } from 'rxjs';
-import { catchError } from 'rxjs/operators';
+import { BehaviorSubject, Observable, throwError } from 'rxjs';
+import { catchError, switchMap } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+import { AuthService } from '../shared/services/auth.service';
 
 @Injectable()
 export class ErrorInterceptor implements HttpInterceptor {
-  constructor(private _router: Router, private _toastrService: ToastrService) {}
+  isRefreshing = false;
+
+  constructor(
+    private _router: Router,
+    private _toastrService: ToastrService,
+    private _authService: AuthService
+  ) {}
 
   intercept(
     request: HttpRequest<any>,
@@ -22,9 +29,9 @@ export class ErrorInterceptor implements HttpInterceptor {
   ): Observable<HttpEvent<any>> {
     return next.handle(request).pipe(
       catchError((error) => {
-        // if (error.status === 401 || error.status === 403) {
-        //   this.handleUnauthorized();
-        // }
+        if (error.status === 401) {
+          this.handleUnauthorized();
+        }
         if (error instanceof HttpErrorResponse) {
           this.handleError(error.error);
         }
@@ -39,8 +46,13 @@ export class ErrorInterceptor implements HttpInterceptor {
   }
 
   handleUnauthorized() {
-    this.goToHome();
-    this._toastrService.error('You are unauthorized.');
+    if (!this.isRefreshing) {
+      this.isRefreshing = true;
+
+      this._authService.refreshToken().subscribe((response) => {
+        this.isRefreshing = false;
+      });
+    }
   }
 
   goToHome() {
