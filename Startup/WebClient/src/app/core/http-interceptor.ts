@@ -8,7 +8,7 @@ import {
   HttpErrorResponse,
 } from '@angular/common/http';
 import { BehaviorSubject, Observable, throwError } from 'rxjs';
-import { catchError, switchMap } from 'rxjs/operators';
+import { catchError, map, switchMap } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { AuthService } from '../shared/services/auth.service';
@@ -30,7 +30,7 @@ export class ErrorInterceptor implements HttpInterceptor {
     return next.handle(request).pipe(
       catchError((error) => {
         if (error.status === 401) {
-          this.handleUnauthorized();
+          this.handleUnauthorized(request, next);
         }
         if (error instanceof HttpErrorResponse) {
           this.handleError(error.error);
@@ -45,14 +45,41 @@ export class ErrorInterceptor implements HttpInterceptor {
     this._toastrService.error(message);
   }
 
-  handleUnauthorized() {
+  handleUnauthorized(request: HttpRequest<any>, next: HttpHandler) {
     if (!this.isRefreshing) {
       this.isRefreshing = true;
 
-      this._authService.refreshToken().subscribe((response) => {
-        this.isRefreshing = false;
-      });
+      if (this._authService.getToken()) {
+        return this._authService.refreshToken().pipe(
+          switchMap(() => {
+            this.isRefreshing = false;
+            console.log('1');
+
+            return next.handle(request);
+          }),
+          catchError((error) => {
+            this.isRefreshing = false;
+            console.log('2');
+
+            if (error.status == '403') {
+              this.handleForbbiden();
+            }
+
+            return throwError(() => error);
+          })
+        );
+      }
     }
+    console.log('3');
+
+    return next.handle(request);
+  }
+
+  handleForbbiden() {
+    this.goToHome();
+
+    this._toastrService.error('Forbbiden');
+    this._authService.logout();
   }
 
   goToHome() {

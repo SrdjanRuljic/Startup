@@ -112,6 +112,8 @@ export class AuthService {
   }
 
   private handleLoginSuccess(response: any) {
+    console.log('response:', response);
+
     this.saveToken(response.auth_token);
     this.saveRefreshToken(response.refresh_token);
 
