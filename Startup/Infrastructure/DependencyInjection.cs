@@ -77,7 +77,7 @@ namespace Infrastructure
                         context.HandleResponse();
 
                         context.Response.StatusCode = (int)HttpStatusCode.Unauthorized;
-                        context.Response.AddUnauthorisedExcention(ErrorMessages.Unauthorised);
+                        context.Response.AddUnauthorisedExcention(context.ErrorDescription);
                         await context.Response.WriteAsync(ErrorMessages.Unauthorised);
                     }
                 };

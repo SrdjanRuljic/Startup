@@ -44,7 +44,7 @@ export class AuthService {
       })
       .pipe(
         map((res) => {
-          this.handleLoginSuccess(res);
+          this.handleRefreshSuccess(res);
         })
       );
   }
@@ -112,14 +112,20 @@ export class AuthService {
   }
 
   private handleLoginSuccess(response: any) {
-    console.log('response:', response);
-
     this.saveToken(response.auth_token);
     this.saveRefreshToken(response.refresh_token);
 
     this.isAuthorized$.next(true);
 
     this.getAllUserRoles();
+  }
+
+  handleRefreshSuccess(response: any) {
+    console.log('response:', response);
+    this.saveToken(response.auth_token);
+    this.saveRefreshToken(response.refresh_token);
+
+    this.isAuthorized$.next(true);
   }
 
   private handleLogoutSuccess(response: any) {

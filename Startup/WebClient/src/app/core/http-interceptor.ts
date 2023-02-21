@@ -8,7 +8,7 @@ import {
   HttpErrorResponse,
 } from '@angular/common/http';
 import { BehaviorSubject, Observable, throwError } from 'rxjs';
-import { catchError, map, switchMap } from 'rxjs/operators';
+import { catchError, filter, switchMap, take } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { AuthService } from '../shared/services/auth.service';
@@ -16,6 +16,9 @@ import { AuthService } from '../shared/services/auth.service';
 @Injectable()
 export class ErrorInterceptor implements HttpInterceptor {
   isRefreshing = false;
+  private refreshTokenSubject: BehaviorSubject<any> = new BehaviorSubject<any>(
+    null
+  );
 
   constructor(
     private _router: Router,
@@ -48,42 +51,53 @@ export class ErrorInterceptor implements HttpInterceptor {
   handleUnauthorized(request: HttpRequest<any>, next: HttpHandler) {
     if (!this.isRefreshing) {
       this.isRefreshing = true;
+      this.refreshTokenSubject.next(null);
 
       if (this._authService.getToken()) {
-        this._authService.refreshToken().pipe(
-          switchMap(() => {
-            this.isRefreshing = false;
-            console.log('1');
+        this._authService
+          .refreshToken()
+          .pipe(
+            switchMap((response: any) => {
+              this.isRefreshing = false;
+              this.refreshTokenSubject.next(response.auth_token);
 
-            return next.handle(request);
-          }),
-          catchError((error) => {
-            this.isRefreshing = false;
-            console.log('2');
+              this._authService.handleRefreshSuccess(response);
 
-            if (error.status == '403') {
-              this.handleForbbiden();
-            }
+              return next.handle(
+                this.refreshTokenHeader(request, response.auth_token)
+              );
+            }),
+            catchError((error) => {
+              this.isRefreshing = false;
 
-            return throwError(() => error);
-          })
-        );
+              this.goToHome();
+              this._authService.logout();
+
+              return throwError(() => error);
+            })
+          )
+          .subscribe();
       }
     }
-    console.log('3');
 
-    return next.handle(request);
-  }
-
-  handleForbbiden() {
-    this.goToHome();
-
-    this._toastrService.error('Forbbiden');
-    this._authService.logout();
+    return this.refreshTokenSubject.pipe(
+      filter((token) => token !== null),
+      take(1),
+      switchMap((token) => next.handle(this.refreshTokenHeader(request, token)))
+    );
   }
 
   goToHome() {
     this._router.navigate(['/']);
+  }
+
+  private refreshTokenHeader(request: HttpRequest<any>, token: string) {
+    return request.clone({
+      setHeaders: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+    });
   }
 }
 
