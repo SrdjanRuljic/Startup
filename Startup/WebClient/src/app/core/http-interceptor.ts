@@ -50,7 +50,7 @@ export class ErrorInterceptor implements HttpInterceptor {
       this.isRefreshing = true;
 
       if (this._authService.getToken()) {
-        return this._authService.refreshToken().pipe(
+        this._authService.refreshToken().pipe(
           switchMap(() => {
             this.isRefreshing = false;
             console.log('1');
