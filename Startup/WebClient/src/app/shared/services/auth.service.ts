@@ -9,9 +9,8 @@ import { ILogin } from '../models/login';
 import { IConfirmEmail } from '../models/confirm-email';
 import { IForgotPassword } from '../models/forgot-password';
 import { IResetPassword } from '../models/reset-password';
+import { TokenService } from './token.service';
 
-const TOKEN_KEY = 'auth-token';
-const REFRESH_TOKEN_KEY = 'refresh-token';
 const PERMISSIONS_KEY = 'permissions';
 
 @Injectable({
@@ -26,8 +25,11 @@ export class AuthService {
   constructor(
     private _appGlobals: AppGlobals,
     private _http: HttpClient,
-    private _permissionsService: NgxPermissionsService
+    private _permissionsService: NgxPermissionsService,
+    private _tokenService: TokenService
   ) {}
+
+  //#region [Http]
 
   register(model: IRegister): Observable<any> {
     return this._http
@@ -36,7 +38,7 @@ export class AuthService {
   }
 
   refreshToken(): Observable<any> {
-    let refreshToken = this.getRefreshToken();
+    let refreshToken = this._tokenService.getRefreshToken();
 
     return this._http
       .post(this._authUrl + '/' + 'refresh-token', {
@@ -89,31 +91,15 @@ export class AuthService {
     );
   }
 
+  //#endregion
+
   getIsAuthorized$(): Observable<boolean> {
     return this.isAuthorized$.asObservable();
   }
 
-  getToken(): string | null {
-    return localStorage.getItem(TOKEN_KEY);
-  }
-
-  getRefreshToken(): string | null {
-    return localStorage.getItem(REFRESH_TOKEN_KEY);
-  }
-
-  private saveToken(token: string): void {
-    localStorage.removeItem(TOKEN_KEY);
-    localStorage.setItem(TOKEN_KEY, token);
-  }
-
-  private saveRefreshToken(token: string): void {
-    localStorage.removeItem(REFRESH_TOKEN_KEY);
-    localStorage.setItem(REFRESH_TOKEN_KEY, token);
-  }
-
   private handleLoginSuccess(response: any) {
-    this.saveToken(response.auth_token);
-    this.saveRefreshToken(response.refresh_token);
+    this._tokenService.saveToken(response.auth_token);
+    this._tokenService.saveRefreshToken(response.refresh_token);
 
     this.isAuthorized$.next(true);
 
@@ -121,9 +107,8 @@ export class AuthService {
   }
 
   handleRefreshSuccess(response: any) {
-    console.log('response:', response);
-    this.saveToken(response.auth_token);
-    this.saveRefreshToken(response.refresh_token);
+    this._tokenService.saveToken(response.auth_token);
+    this._tokenService.saveRefreshToken(response.refresh_token);
 
     this.isAuthorized$.next(true);
   }
@@ -136,7 +121,7 @@ export class AuthService {
   }
 
   getIsAuthorized() {
-    let token = this.getToken();
+    let token = this._tokenService.getToken();
     return !this._jwtHelper.isTokenExpired(token!);
   }
 

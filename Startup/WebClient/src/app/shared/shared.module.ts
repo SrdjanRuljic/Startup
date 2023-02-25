@@ -14,6 +14,7 @@ import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { AuthService } from './services/auth.service';
 import { UsersService } from './services/users.service';
 import { ConfirmationModalService } from './services/confirmation-modal.service';
+import { TokenService } from './services/token.service';
 
 @NgModule({
   imports: [
@@ -32,6 +33,11 @@ import { ConfirmationModalService } from './services/confirmation-modal.service'
   ],
   declarations: [MenuComponent],
   exports: [MenuComponent, NgxPermissionsModule],
-  providers: [AuthService, UsersService, ConfirmationModalService],
+  providers: [
+    AuthService,
+    UsersService,
+    ConfirmationModalService,
+    TokenService,
+  ],
 })
 export class SharedModule {}

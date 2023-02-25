@@ -10,16 +10,20 @@ import { Injectable } from '@angular/core';
 import { Observable, take } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { AuthService } from '../shared/services/auth.service';
+import { TokenService } from '../shared/services/token.service';
 
 @Injectable()
 export class JwtInterceptor implements HttpInterceptor {
-  constructor(private _authService: AuthService) {}
+  constructor(
+    private _authService: AuthService,
+    private _tokenService: TokenService
+  ) {}
 
   intercept(
     request: HttpRequest<any>,
     next: HttpHandler
   ): Observable<HttpEvent<any>> {
-    const token = this._authService.getToken();
+    const token = this._tokenService.getToken();
     const isApiUrl = request.url.startsWith(environment.api_url);
 
     if (isApiUrl && token) {
