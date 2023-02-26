@@ -17,7 +17,9 @@ import { TokenService } from '../shared/services/token.service';
 @Injectable()
 export class ErrorInterceptor implements HttpInterceptor {
   isRefreshing = false;
-  private refreshToken$: BehaviorSubject<any> = new BehaviorSubject<any>(null);
+  private refreshedToken$: BehaviorSubject<any> = new BehaviorSubject<any>(
+    null
+  );
 
   constructor(
     private _router: Router,
@@ -51,7 +53,7 @@ export class ErrorInterceptor implements HttpInterceptor {
   handleUnauthorized(request: HttpRequest<any>, next: HttpHandler) {
     if (!this.isRefreshing) {
       this.isRefreshing = true;
-      this.refreshToken$.next(null);
+      this.refreshedToken$.next(null);
 
       if (this._tokenService.getToken()) {
         this._authService
@@ -59,7 +61,7 @@ export class ErrorInterceptor implements HttpInterceptor {
           .pipe(
             switchMap((response: any) => {
               this.isRefreshing = false;
-              this.refreshToken$.next(response.auth_token);
+              this.refreshedToken$.next(response.auth_token);
 
               this._authService.handleRefreshSuccess(response);
 
@@ -80,7 +82,7 @@ export class ErrorInterceptor implements HttpInterceptor {
       }
     }
 
-    return this.refreshToken$.pipe(
+    return this.refreshedToken$.pipe(
       filter((token) => token !== null),
       take(1),
       switchMap((token) => next.handle(this.refreshHeaderToken(request, token)))
