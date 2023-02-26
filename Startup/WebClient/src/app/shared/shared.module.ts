@@ -15,6 +15,7 @@ import { TimeagoModule } from 'ngx-timeago';
 import { AuthService } from './services/auth.service';
 import { UsersService } from './services/users.service';
 import { ConfirmationModalService } from './services/confirmation-modal.service';
+import { TokenService } from './services/token.service';
 
 @NgModule({
   imports: [
@@ -33,6 +34,13 @@ import { ConfirmationModalService } from './services/confirmation-modal.service'
     TimeagoModule.forRoot(),
   ],
   declarations: [MenuComponent],
+  exports: [MenuComponent, NgxPermissionsModule],
+  providers: [
+    AuthService,
+    UsersService,
+    ConfirmationModalService,
+    TokenService,
+  ],
   exports: [MenuComponent, NgxPermissionsModule, TimeagoModule],
   providers: [AuthService, UsersService, ConfirmationModalService],
 })

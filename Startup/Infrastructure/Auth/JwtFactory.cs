@@ -57,7 +57,7 @@ namespace Infrastructure.Auth
 
             JwtSecurityToken token = new JwtSecurityToken(issuer: _config["Jwt:Issuer"],
                                                           audience: _config["Jwt:Audience"],
-                                                          expires: _dateTimeService.Now.AddDays(1),
+                                                          expires: _dateTimeService.Now.AddHours(24),
                                                           signingCredentials: credentials);
 
             string encodeToken = new JwtSecurityTokenHandler().WriteToken(token);

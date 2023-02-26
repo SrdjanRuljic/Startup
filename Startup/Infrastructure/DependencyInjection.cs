@@ -1,16 +1,20 @@
-﻿using Application.Common.Interfaces;
+﻿using Application.Common.Excentions;
+using Application.Common.Interfaces;
+using Application.Exceptions;
 using Domain.Entities.Identity;
 using Infrastructure.Auth;
 using Infrastructure.EmailSender;
 using Infrastructure.Identity;
 using Infrastructure.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using System;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -81,6 +85,15 @@ namespace Infrastructure
                         }
 
                         return Task.CompletedTask;
+                    },
+
+                    OnChallenge = async context =>
+                    {
+                        context.HandleResponse();
+
+                        context.Response.StatusCode = (int)HttpStatusCode.Unauthorized;
+                        context.Response.AddUnauthorisedExcention(context.ErrorDescription);
+                        await context.Response.WriteAsync(ErrorMessages.Unauthorised);
                     }
                 };
             });
