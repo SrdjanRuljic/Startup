@@ -34,14 +34,12 @@ import { TokenService } from './services/token.service';
     TimeagoModule.forRoot(),
   ],
   declarations: [MenuComponent],
-  exports: [MenuComponent, NgxPermissionsModule],
+  exports: [MenuComponent, NgxPermissionsModule, TimeagoModule],
   providers: [
     AuthService,
     UsersService,
     ConfirmationModalService,
     TokenService,
   ],
-  exports: [MenuComponent, NgxPermissionsModule, TimeagoModule],
-  providers: [AuthService, UsersService, ConfirmationModalService],
 })
 export class SharedModule {}

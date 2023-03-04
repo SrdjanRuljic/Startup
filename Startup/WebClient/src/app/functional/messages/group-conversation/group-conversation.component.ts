@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { IChatGroup } from 'src/app/shared/models/chat-group';
 import { AuthService } from 'src/app/shared/services/auth.service';
 import { ChatGroupService } from 'src/app/shared/services/chat-group.service';
+import { TokenService } from 'src/app/shared/services/token.service';
 
 @Component({
   selector: 'app-group-conversation',
@@ -18,7 +19,7 @@ export class GroupConversationComponent implements OnInit {
   constructor(
     private _router: Router,
     private _route: ActivatedRoute,
-    private _authService: AuthService,
+    private _tokenService: TokenService,
     public _chatGroupService: ChatGroupService
   ) {
     this.model = {
@@ -32,7 +33,7 @@ export class GroupConversationComponent implements OnInit {
     this._route.params.subscribe((params) => {
       this.name = params['name'];
       if (this.name != '') {
-        const token = this._authService.getToken();
+        const token = this._tokenService.getToken();
       }
     });
   }

@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { IMessage } from 'src/app/shared/models/message';
 import { AuthService } from 'src/app/shared/services/auth.service';
 import { MessagesService } from 'src/app/shared/services/messages.service';
+import { TokenService } from 'src/app/shared/services/token.service';
 
 @Component({
   selector: 'app-conversation',
@@ -19,7 +20,7 @@ export class ConversationComponent implements OnInit, OnDestroy {
     private _router: Router,
     private _route: ActivatedRoute,
     public _messagesService: MessagesService,
-    private _authService: AuthService
+    private _tokenService: TokenService
   ) {
     this.model = {
       content: '',
@@ -36,7 +37,7 @@ export class ConversationComponent implements OnInit, OnDestroy {
     this._route.params.subscribe((params) => {
       this.username = params['username'];
       if (this.username != '0') {
-        const token = this._authService.getToken();
+        const token = this._tokenService.getToken();
         this.model.recipientUserName = this.username;
 
         this._messagesService.createHubConnection(

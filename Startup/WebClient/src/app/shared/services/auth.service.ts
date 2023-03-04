@@ -27,7 +27,7 @@ export class AuthService {
     private _appGlobals: AppGlobals,
     private _http: HttpClient,
     private _permissionsService: NgxPermissionsService,
-    private _presenceService: PresenceService
+    private _presenceService: PresenceService,
     private _tokenService: TokenService
   ) {}
 
