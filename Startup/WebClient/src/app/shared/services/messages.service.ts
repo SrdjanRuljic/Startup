@@ -54,6 +54,7 @@ export class MessagesService {
 
   stopHubConnection() {
     if (this.hubConnection) {
+      this.messagesThreadSources.next([]);
       this.hubConnection.stop();
     }
   }
