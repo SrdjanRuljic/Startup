@@ -1,5 +1,4 @@
 ﻿using Application.Auth.Commands.Login;
-using Application.Auth.Queries.Login;
 using Application.Exceptions;
 using FluentAssertions;
 using NUnit.Framework;
