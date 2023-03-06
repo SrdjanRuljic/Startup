@@ -1,51 +1,88 @@
-using Application.System.Commands.SeedData;
-using Infrastructure;
-using Infrastructure.Identity;
-using MediatR;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
-using System;
-using System.Threading;
-using System.Threading.Tasks;
+var builder = WebApplication.CreateBuilder(args);
+string MyAllowSpecificOrigins = "_ratingSystemPolicy";
 
-namespace WebAPI
+// add services to the container
+
+builder.Services.AddApplication();
+builder.Services.AddInfrastructure(builder.Configuration);
+builder.Services.AddPersistence(builder.Configuration);
+builder.Services.AddScoped<ICurrentUserService, CurrentUserService>();
+builder.Services.AddHttpContextAccessor();
+builder.Services.AddCors(options =>
 {
-    public class Program
+    options.AddPolicy(MyAllowSpecificOrigins,
+    builder =>
     {
-        public static IHostBuilder CreateHostBuilder(string[] args) =>
-            Host.CreateDefaultBuilder(args)
-                .ConfigureWebHostDefaults(webBuilder =>
+        builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader();
+    });
+});
+builder.Services.AddControllers();
+builder.Services.AddSwaggerGen(options =>
+{
+    options.SwaggerDoc("v1", new OpenApiInfo { Title = "WebAPI", Version = "v1" });
+    options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+    {
+        Description = "JWT Authorization header using the Bearer scheme.",
+        Type = SecuritySchemeType.Http,
+        Scheme = "bearer"
+    });
+    options.AddSecurityRequirement(new OpenApiSecurityRequirement()
                 {
-                    webBuilder.UseStartup<Startup>();
+                    {
+                        new OpenApiSecurityScheme{
+                            Reference = new OpenApiReference
+                            {
+                                Id = "Bearer",
+                                Type = ReferenceType.SecurityScheme
+                            }
+                        }, new List<string>()
+                    }
                 });
 
-        public static async Task Main(string[] args)
-        {
-            IHost host = CreateHostBuilder(args).Build();
+    options.OperationFilter<SwaggerLanguageHeader>();
+});
 
-            using (IServiceScope scope = host.Services.CreateScope())
-            {
-                IServiceProvider services = scope.ServiceProvider;
+// configure HTTP request pipeline
 
-                try
-                {
-                    ApplicationDbContext applicationContext = services.GetRequiredService<ApplicationDbContext>();
-                    applicationContext.Database.Migrate();
+var app = builder.Build();
 
-                    IMediator mediator = services.GetRequiredService<IMediator>();
-                    await mediator.Send(new SeedDataCommand(), CancellationToken.None);
-                }
-                catch (Exception ex)
-                {
-                    ILogger<Program> logger = scope.ServiceProvider.GetRequiredService<ILogger<Program>>();
-                    logger.LogError(ex, "An error occurred while migrating or initializing the database.");
-                }
-            }
+if (builder.Environment.IsDevelopment())
+{
+    app.UseDeveloperExceptionPage();
+    app.UseSwagger();
+    app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "WebAPI v1"));
+}
 
-            host.Run();
-        }
+app.UseCustomExceptionHandler();
+
+app.UseHttpsRedirection();
+
+app.UseCors(MyAllowSpecificOrigins);
+
+app.UseRouting();
+
+app.UseRequestLocalization();
+
+app.UseAuthentication();
+
+app.UseAuthorization();
+
+app.MapControllers();
+
+using (IServiceScope scope = app.Services.CreateScope())
+{
+    IServiceProvider services = scope.ServiceProvider;
+
+    try
+    {
+        ApplicationDbContext applicationContext = services.GetRequiredService<ApplicationDbContext>();
+        applicationContext.Database.Migrate();
+    }
+    catch (Exception ex)
+    {
+        var logger = services.GetRequiredService<ILogger<Program>>();
+        logger.LogError(ex, "an error occurred during migration");
     }
 }
+
+await app.RunAsync();

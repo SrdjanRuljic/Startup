@@ -33,7 +33,7 @@ namespace WebAPI.Controllers
 
         [HttpGet]
         [Route("get-by-username")]
-        public async Task<IActionResult> GetByUserName(string id)
+        public async Task<IActionResult> GetByUserName()
         {
             GetByUserNameViewModel user = await Mediator.Send(new GetByUserNameQuery());
 
