@@ -6,15 +6,15 @@ using MediatR;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Application.Users.Queries.GetByUserName
+namespace Application.Users.Queries.GetLoggedIn
 {
-    public class GetByUserNameQueryHandler : IRequestHandler<GetByUserNameQuery, GetByUserNameViewModel>
+    public class GetLoggedInUserQueryHandler : IRequestHandler<GetLoggedInUserQuery, GetLoggedInUserViewModel>
     {
         private readonly ICurrentUserService _currentUserService;
         private readonly IManagersService _managersService;
         private readonly IMapper _mapper;
 
-        public GetByUserNameQueryHandler(IManagersService managersService,
+        public GetLoggedInUserQueryHandler(IManagersService managersService,
                                          ICurrentUserService currentUserService,
                                          IMapper mapper)
         {
@@ -23,14 +23,14 @@ namespace Application.Users.Queries.GetByUserName
             _mapper = mapper;
         }
 
-        public async Task<GetByUserNameViewModel> Handle(GetByUserNameQuery request, CancellationToken cancellationToken)
+        public async Task<GetLoggedInUserViewModel> Handle(GetLoggedInUserQuery request, CancellationToken cancellationToken)
         {
             AppUser user = await _managersService.FindByUserNameAsync(_currentUserService.UserName);
 
             if (user == null)
                 throw new NotFoundException(string.Format(Resources.Translation.EntityWasNotFound, nameof(AppUser), _currentUserService.UserName));
 
-            GetByUserNameViewModel model = _mapper.Map<GetByUserNameViewModel>(user);
+            GetLoggedInUserViewModel model = _mapper.Map<GetLoggedInUserViewModel>(user);
 
             return model;
         }

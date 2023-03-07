@@ -6,7 +6,7 @@ using Application.Users.Commands.Insert;
 using Application.Users.Commands.Update.Self;
 using Application.Users.Commands.Update.Update;
 using Application.Users.Queries.GetById;
-using Application.Users.Queries.GetByUserName;
+using Application.Users.Queries.GetLoggedIn;
 using Application.Users.Queries.GetDisplayName;
 using Application.Users.Queries.Search;
 using Microsoft.AspNetCore.Authorization;
@@ -32,15 +32,6 @@ namespace WebAPI.Controllers
         }
 
         [HttpGet]
-        [Route("get-by-username")]
-        public async Task<IActionResult> GetByUserName()
-        {
-            GetByUserNameViewModel user = await Mediator.Send(new GetByUserNameQuery());
-
-            return Ok(user);
-        }
-
-        [HttpGet]
         [Route("display-name")]
         public async Task<IActionResult> GetDisplayName()
         {
@@ -49,18 +40,18 @@ namespace WebAPI.Controllers
             return Ok(new { displayName = displayName });
         }
 
+        [HttpGet]
+        [Route("loggedin")]
+        public async Task<IActionResult> GetloggedinUser()
+        {
+            GetLoggedInUserViewModel user = await Mediator.Send(new GetLoggedInUserQuery());
+
+            return Ok(user);
+        }
+
         #endregion [GET]
 
         #region [POST]
-
-        [HttpPost]
-        [Route("search")]
-        public async Task<IActionResult> Search(SearchUsersQuery query)
-        {
-            PaginationResultViewModel<SearchUsersViewModel> users = await Mediator.Send(query);
-
-            return Ok(users);
-        }
 
         [Authorize(Policy = "RequireAdminRole")]
         [HttpPost]
@@ -72,28 +63,18 @@ namespace WebAPI.Controllers
             return Ok();
         }
 
+        [HttpPost]
+        [Route("search")]
+        public async Task<IActionResult> Search(SearchUsersQuery query)
+        {
+            PaginationResultViewModel<SearchUsersViewModel> users = await Mediator.Send(query);
+
+            return Ok(users);
+        }
+
         #endregion [POST]
 
         #region [PUT]
-
-        [Authorize(Policy = "RequireAdminRole")]
-        [HttpPut]
-        [Route("")]
-        public async Task<IActionResult> Update(UpdateCommand command)
-        {
-            await Mediator.Send(command);
-
-            return Ok();
-        }
-
-        [HttpPut]
-        [Route("self")]
-        public async Task<IActionResult> UpdateSelf(UpdateSelfCommand command)
-        {
-            await Mediator.Send(command);
-
-            return Ok();
-        }
 
         [HttpPut]
         [Route("change-password")]
@@ -108,6 +89,25 @@ namespace WebAPI.Controllers
         [HttpPut]
         [Route("change-user-password")]
         public async Task<IActionResult> ChangeUserPassword(ChangeUserPasswordCommand command)
+        {
+            await Mediator.Send(command);
+
+            return Ok();
+        }
+
+        [Authorize(Policy = "RequireAdminRole")]
+        [HttpPut]
+        [Route("")]
+        public async Task<IActionResult> Update(UpdateCommand command)
+        {
+            await Mediator.Send(command);
+
+            return Ok();
+        }
+
+        [HttpPut]
+        [Route("self")]
+        public async Task<IActionResult> UpdateSelf(UpdateSelfCommand command)
         {
             await Mediator.Send(command);
 

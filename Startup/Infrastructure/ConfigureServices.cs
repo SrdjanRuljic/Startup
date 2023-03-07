@@ -6,6 +6,7 @@ using Infrastructure.Auth;
 using Infrastructure.EmailSender;
 using Infrastructure.Identity;
 using Infrastructure.Persistence;
+using Infrastructure.Persistence.Interceptors;
 using Infrastructure.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Http;
@@ -24,15 +25,17 @@ namespace Infrastructure
     {
         public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
         {
+            services.AddScoped<AuditableEntitySaveChangesInterceptor>();
+
             string connectionString = configuration.GetConnectionString("StartupDb");
 
-            services.AddScoped<IApplicationDbContext, ApplicationDbContext>();
+            services.AddScoped<ApplicationDbContextInitialiser>();
 
-            services.AddTransient<IJwtFactory, JwtFactory>();
-            services.AddTransient<IManagersService, ManagersService>();
-            services.AddTransient<IDateTimeService, DateTimeService>();
+            services.AddDbContext<ApplicationDbContext>(options =>
+                options.UseSqlServer(configuration.GetConnectionString("StartupDb"),
+                    builder => builder.MigrationsAssembly(typeof(ApplicationDbContext).Assembly.FullName)));
 
-            services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(connectionString));
+            services.AddScoped<IApplicationDbContext>(provider => provider.GetRequiredService<ApplicationDbContext>());
 
             services.AddIdentity<AppUser, AppRole>(options =>
             {
@@ -83,6 +86,10 @@ namespace Infrastructure
                     }
                 };
             });
+
+            services.AddTransient<IJwtFactory, JwtFactory>();
+            services.AddTransient<IManagersService, ManagersService>();
+            services.AddTransient<IDateTimeService, DateTimeService>();
 
             services.AddAuthorization(options =>
             {

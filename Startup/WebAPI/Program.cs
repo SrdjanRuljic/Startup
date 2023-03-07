@@ -1,4 +1,16 @@
-using Infrastructure.Persistence;
+global using Application;
+global using Application.Common.Interfaces;
+global using Infrastructure;
+global using Microsoft.AspNetCore.Builder;
+global using Microsoft.Extensions.DependencyInjection;
+global using Microsoft.Extensions.Hosting;
+global using Microsoft.OpenApi.Models;
+global using System;
+global using System.Collections.Generic;
+global using WebAPI._1_Startup;
+global using WebAPI.Helpers;
+global using WebAPI.Services;
+global using Infrastructure.Persistence;
 
 var builder = WebApplication.CreateBuilder(args);
 string MyAllowSpecificOrigins = "_ratingSystemPolicy";
@@ -50,6 +62,16 @@ var app = builder.Build();
 if (builder.Environment.IsDevelopment())
 {
     app.UseDeveloperExceptionPage();
+    app.UseMigrationsEndPoint();
+
+    // Initialise and seed database
+    using (var scope = app.Services.CreateScope())
+    {
+        var initialiser = scope.ServiceProvider.GetRequiredService<ApplicationDbContextInitialiser>();
+        await initialiser.InitialiseAsync();
+        await initialiser.SeedAsync();
+    }
+
     app.UseSwagger();
     app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "WebAPI v1"));
 }
@@ -69,21 +91,5 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
-
-using (IServiceScope scope = app.Services.CreateScope())
-{
-    IServiceProvider services = scope.ServiceProvider;
-
-    try
-    {
-        ApplicationDbContext applicationContext = services.GetRequiredService<ApplicationDbContext>();
-        applicationContext.Database.Migrate();
-    }
-    catch (Exception ex)
-    {
-        var logger = services.GetRequiredService<ILogger<Program>>();
-        logger.LogError(ex, "an error occurred during migration");
-    }
-}
 
 await app.RunAsync();
