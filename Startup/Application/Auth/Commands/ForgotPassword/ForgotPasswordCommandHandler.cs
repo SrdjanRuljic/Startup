@@ -1,8 +1,6 @@
 ﻿using Application.Auth.Commands.ForgotPassword.Notification;
-using Application.Auth.Commands.Register.Notification;
 using Application.Common.Behaviours;
 using Application.Common.Interfaces;
-using Application.Common.Models;
 using Application.Exceptions;
 using Domain.Entities.Identity;
 using MediatR;

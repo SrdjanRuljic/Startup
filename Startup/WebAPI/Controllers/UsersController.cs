@@ -23,7 +23,7 @@ namespace WebAPI.Controllers
         [Route("{id}")]
         public async Task<IActionResult> GetById(string id)
         {
-            GetUserByIdViewModel user = await Mediator.Send(new GetUserByIdQuery
+            GetUserByIdViewModel user = await Sender.Send(new GetUserByIdQuery
             {
                 Id = id
             });
@@ -35,7 +35,7 @@ namespace WebAPI.Controllers
         [Route("display-name")]
         public async Task<IActionResult> GetDisplayName()
         {
-            string displayName = await Mediator.Send(new GetDisplayNameQuery());
+            string displayName = await Sender.Send(new GetDisplayNameQuery());
 
             return Ok(new { displayName = displayName });
         }
@@ -44,7 +44,7 @@ namespace WebAPI.Controllers
         [Route("loggedin")]
         public async Task<IActionResult> GetloggedinUser()
         {
-            GetLoggedInUserViewModel user = await Mediator.Send(new GetLoggedInUserQuery());
+            GetLoggedInUserViewModel user = await Sender.Send(new GetLoggedInUserQuery());
 
             return Ok(user);
         }
@@ -58,7 +58,7 @@ namespace WebAPI.Controllers
         [Route("")]
         public async Task<IActionResult> Insert(InsertUserCommand command)
         {
-            await Mediator.Send(command);
+            await Sender.Send(command);
 
             return Ok();
         }
@@ -67,7 +67,7 @@ namespace WebAPI.Controllers
         [Route("search")]
         public async Task<IActionResult> Search(SearchUsersQuery query)
         {
-            PaginationResultViewModel<SearchUsersViewModel> users = await Mediator.Send(query);
+            PaginationResultViewModel<SearchUsersViewModel> users = await Sender.Send(query);
 
             return Ok(users);
         }
@@ -80,7 +80,7 @@ namespace WebAPI.Controllers
         [Route("change-password")]
         public async Task<IActionResult> ChangePassword(ChangePasswordCommand command)
         {
-            await Mediator.Send(command);
+            await Sender.Send(command);
 
             return Ok();
         }
@@ -90,7 +90,7 @@ namespace WebAPI.Controllers
         [Route("change-user-password")]
         public async Task<IActionResult> ChangeUserPassword(ChangeUserPasswordCommand command)
         {
-            await Mediator.Send(command);
+            await Sender.Send(command);
 
             return Ok();
         }
@@ -100,7 +100,7 @@ namespace WebAPI.Controllers
         [Route("")]
         public async Task<IActionResult> Update(UpdateCommand command)
         {
-            await Mediator.Send(command);
+            await Sender.Send(command);
 
             return Ok();
         }
@@ -109,7 +109,7 @@ namespace WebAPI.Controllers
         [Route("self")]
         public async Task<IActionResult> UpdateSelf(UpdateSelfCommand command)
         {
-            await Mediator.Send(command);
+            await Sender.Send(command);
 
             return Ok();
         }
@@ -123,7 +123,7 @@ namespace WebAPI.Controllers
         [Route("{id}")]
         public async Task<IActionResult> Delete(string id)
         {
-            await Mediator.Send(new DeleteUserCommand
+            await Sender.Send(new DeleteUserCommand
             {
                 Id = id
             });

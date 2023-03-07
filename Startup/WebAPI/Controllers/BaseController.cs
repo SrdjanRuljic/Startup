@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.DependencyInjection;
 
 namespace WebAPI.Controllers
 {
@@ -11,8 +10,8 @@ namespace WebAPI.Controllers
     [Authorize]
     public abstract class BaseController : ControllerBase
     {
-        private IMediator _mediator;
+        private ISender _sender;
 
-        protected IMediator Mediator => _mediator ??= HttpContext.RequestServices.GetService<IMediator>();
+        protected ISender Sender => _sender ??= HttpContext.RequestServices.GetService<ISender>();
     }
 }

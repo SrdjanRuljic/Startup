@@ -20,7 +20,7 @@ namespace WebAPI.Controllers
         [Route("user-roles")]
         public async Task<IActionResult> UserRoles()
         {
-            string[] roles = await Mediator.Send(new GetUserRolesQuery());
+            string[] roles = await Sender.Send(new GetUserRolesQuery());
 
             return Ok(roles);
         }
@@ -33,7 +33,7 @@ namespace WebAPI.Controllers
         [Route("confirm-email")]
         public async Task<IActionResult> ConfirmEmail(ConfirmEmailCommand command)
         {
-            await Mediator.Send(command);
+            await Sender.Send(command);
 
             return Ok();
         }
@@ -43,7 +43,7 @@ namespace WebAPI.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> ForgotPassword(ForgotPasswordCommand command)
         {
-            await Mediator.Send(command);
+            await Sender.Send(command);
 
             return Ok();
         }
@@ -53,7 +53,7 @@ namespace WebAPI.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> Login(LoginCommand command)
         {
-            object token = await Mediator.Send(command);
+            object token = await Sender.Send(command);
 
             return Ok(token);
         }
@@ -62,7 +62,7 @@ namespace WebAPI.Controllers
         [Route("logout")]
         public async Task<IActionResult> Logout()
         {
-            await Mediator.Send(new LogoutCommand());
+            await Sender.Send(new LogoutCommand());
 
             return Ok();
         }
@@ -72,7 +72,7 @@ namespace WebAPI.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> RefreshToken(RefreshTokenCommand command)
         {
-            object result = await Mediator.Send(command);
+            object result = await Sender.Send(command);
 
             return Ok(result);
         }
@@ -82,7 +82,7 @@ namespace WebAPI.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> Register(RegisterCommand command)
         {
-            await Mediator.Send(command);
+            await Sender.Send(command);
 
             return Ok();
         }
@@ -91,7 +91,7 @@ namespace WebAPI.Controllers
         [Route("reset-password")]
         public async Task<IActionResult> ResetPassword(ResetPasswordCommand command)
         {
-            await Mediator.Send(command);
+            await Sender.Send(command);
 
             return Ok();
         }

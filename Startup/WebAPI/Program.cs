@@ -11,9 +11,11 @@ global using WebAPI._1_Startup;
 global using WebAPI.Helpers;
 global using WebAPI.Services;
 global using Infrastructure.Persistence;
+using Microsoft.OpenApi.Any;
 
-var builder = WebApplication.CreateBuilder(args);
-string MyAllowSpecificOrigins = "_ratingSystemPolicy";
+string MyAllowSpecificOrigins = "_startupSystemPolicy";
+
+WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
 // add services to the container
 
@@ -40,24 +42,29 @@ builder.Services.AddSwaggerGen(options =>
         Scheme = "bearer"
     });
     options.AddSecurityRequirement(new OpenApiSecurityRequirement()
+    {
+        {
+            new OpenApiSecurityScheme{
+                Reference = new OpenApiReference
                 {
-                    {
-                        new OpenApiSecurityScheme{
-                            Reference = new OpenApiReference
-                            {
-                                Id = "Bearer",
-                                Type = ReferenceType.SecurityScheme
-                            }
-                        }, new List<string>()
-                    }
-                });
+                    Id = "Bearer",
+                    Type = ReferenceType.SecurityScheme
+                }
+            }, new List<string>()
+        }
+    });
+    options.MapType<TimeSpan>(() => new OpenApiSchema
+    {
+        Type = "string",
+        Example = new OpenApiString("00:00")
+    });
 
     options.OperationFilter<SwaggerLanguageHeader>();
 });
 
 // configure HTTP request pipeline
 
-var app = builder.Build();
+WebApplication app = builder.Build();
 
 if (builder.Environment.IsDevelopment())
 {
@@ -65,9 +72,9 @@ if (builder.Environment.IsDevelopment())
     app.UseMigrationsEndPoint();
 
     // Initialise and seed database
-    using (var scope = app.Services.CreateScope())
+    using (IServiceScope scope = app.Services.CreateScope())
     {
-        var initialiser = scope.ServiceProvider.GetRequiredService<ApplicationDbContextInitialiser>();
+        ApplicationDbContextInitialiser initialiser = scope.ServiceProvider.GetRequiredService<ApplicationDbContextInitialiser>();
         await initialiser.InitialiseAsync();
         await initialiser.SeedAsync();
     }

@@ -10,8 +10,6 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using System;
-using Infrastructure.Persistence.Interceptors;
-using System.Reflection;
 
 namespace Infrastructure.Persistence
 {
@@ -25,6 +23,9 @@ namespace Infrastructure.Persistence
         private static readonly ValueConverter<DateTime?, DateTime?> UtcNullableConverter =
           new ValueConverter<DateTime?, DateTime?>(v => v, v => v == null ? v : DateTime.SpecifyKind(v.Value, DateTimeKind.Utc));
 
+        /// <summary>
+        /// Make sure this is called after configuring all your entities.
+        /// </summary>
         public static void ApplyUtcDateTimeConverter(this ModelBuilder builder)
         {
             foreach (var entityType in builder.Model.GetEntityTypes())
@@ -65,15 +66,11 @@ namespace Infrastructure.Persistence
                                                           IdentityRoleClaim<string>,
                                                           IdentityUserToken<string>>, IApplicationDbContext
     {
-        private readonly AuditableEntitySaveChangesInterceptor _auditableEntitySaveChangesInterceptor;
-
         public DbSet<RefreshToken> RefreshTokens { get; set; }
 
-        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options,
-                                    AuditableEntitySaveChangesInterceptor auditableEntitySaveChangesInterceptor)
+        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
         {
-            _auditableEntitySaveChangesInterceptor = auditableEntitySaveChangesInterceptor;
         }
 
         public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())
@@ -81,16 +78,10 @@ namespace Infrastructure.Persistence
             return base.SaveChangesAsync(cancellationToken);
         }
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            optionsBuilder.AddInterceptors(_auditableEntitySaveChangesInterceptor);
-        }
-
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-
-            modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
+            modelBuilder.ApplyConfigurationsFromAssembly(typeof(ApplicationDbContext).Assembly);
             modelBuilder.ApplyUtcDateTimeConverter();
         }
     }
