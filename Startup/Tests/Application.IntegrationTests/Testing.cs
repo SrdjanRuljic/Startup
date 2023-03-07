@@ -1,9 +1,9 @@
 ﻿using Application.Common.Interfaces;
 using Application.System.Commands.SeedData;
 using Domain.Entities.Identity;
-using Infrastructure;
 using Infrastructure.Identity;
 using Infrastructure.Identity.Extensions;
+using Infrastructure.Persistence;
 using MediatR;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;

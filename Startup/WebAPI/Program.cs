@@ -1,3 +1,5 @@
+using Infrastructure.Persistence;
+
 var builder = WebApplication.CreateBuilder(args);
 string MyAllowSpecificOrigins = "_ratingSystemPolicy";
 
@@ -5,7 +7,6 @@ string MyAllowSpecificOrigins = "_ratingSystemPolicy";
 
 builder.Services.AddApplication();
 builder.Services.AddInfrastructure(builder.Configuration);
-builder.Services.AddPersistence(builder.Configuration);
 builder.Services.AddScoped<ICurrentUserService, CurrentUserService>();
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddCors(options =>
