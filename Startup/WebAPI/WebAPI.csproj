@@ -8,6 +8,10 @@
     <None Remove="appsettings.Development.json~RF20fe2e69.TMP" />
   </ItemGroup>
 
+	<ItemGroup>
+		<InternalsVisibleTo Include="Application.IntegrationTests" />
+	</ItemGroup>
+	
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="7.0.3" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="7.0.3">

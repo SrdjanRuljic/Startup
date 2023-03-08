@@ -15,13 +15,13 @@ namespace Application.Auth.Commands.ConfirmEmail
                 isValid = false;
             }
 
-            if (String.IsNullOrWhiteSpace(model.UserName))
+            if (String.IsNullOrEmpty(model.UserName))
             {
                 validationMessage += Resources.Translation.UsernameRequired;
                 isValid = false;
             }
 
-            if (String.IsNullOrWhiteSpace(model.Token))
+            if (String.IsNullOrEmpty(model.Token))
             {
                 validationMessage += Resources.Translation.TokenRequired;
                 isValid = false;

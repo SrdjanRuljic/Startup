@@ -19,6 +19,11 @@ namespace Application.Auth.Commands.ConfirmEmail
 
         public async Task<Unit> Handle(ConfirmEmailCommand request, CancellationToken cancellationToken)
         {
+            string errorMessage = null;
+
+            if (!request.IsValid(out errorMessage))
+                throw new BadRequestException(errorMessage);
+
             AppUser user = await _managersService.FindByUserNameAsync(request.UserName);
 
             if (user == null)

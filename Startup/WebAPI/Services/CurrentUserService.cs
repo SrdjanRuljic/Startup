@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Application.Common.Interfaces;
+using Microsoft.AspNetCore.Http;
 using System.Security.Claims;
 
 namespace WebAPI.Services
