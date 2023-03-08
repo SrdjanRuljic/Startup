@@ -11,6 +11,7 @@ global using WebAPI._1_Startup;
 global using WebAPI.Helpers;
 global using WebAPI.Services;
 global using Infrastructure.Persistence;
+using Microsoft.OpenApi.Any;
 
 var builder = WebApplication.CreateBuilder(args);
 string MyAllowSpecificOrigins = "_ratingSystemPolicy";
@@ -40,17 +41,22 @@ builder.Services.AddSwaggerGen(options =>
         Scheme = "bearer"
     });
     options.AddSecurityRequirement(new OpenApiSecurityRequirement()
+    {
+        {
+            new OpenApiSecurityScheme{
+                Reference = new OpenApiReference
                 {
-                    {
-                        new OpenApiSecurityScheme{
-                            Reference = new OpenApiReference
-                            {
-                                Id = "Bearer",
-                                Type = ReferenceType.SecurityScheme
-                            }
-                        }, new List<string>()
-                    }
-                });
+                    Id = "Bearer",
+                    Type = ReferenceType.SecurityScheme
+                }
+            }, new List<string>()
+        }
+    });
+    options.MapType<TimeSpan>(() => new OpenApiSchema
+    {
+        Type = "string",
+        Example = new OpenApiString("00:00")
+    });
 
     options.OperationFilter<SwaggerLanguageHeader>();
 });
