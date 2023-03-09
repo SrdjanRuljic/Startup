@@ -22,14 +22,12 @@ namespace Application.Users.Queries.GetById
 
         public async Task<GetUserByIdViewModel> Handle(GetUserByIdQuery request, CancellationToken cancellationToken)
         {
-            AppUser user = await _managersService.FindByIdAsync(request.Id);
+            AppUser user = await _managersService.GetUserByIdAsync(request.Id);
 
             if (user == null)
                 throw new NotFoundException(string.Format(Resources.Translation.EntityWasNotFound, nameof(AppUser), request.Id));
 
             GetUserByIdViewModel model = _mapper.Map<GetUserByIdViewModel>(user);
-
-            model.Roles = await _managersService.GetRolesAsync(user);
 
             return model;
         }
