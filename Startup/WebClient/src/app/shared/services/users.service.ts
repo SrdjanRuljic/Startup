@@ -31,10 +31,8 @@ export class UsersService {
     return this._http.get(this._usersUrl + '/' + id).pipe(map((res) => res));
   }
 
-  getByUserName(): Observable<any> {
-    return this._http
-      .get(this._usersUrl + '/get-by-username')
-      .pipe(map((res) => res));
+  getLoggedIn(): Observable<any> {
+    return this._http.get(this._usersUrl + '/loggedin').pipe(map((res) => res));
   }
 
   update(model: IUserWithRoles): Observable<any> {

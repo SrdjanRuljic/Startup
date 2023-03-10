@@ -38,7 +38,7 @@ export class UpdateSelfComponent implements OnInit {
   }
 
   getUser() {
-    this._usersService.getByUserName().subscribe((response) => {
+    this._usersService.getLoggedIn().subscribe((response) => {
       this.model = response;
       this.previousUserName = this.model.userName;
       this.previousFirstName = this.model.firstName;
