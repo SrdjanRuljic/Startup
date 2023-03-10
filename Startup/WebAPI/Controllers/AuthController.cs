@@ -90,6 +90,7 @@ namespace WebAPI.Controllers
 
         [HttpPost]
         [Route("reset-password")]
+        [AllowAnonymous]
         public async Task<IActionResult> ResetPassword(ResetPasswordCommand command)
         {
             await Mediator.Send(command);
