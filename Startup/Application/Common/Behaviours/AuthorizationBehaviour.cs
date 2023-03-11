@@ -16,7 +16,7 @@ namespace Application.Common.Behaviours
         private readonly ICurrentUserService _currentUserService;
         private readonly IManagersService _managersService;
 
-        public AuthorizationBehaviour(ICurrentUserService currentUserService, 
+        public AuthorizationBehaviour(ICurrentUserService currentUserService,
                                       IManagersService managersService)
         {
             _currentUserService = currentUserService;
@@ -29,7 +29,7 @@ namespace Application.Common.Behaviours
 
             if (authorizeAttributes.Any())
             {
-                if (_currentUserService.UserName == null)
+                if (_currentUserService.UserId == null)
                     throw new UnauthorizedAccessException(ErrorMessages.Unauthorised);
 
                 IEnumerable<AuthorizeAttribute> authorizeAttributesWithRoles = authorizeAttributes.Where(a => !string.IsNullOrWhiteSpace(a.Roles));
@@ -42,7 +42,7 @@ namespace Application.Common.Behaviours
                     {
                         foreach (string role in roles)
                         {
-                            bool isInRole = await _managersService.IsInRoleAsync(_currentUserService.UserName, role.Trim());
+                            bool isInRole = await _managersService.IsInRoleAsync(_currentUserService.UserId, role.Trim());
                             if (isInRole)
                             {
                                 authorized = true;
@@ -61,7 +61,7 @@ namespace Application.Common.Behaviours
                 {
                     foreach (string policy in authorizeAttributesWithPolicies.Select(a => a.Policy))
                     {
-                        bool authorized = await _managersService.AuthorizeAsync(_currentUserService.UserName, policy);
+                        bool authorized = await _managersService.AuthorizeAsync(_currentUserService.UserId, policy);
 
                         if (!authorized)
                         {

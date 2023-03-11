@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Transactions;
 
@@ -38,20 +39,18 @@ namespace Infrastructure.Identity
         {
             AppUser user = await _userManager.FindByNameAsync(userName);
 
-            if (user == null)
-                return null;
+            if (user == null) return null;
 
             SignInResult result = await _signInManager.PasswordSignInAsync(user.UserName, password, false, false);
 
             return result.Succeeded ? user : null;
         }
 
-        public async Task<bool> AuthorizeAsync(string userName, string policyName)
+        public async Task<bool> AuthorizeAsync(string userId, string policyName)
         {
-            AppUser user = _userManager.Users.SingleOrDefault(u => u.UserName == userName);
+            AppUser user = await _userManager.FindByIdAsync(userId);
 
-            if (user == null)
-                return false;
+            if (user == null) return false;
 
             ClaimsPrincipal principal = await _userClaimsPrincipalFactory.CreateAsync(user);
 
@@ -126,7 +125,7 @@ namespace Infrastructure.Identity
             await _userManager.FindByIdAsync(id);
 
         public async Task<AppUser> FindByUserNameAsync(string userName) =>
-                                    await _userManager.FindByNameAsync(userName);
+            await _userManager.FindByNameAsync(userName);
 
         public async Task<string> GenerateEmailConfirmationTokenAsync(AppUser user) =>
             await _userManager.GenerateEmailConfirmationTokenAsync(user);
@@ -134,11 +133,11 @@ namespace Infrastructure.Identity
         public async Task<string> GenerateResetPasswordTokenAsync(AppUser user) =>
             await _userManager.GeneratePasswordResetTokenAsync(user);
 
-        public async Task<string> GetDisplayNameAsync(string userName) =>
+        public async Task<string> GetDisplayNameAsync(string userId, CancellationToken cancellationToken) =>
             await _userManager.Users
-                              .Where(x => x.UserName.Equals(userName))
+                              .Where(x => x.Id == userId)
                               .Select(x => SetDisplayName(x.FirstName, x.LastName))
-                              .FirstOrDefaultAsync();
+                              .FirstOrDefaultAsync(cancellationToken);
 
         public async Task<string[]> GetRolesAsync(AppUser user)
         {
@@ -147,28 +146,28 @@ namespace Infrastructure.Identity
             return list.ToArray();
         }
 
-        public async Task<AppUser> GetUserByIdAsync(string id) =>
+        public async Task<AppUser> GetUserByIdAsync(string id, CancellationToken cancellationToken) =>
             await _userManager.Users
                               .Include(x => x.UserRoles)
                               .ThenInclude(x => x.Role)
                               .Where(x => x.Id == id)
-                              .FirstOrDefaultAsync();
+                              .FirstOrDefaultAsync(cancellationToken);
 
         public IQueryable<AppUser> GetUsers() =>
-                    _userManager.Users;
+            _userManager.Users;
 
-        public async Task<bool> IsInRoleAsync(string userName, string role)
+        public async Task<bool> IsInRoleAsync(string userId, string role)
         {
-            AppUser user = _userManager.Users.SingleOrDefault(u => u.UserName == userName);
+            AppUser user = await _userManager.FindByIdAsync(userId);
 
             return user != null && await _userManager.IsInRoleAsync(user, role);
         }
 
-        public async Task<bool> IsThereAnyRoleAsync() =>
-                    await _roleManager.Roles.AnyAsync();
+        public async Task<bool> IsThereAnyRoleAsync(CancellationToken cancellationToken) =>
+            await _roleManager.Roles.AnyAsync(cancellationToken);
 
-        public async Task<bool> IsThereAnyUserAsync() =>
-            await _userManager.Users.AnyAsync();
+        public async Task<bool> IsThereAnyUserAsync(CancellationToken cancellationToken) =>
+            await _userManager.Users.AnyAsync(cancellationToken);
 
         public async Task<bool> IsUserInRoleAsync(AppUser user, string role) =>
             await _userManager.IsInRoleAsync(user, role);
@@ -219,11 +218,11 @@ namespace Infrastructure.Identity
             return result.ToApplicationResult();
         }
 
-        public async Task<bool> UserExistAsync(string userName, string email) =>
-            await _userManager.Users.AnyAsync(x => x.UserName.Equals(userName) || x.Email.Equals(email));
+        public async Task<bool> UserExistAsync(string userName, string email, CancellationToken cancellationToken) =>
+            await _userManager.Users.AnyAsync(x => x.UserName.Equals(userName) || x.Email.Equals(email), cancellationToken);
 
-        public async Task<bool> UserNameExistAsync(string id, string userName) =>
-            await _userManager.Users.AnyAsync(x => x.UserName.Equals(userName) && !x.Id.Equals(id));
+        public async Task<bool> UserNameExistAsync(string id, string userName, CancellationToken cancellationToken) =>
+            await _userManager.Users.AnyAsync(x => x.UserName == userName && x.Id != id, cancellationToken);
 
         private static string SetDisplayName(string firstName, string lastName)
         {

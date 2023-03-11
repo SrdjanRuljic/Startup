@@ -20,7 +20,7 @@ namespace Infrastructure.Auth
             _dateTimeService = dateTimeService;
         }
 
-        public string GenerateEncodedToken(string username, string[] roles)
+        public string GenerateEncodedToken(string userId, string[] roles)
         {
             SymmetricSecurityKey securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Jwt:AccessTokenSecret"]));
             SigningCredentials credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha512);
@@ -29,7 +29,7 @@ namespace Infrastructure.Auth
             {
                 List<Claim> claims = new List<Claim>();
 
-                claims.Add(new Claim(JwtRegisteredClaimNames.Sub, username));
+                claims.Add(new Claim(JwtRegisteredClaimNames.Sub, userId));
                 claims.Add(new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()));
 
                 foreach (var item in roles)

@@ -37,7 +37,7 @@ namespace Application.Users.Commands.Insert
             if (String.IsNullOrEmpty(request.LastName) || String.IsNullOrWhiteSpace(request.LastName))
                 request.LastName = null;
 
-            bool userExist = await _managersService.UserExistAsync(request.UserName, request.Email);
+            bool userExist = await _managersService.UserExistAsync(request.UserName, request.Email, cancellationToken);
 
             if (userExist)
                 throw new BadRequestException(ErrorMessages.UserExists);

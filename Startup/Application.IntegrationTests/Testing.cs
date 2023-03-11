@@ -5,7 +5,6 @@ using Microsoft.Extensions.Configuration;
 using Respawn;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Mvc.Testing;
-using Microsoft.VisualStudio.TestPlatform.TestHost;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
 using System.Linq;
@@ -21,7 +20,7 @@ namespace Application.IntegrationTests
     {
         private static Respawner _checkpoint;
         private static IConfiguration _configuration;
-        private static string _currentUserName;
+        private static string _currentUserId;
         private static WebApplicationFactory<Program> _factory;
         private static IServiceScopeFactory _scopeFactory;
 
@@ -54,9 +53,9 @@ namespace Application.IntegrationTests
             return await context.FindAsync<TEntity>(keyValues);
         }
 
-        public static string GetCurrentUserName()
+        public static string GetCurrentUserId()
         {
-            return _currentUserName;
+            return _currentUserId;
         }
 
         public static async Task ResetState()
@@ -69,7 +68,7 @@ namespace Application.IntegrationTests
             {
             }
 
-            _currentUserName = null;
+            _currentUserId = null;
         }
 
         public static async Task<string> RunAsAdministratorAsync()
@@ -104,9 +103,9 @@ namespace Application.IntegrationTests
 
             if (result.Succeeded)
             {
-                _currentUserName = user.UserName;
+                _currentUserId = user.Id;
 
-                return _currentUserName;
+                return _currentUserId;
             }
 
             string errors = string.Join(Environment.NewLine, result.ToApplicationResult().Errors);

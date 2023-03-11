@@ -21,10 +21,10 @@ namespace Application.Users.Queries.GetDisplayName
 
         public async Task<string> Handle(GetDisplayNameQuery request, CancellationToken cancellationToken)
         {
-            string displayName = await _managersService.GetDisplayNameAsync(_currentUserService.UserName);
+            string displayName = await _managersService.GetDisplayNameAsync(_currentUserService.UserId, cancellationToken);
 
             if (displayName == null)
-                throw new NotFoundException(string.Format(Resources.Translation.EntityWasNotFound, nameof(AppUser), _currentUserService.UserName));
+                throw new NotFoundException(string.Format(Resources.Translation.EntityWasNotFound, nameof(AppUser), _currentUserService.UserId));
 
             return displayName;
         }

@@ -27,7 +27,7 @@ namespace Application.IntegrationTests
             builder.ConfigureServices((builder, services) =>
             {
                 services.Remove<ICurrentUserService>()
-                        .AddTransient(provider => Mock.Of<ICurrentUserService>(s => s.UserName == GetCurrentUserName()));
+                        .AddTransient(provider => Mock.Of<ICurrentUserService>(s => s.UserId == GetCurrentUserId()));
 
                 services.Remove<DbContextOptions<ApplicationDbContext>>()
                         .AddDbContext<ApplicationDbContext>((sp, options) =>

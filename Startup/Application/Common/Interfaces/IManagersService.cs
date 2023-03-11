@@ -1,6 +1,7 @@
 ﻿using Application.Common.Models;
 using Domain.Entities.Identity;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Application.Common.Interfaces
@@ -9,7 +10,7 @@ namespace Application.Common.Interfaces
     {
         Task<AppUser> AuthenticateAsync(string userName, string password);
 
-        Task<bool> AuthorizeAsync(string userName, string policyName);
+        Task<bool> AuthorizeAsync(string userId, string policyName);
 
         Task<Result> ChangePasswordAsync(AppUser user, string currentPassword, string newPassword);
 
@@ -33,19 +34,19 @@ namespace Application.Common.Interfaces
 
         Task<string> GenerateResetPasswordTokenAsync(AppUser user);
 
-        Task<string> GetDisplayNameAsync(string userName);
+        Task<string> GetDisplayNameAsync(string userId, CancellationToken cancellationToken);
 
         Task<string[]> GetRolesAsync(AppUser user);
 
-        Task<AppUser> GetUserByIdAsync(string id);
+        Task<AppUser> GetUserByIdAsync(string id, CancellationToken cancellationToken);
 
         IQueryable<AppUser> GetUsers();
 
-        Task<bool> IsInRoleAsync(string userName, string role);
+        Task<bool> IsInRoleAsync(string userId, string role);
 
-        Task<bool> IsThereAnyRoleAsync();
+        Task<bool> IsThereAnyRoleAsync(CancellationToken cancellationToken);
 
-        Task<bool> IsThereAnyUserAsync();
+        Task<bool> IsThereAnyUserAsync(CancellationToken cancellationToken);
 
         Task<bool> IsUserInRoleAsync(AppUser user, string role);
 
@@ -57,8 +58,8 @@ namespace Application.Common.Interfaces
 
         Task<Result> UpdateUserAsync(AppUser user, string[] roles);
 
-        Task<bool> UserExistAsync(string userName, string email);
+        Task<bool> UserExistAsync(string userName, string email, CancellationToken cancellationToken);
 
-        Task<bool> UserNameExistAsync(string id, string userName);
+        Task<bool> UserNameExistAsync(string id, string userName, CancellationToken cancellationToken);
     }
 }

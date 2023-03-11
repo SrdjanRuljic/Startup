@@ -4,7 +4,7 @@
     {
         string GenerateEncodedToken();
 
-        string GenerateEncodedToken(string username, string[] roles);
+        string GenerateEncodedToken(string userId, string[] roles);
 
         bool Validate(string refreshToken);
     }

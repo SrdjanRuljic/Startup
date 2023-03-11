@@ -27,7 +27,7 @@ namespace Application.Users.Commands.ChangePassword
             if (!request.IsValid(out errorMessage))
                 throw new BadRequestException(errorMessage);
 
-            AppUser user = await _managersService.FindByUserNameAsync(_currentUserService.UserName);
+            AppUser user = await _managersService.FindByIdAsync(_currentUserService.UserId);
 
             Result result = await _managersService.ChangePasswordAsync(user, request.CurrentPassword, request.NewPassword);
 

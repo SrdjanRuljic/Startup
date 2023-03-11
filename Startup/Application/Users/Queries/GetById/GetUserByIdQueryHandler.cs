@@ -22,7 +22,7 @@ namespace Application.Users.Queries.GetById
 
         public async Task<GetUserByIdViewModel> Handle(GetUserByIdQuery request, CancellationToken cancellationToken)
         {
-            AppUser user = await _managersService.GetUserByIdAsync(request.Id);
+            AppUser user = await _managersService.GetUserByIdAsync(request.Id, cancellationToken);
 
             if (user == null)
                 throw new NotFoundException(string.Format(Resources.Translation.EntityWasNotFound, nameof(AppUser), request.Id));

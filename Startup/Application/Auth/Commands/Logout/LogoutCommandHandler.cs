@@ -30,10 +30,10 @@ namespace Application.Auth.Commands.Logout
         {
             await _managersService.SignOutAsync();
 
-            AppUser user = await _managersService.FindByUserNameAsync(_currentUserService.UserName);
+            AppUser user = await _managersService.FindByIdAsync(_currentUserService.UserId);
 
             if (user == null)
-                throw new NotFoundException(string.Format(Resources.Translation.EntityWasNotFound, nameof(AppUser), _currentUserService.UserName));
+                throw new NotFoundException(string.Format(Resources.Translation.EntityWasNotFound, nameof(AppUser), _currentUserService.UserId));
 
             List<RefreshToken> refreshTokens = await _context.RefreshTokens
                                                              .Where(x => x.UserId == user.Id)

@@ -37,7 +37,7 @@ namespace Application.Auth.Commands.Login
 
             string[] roles = await _managersService.GetRolesAsync(user);
 
-            object tokens = TokenHelper.GenerateJwt(user.UserName, roles, _jwtFactory);
+            object tokens = TokenHelper.GenerateJwt(user.Id, roles, _jwtFactory);
 
             string refershToken = tokens?.GetType()
                                          .GetProperty("refresh_token")?

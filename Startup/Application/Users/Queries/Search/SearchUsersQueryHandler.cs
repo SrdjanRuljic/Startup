@@ -26,7 +26,7 @@ namespace Application.Users.Queries.Search
         public async Task<PaginationResultViewModel<SearchUsersViewModel>> Handle(SearchUsersQuery request, CancellationToken cancellationToken)
         {
             IQueryable<SearchUsersViewModel> list = _managersService.GetUsers()
-                                                                    .Where(x => x.UserName != _currentUserService.UserName)
+                                                                    .Where(x => x.Id != _currentUserService.UserId)
                                                                     .Where(x => string.IsNullOrEmpty(request.Term) ?
                                                                                 true :
                                                                                 x.FirstName.Contains(request.Term) ||

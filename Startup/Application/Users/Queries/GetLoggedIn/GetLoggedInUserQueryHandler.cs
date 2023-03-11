@@ -25,10 +25,10 @@ namespace Application.Users.Queries.GetLoggedIn
 
         public async Task<GetLoggedInUserViewModel> Handle(GetLoggedInUserQuery request, CancellationToken cancellationToken)
         {
-            AppUser user = await _managersService.FindByUserNameAsync(_currentUserService.UserName);
+            AppUser user = await _managersService.FindByIdAsync(_currentUserService.UserId);
 
             if (user == null)
-                throw new NotFoundException(string.Format(Resources.Translation.EntityWasNotFound, nameof(AppUser), _currentUserService.UserName));
+                throw new NotFoundException(string.Format(Resources.Translation.EntityWasNotFound, nameof(AppUser), _currentUserService.UserId));
 
             GetLoggedInUserViewModel model = _mapper.Map<GetLoggedInUserViewModel>(user);
 

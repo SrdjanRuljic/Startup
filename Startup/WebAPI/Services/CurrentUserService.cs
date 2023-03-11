@@ -8,15 +8,15 @@ namespace WebAPI.Services
     {
         private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public string UserName
+        public string UserId
         {
             get
             {
                 ClaimsIdentity clames = _httpContextAccessor.HttpContext?.User?.Identity as ClaimsIdentity;
 
-                string userName = clames?.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+                string userId = clames?.FindFirst(ClaimTypes.NameIdentifier)?.Value;
 
-                return userName;
+                return userId;
             }
         }
 
