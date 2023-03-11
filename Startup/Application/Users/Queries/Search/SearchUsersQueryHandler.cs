@@ -12,17 +12,15 @@ namespace Application.Users.Queries.Search
 {
     public class SearchUsersQueryHandler : IRequestHandler<SearchUsersQuery, PaginationResultViewModel<SearchUsersViewModel>>
     {
+        private readonly ICurrentUserService _currentUserService;
         private readonly IManagersService _managersService;
         private readonly IMapper _mapper;
-        private readonly ICurrentUserService _currentUserService;
 
-        public SearchUsersQueryHandler(IManagersService managersService,
-                                       IMapper mapper,
-                                       ICurrentUserService currentUserService)
+        public SearchUsersQueryHandler(ICurrentUserService currentUserService, IManagersService managersService, IMapper mapper)
         {
+            _currentUserService = currentUserService;
             _managersService = managersService;
             _mapper = mapper;
-            _currentUserService = currentUserService;
         }
 
         public async Task<PaginationResultViewModel<SearchUsersViewModel>> Handle(SearchUsersQuery request, CancellationToken cancellationToken)

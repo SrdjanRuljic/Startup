@@ -1,17 +1,17 @@
-global using Application;
-global using Application.Common.Interfaces;
-global using Infrastructure;
-global using Microsoft.AspNetCore.Builder;
-global using Microsoft.Extensions.DependencyInjection;
-global using Microsoft.Extensions.Hosting;
-global using Microsoft.OpenApi.Models;
-global using System;
-global using System.Collections.Generic;
-global using WebAPI._1_Startup;
-global using WebAPI.Helpers;
-global using WebAPI.Services;
-global using Infrastructure.Persistence;
+using Application;
+using Application.Common.Interfaces;
+using Infrastructure;
+using Infrastructure.Persistence;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Any;
+using Microsoft.OpenApi.Models;
+using System;
+using System.Collections.Generic;
+using WebAPI._1_Startup;
+using WebAPI.Helpers;
+using WebAPI.Services;
 
 string MyAllowSpecificOrigins = "_startupSystemPolicy";
 
@@ -99,4 +99,4 @@ app.UseAuthorization();
 
 app.MapControllers();
 
-await app.RunAsync();
+app.Run();

@@ -37,6 +37,8 @@ namespace Application.Common.Interfaces
 
         Task<string[]> GetRolesAsync(AppUser user);
 
+        Task<AppUser> GetUserByIdAsync(string id);
+
         IQueryable<AppUser> GetUsers();
 
         Task<bool> IsInRoleAsync(string userName, string role);

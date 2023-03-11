@@ -3,7 +3,6 @@ using MediatR;
 
 namespace Application.Auth.Commands.ResetPassword
 {
-    [Authorize(Policy = "RequireAuthorization")]
     public class ResetPasswordCommand : IRequest
     {
         public string ConfirmedPassword { get; set; }

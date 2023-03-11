@@ -147,8 +147,15 @@ namespace Infrastructure.Identity
             return list.ToArray();
         }
 
+        public async Task<AppUser> GetUserByIdAsync(string id) =>
+            await _userManager.Users
+                              .Include(x => x.UserRoles)
+                              .ThenInclude(x => x.Role)
+                              .Where(x => x.Id == id)
+                              .FirstOrDefaultAsync();
+
         public IQueryable<AppUser> GetUsers() =>
-            _userManager.Users;
+                    _userManager.Users;
 
         public async Task<bool> IsInRoleAsync(string userName, string role)
         {
