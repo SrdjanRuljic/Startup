@@ -15,6 +15,7 @@ import { AuthService } from './services/auth.service';
 import { UsersService } from './services/users.service';
 import { ConfirmationModalService } from './services/confirmation-modal.service';
 import { TokenService } from './services/token.service';
+import { SpinnerComponent } from './spinner/spinner.component';
 
 @NgModule({
   imports: [
@@ -31,8 +32,8 @@ import { TokenService } from './services/token.service';
     ConfirmationModalModule,
     BsDropdownModule.forRoot(),
   ],
-  declarations: [MenuComponent],
-  exports: [MenuComponent, NgxPermissionsModule],
+  declarations: [MenuComponent, SpinnerComponent],
+  exports: [MenuComponent, NgxPermissionsModule, SpinnerComponent],
   providers: [
     AuthService,
     UsersService,
