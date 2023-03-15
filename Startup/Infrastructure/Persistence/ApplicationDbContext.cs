@@ -66,6 +66,9 @@ namespace Infrastructure.Persistence
                                                           IdentityRoleClaim<string>,
                                                           IdentityUserToken<string>>, IApplicationDbContext
     {
+        public DbSet<Connection> Connections { get; set; }
+        public DbSet<Group> Groups { get; set; }
+        public DbSet<Message> Messages { get; set; }
         public DbSet<RefreshToken> RefreshTokens { get; set; }
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
