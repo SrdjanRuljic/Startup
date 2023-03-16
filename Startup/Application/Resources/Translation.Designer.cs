@@ -268,6 +268,15 @@ namespace Application.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to You cannot send meesage to yourself. .
+        /// </summary>
+        public static string MessageYourselfValidation {
+            get {
+                return ResourceManager.GetString("MessageYourselfValidation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Model can not be null..
         /// </summary>
         public static string ModelCanNotBeNull {
@@ -363,6 +372,15 @@ namespace Application.Resources {
         public static string PasswordTooShort {
             get {
                 return ResourceManager.GetString("PasswordTooShort", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Recipient is required. .
+        /// </summary>
+        public static string RecipientRequired {
+            get {
+                return ResourceManager.GetString("RecipientRequired", resourceCulture);
             }
         }
         

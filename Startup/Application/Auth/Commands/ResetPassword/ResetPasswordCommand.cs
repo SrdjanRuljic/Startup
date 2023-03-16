@@ -1,5 +1,4 @@
-﻿using Application.Common.Security;
-using MediatR;
+﻿using MediatR;
 
 namespace Application.Auth.Commands.ResetPassword
 {
