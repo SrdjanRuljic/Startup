@@ -79,6 +79,15 @@ namespace Application.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Connection id is required. .
+        /// </summary>
+        public static string ConnectionIdRequired {
+            get {
+                return ResourceManager.GetString("ConnectionIdRequired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to A current password must contain uppercase and lowercase letters, numbers, and special characters..
         /// </summary>
         public static string CurrentPasswordMustContain {
@@ -174,6 +183,15 @@ namespace Application.Resources {
         public static string Forbidden {
             get {
                 return ResourceManager.GetString("Forbidden", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Group name is required. .
+        /// </summary>
+        public static string GroupNameRequired {
+            get {
+                return ResourceManager.GetString("GroupNameRequired", resourceCulture);
             }
         }
         
