@@ -80,6 +80,14 @@ export class MenuComponent implements OnInit, OnDestroy {
     this._router.navigate(['/users/change-password']);
   }
 
+  goToMessages() {
+    this._router.navigate(['/messages']);
+  }
+
+  goToInterlocutors() {
+    this._router.navigate(['/interlocutors']);
+  }
+
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
   }

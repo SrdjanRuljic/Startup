@@ -12,7 +12,7 @@ const DISPLAYNAME_KEY = 'display-name';
   providedIn: 'root',
 })
 export class UsersService {
-  private _usersUrl = this._appGlobals.WebApiUrl + 'api/users';
+  private _usersUrl = this._appGlobals.WebApiUrl + 'users';
   displayName$ = new BehaviorSubject<string>(this.displayName);
 
   constructor(private _appGlobals: AppGlobals, private _http: HttpClient) {}
