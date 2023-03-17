@@ -19,6 +19,8 @@ using System;
 using System.Net;
 using System.Text;
 
+using System.Threading.Tasks;
+
 namespace Infrastructure
 {
     public static class ConfigureServices
@@ -83,6 +85,20 @@ namespace Infrastructure
                         context.Response.StatusCode = (int)HttpStatusCode.Unauthorized;
                         context.Response.AddUnauthorisedExcention(context.ErrorDescription);
                         await context.Response.WriteAsync(ErrorMessages.Unauthorised);
+                    },
+
+                    OnMessageReceived = context =>
+                    {
+                        var accessToken = context.Request.Query["access_token"];
+
+                        var path = context.HttpContext.Request.Path;
+
+                        if (!string.IsNullOrEmpty(accessToken) && path.StartsWithSegments("/hubs"))
+                        {
+                            context.Token = accessToken;
+                        }
+
+                        return Task.CompletedTask;
                     }
                 };
             });

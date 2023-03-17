@@ -7,11 +7,13 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Any;
 using Microsoft.OpenApi.Models;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using WebAPI._1_Startup;
 using WebAPI.Helpers;
 using WebAPI.Services;
+using WebAPI.SignalR;
 
 string MyAllowSpecificOrigins = "_startupSystemPolicy";
 
@@ -61,6 +63,12 @@ builder.Services.AddSwaggerGen(options =>
 
     options.OperationFilter<SwaggerLanguageHeader>();
 });
+builder.Services.AddSingleton<PresenceTracker>();
+builder.Services.AddSignalR()
+                .AddNewtonsoftJsonProtocol(options =>
+                {
+                    options.PayloadSerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
+                });
 
 // configure HTTP request pipeline
 
@@ -98,5 +106,8 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
+
+app.MapHub<PresenceHub>("hubs/presence");
+app.MapHub<MessageHub>("hubs/message");
 
 app.Run();
