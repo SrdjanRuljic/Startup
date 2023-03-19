@@ -37,7 +37,8 @@ namespace Application.Users.Queries.Search
 
             PaginatedList<SearchUsersViewModel> paginatedList = await PaginatedList<SearchUsersViewModel>.CreateAsync(list,
                                                                                                                       request.PageNumber,
-                                                                                                                      request.PageSize);
+                                                                                                                      request.PageSize,
+                                                                                                                      cancellationToken);
 
             return new PaginationResultViewModel<SearchUsersViewModel>
             {

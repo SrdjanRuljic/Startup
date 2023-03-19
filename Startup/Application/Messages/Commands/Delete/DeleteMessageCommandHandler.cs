@@ -26,7 +26,7 @@ namespace Application.Messages.Commands.Delete
                                                             .Include(x => x.Sender)
                                                             .Include(x => x.Recipient)
                                                             .Where(x => x.Id == request.Id)
-                                                            .FirstOrDefaultAsync();
+                                                            .FirstOrDefaultAsync(cancellationToken);
 
             if (message == null)
                 throw new NotFoundException(string.Format(Resources.Translation.EntityWasNotFound, nameof(Domain.Entities.Message), request.Id));

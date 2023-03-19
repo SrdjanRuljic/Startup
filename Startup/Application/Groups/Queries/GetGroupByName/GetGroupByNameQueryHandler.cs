@@ -28,7 +28,7 @@ namespace Application.Groups.Queries.GetGroupByName
             return await _context.Groups
                                  .Include(x => x.Connections)
                                  .Where(x => x.Name == request.Name)
-                                 .FirstOrDefaultAsync();
+                                 .FirstOrDefaultAsync(cancellationToken);
         }
     }
 }

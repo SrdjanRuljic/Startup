@@ -36,7 +36,7 @@ namespace Application.Messages.Queries.GetThread
                                                                         x.SenderDeleted == false)
                                                             .OrderBy(x => x.MessageSent)
                                                             .ProjectTo<MessageViewModel>(_mapper.ConfigurationProvider)
-                                                            .ToListAsync();
+                                                            .ToListAsync(cancellationToken);
 
             return messages;
         }

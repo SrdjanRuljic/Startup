@@ -36,7 +36,7 @@ namespace Application.Messages.Commands.ReadMany
                                                          .Where(x => x.RecipientId == _currentUserService.UserId &&
                                                                      x.SenderId == request.RecipientUserId)
                                                          .Where(x => x.DateRead == null)
-                                                         .ToListAsync();
+                                                         .ToListAsync(cancellationToken);
 
             if (unreadMessages.Any())
             {

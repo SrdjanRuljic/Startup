@@ -45,7 +45,8 @@ namespace Application.Messages.Queries.Search
 
             PaginatedList<SearchMessagesQueryViewModel> paginatedList = await PaginatedList<SearchMessagesQueryViewModel>.CreateAsync(list,
                                                                                                                                       request.PageNumber,
-                                                                                                                                      request.PageSize);
+                                                                                                                                      request.PageSize,
+                                                                                                                                      cancellationToken);
 
             return new PaginationResultViewModel<SearchMessagesQueryViewModel>
             {

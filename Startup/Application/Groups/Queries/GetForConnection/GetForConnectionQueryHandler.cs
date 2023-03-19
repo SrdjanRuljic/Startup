@@ -22,7 +22,7 @@ namespace Application.Groups.Queries.GetForConnection
             return await _context.Groups
                                  .Include(x => x.Connections)
                                  .Where(x => x.Connections.Any(x => x.Id == request.ConnectionId))
-                                 .FirstOrDefaultAsync();
+                                 .FirstOrDefaultAsync(cancellationToken);
         }
     }
 }

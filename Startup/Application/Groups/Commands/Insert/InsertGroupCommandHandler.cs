@@ -27,7 +27,7 @@ namespace Application.Groups.Commands.Insert
             Group group = await _context.Groups
                                         .Include(x => x.Connections)
                                         .Where(x => x.Name == request.Name)
-                                        .FirstOrDefaultAsync();
+                                        .FirstOrDefaultAsync(cancellationToken);
 
             Connection connection = new Connection(request.ConnectionId, request.UserId);
 
@@ -35,7 +35,7 @@ namespace Application.Groups.Commands.Insert
             {
                 group = new Group(request.Name);
 
-                await _context.Groups.AddAsync(group);
+                await _context.Groups.AddAsync(group, cancellationToken);
             }
             else
             {

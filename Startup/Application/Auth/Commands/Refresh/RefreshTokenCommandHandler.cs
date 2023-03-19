@@ -32,7 +32,7 @@ namespace Application.Auth.Commands.Refresh
 
             RefreshToken refreshToken = await _context.RefreshTokens
                                                       .Where(x => x.Token == request.RefreshToken)
-                                                      .FirstOrDefaultAsync();
+                                                      .FirstOrDefaultAsync(cancellationToken);
 
             if (refreshToken == null)
                 throw new NotFoundException(string.Format(Resources.Translation.EntityWasNotFound, nameof(RefreshToken), request.RefreshToken));
@@ -53,7 +53,7 @@ namespace Application.Auth.Commands.Refresh
                                          .GetValue(tokens, null)
                                          .ToString();
 
-            await _context.RefreshTokens.AddAsync(new RefreshToken(user.Id, refershToken));
+            await _context.RefreshTokens.AddAsync(new RefreshToken(user.Id, refershToken), cancellationToken);
 
             await _context.SaveChangesAsync(cancellationToken);
 

@@ -22,7 +22,7 @@ namespace Application.Connections.Commands.Delete
             Group group = await _context.Groups
                                         .Include(x => x.Connections)
                                         .Where(x => x.Connections.Any(x => x.Id == request.Id))
-                                        .FirstOrDefaultAsync();
+                                        .FirstOrDefaultAsync(cancellationToken);
 
             Connection connection = group.Connections
                                          .Where(x => x.Id == request.Id)

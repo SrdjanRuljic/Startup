@@ -34,7 +34,8 @@ namespace Application.Messages.Queries.SearchInterlocutors
 
             PaginatedList<SearchInterlocutorsViewModel> paginatedList = await PaginatedList<SearchInterlocutorsViewModel>.CreateAsync(list,
                                                                                                                                       request.PageNumber,
-                                                                                                                                      request.PageSize);
+                                                                                                                                      request.PageSize,
+                                                                                                                                      cancellationToken);
 
             return new PaginationResultViewModel<SearchInterlocutorsViewModel>
             {

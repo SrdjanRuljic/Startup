@@ -51,7 +51,7 @@ namespace Application.Messages.Commands.Insert
                 RecipientId = recipient.Id,
             };
 
-            await _context.Messages.AddAsync(message);
+            await _context.Messages.AddAsync(message, cancellationToken);
 
             await _context.SaveChangesAsync(cancellationToken);
 
