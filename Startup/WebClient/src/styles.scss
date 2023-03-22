@@ -6,6 +6,11 @@
 @import "~ngx-toastr/toastr.css";
 /* Importing Boostrap icons */
 @import "~bootstrap-icons/font/bootstrap-icons.css";
+
+.card {
+  border-radius: 15px;
+}
+
 li,
 a {
   cursor: pointer;
