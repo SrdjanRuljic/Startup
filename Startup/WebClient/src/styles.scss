@@ -38,3 +38,9 @@ pagination {
 .text-center {
   text-align: center;
 }
+
+.short-text {
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}

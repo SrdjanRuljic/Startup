@@ -24,6 +24,14 @@ namespace Application.Messages.Queries.SearchInterlocutors
             IQueryable<SearchInterlocutorsViewModel> list = _context.Messages
                                                                     .Where(x => x.RecipientId == _currentUserService.UserId ||
                                                                                 x.SenderId == _currentUserService.UserId)
+                                                                    .Where(x => string.IsNullOrEmpty(request.Term) ?
+                                                                                true :
+                                                                                x.Sender.UserName.Contains(request.Term) ||
+                                                                                x.Sender.FirstName.Contains(request.Term) ||
+                                                                                x.Sender.LastName.Contains(request.Term) ||
+                                                                                x.Recipient.UserName.Contains(request.Term) ||
+                                                                                x.Recipient.FirstName.Contains(request.Term) ||
+                                                                                x.Recipient.LastName.Contains(request.Term))
                                                                     .Select(x => new SearchInterlocutorsViewModel()
                                                                     {
                                                                         Id = x.SenderId == _currentUserService.UserId ? x.Recipient.Id : x.Sender.Id,
