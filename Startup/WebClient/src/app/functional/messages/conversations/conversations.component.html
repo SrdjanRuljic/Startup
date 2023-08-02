@@ -2,7 +2,7 @@
   <div class="d-flex justify-content-center h-100">
     <div class="col-12 col-md-9 col-lg-7 col-xl-6">
       <h2 class="mt-2 mb-5">
-        <span class="text-uppercase">Conversation</span>
+        <span class="text-uppercase">Conversations</span>
       </h2>
 
       <div class="row">
@@ -21,44 +21,144 @@
             />
           </div>
 
-          <div style="position: relative; height: 200px">
-            <div *ngIf="interlocutors?.length === 0">
-              No conversation yet...
-            </div>
-            <ul *ngIf="interlocutors?.length !== 0" class="list-unstyled mb-0">
-              <li
-                *ngFor="let item of interlocutors; let i = index"
-                class="p-2 border-bottom"
-                (click)="goToConversation(item)"
-              >
-                <div class="d-flex justify-content-between">
-                  <div class="d-flex flex-row short-text">
-                    <div>
-                      <img
-                        class="d-flex align-self-center me-3 img-circle"
-                        src="{{ item.senderPhotoUrl || './assets/user.png' }}"
-                        alt="{{ item.senderUserName }}"
-                      />
-                    </div>
-                    <div class="pt-1">
-                      <p class="fw-bold mb-0">
-                        {{ item.firstName }} {{ item.lastName }}
-                      </p>
-                    </div>
+          <div *ngIf="interlocutors?.length === 0">No conversation yet...</div>
+          <ul *ngIf="interlocutors?.length !== 0" class="list-unstyled mb-0">
+            <li
+              *ngFor="let item of interlocutors; let i = index"
+              class="p-2 border-bottom"
+              (click)="goToConversation(item)"
+            >
+              <div class="d-flex justify-content-between">
+                <div class="d-flex flex-row short-text">
+                  <div>
+                    <img
+                      class="d-flex align-self-center me-3 img-circle"
+                      src="{{ './assets/user.png' }}"
+                    />
+                  </div>
+                  <div class="pt-1">
+                    <p class="fw-bold mb-0">
+                      {{ item.firstName }} {{ item.lastName }}
+                    </p>
                   </div>
                 </div>
-              </li>
-            </ul>
-          </div>
+              </div>
+            </li>
+          </ul>
         </div>
+
         <div class="col-12 col-lg-7 col-xl-9">
-          <div class="border-bottom">
-            <div class="d-flex align-items-center">
+          <div class="py-2 px-4 border-bottom d-none d-lg-block">
+            <div class="d-flex align-items-center py-1">
               <div class="position-relative">
                 <img
                   class="d-flex align-self-center me-3 img-circle"
                   src="{{ './assets/user.png' }}"
                 />
+              </div>
+              <div class="flex-grow-1 pl-3">
+                <p class="fw-bold mb-0">
+                  {{ selectedInterlocutor?.firstName }}
+                  {{ selectedInterlocutor?.lastName }}
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div class="position-relative">
+            <div class="card">
+              <div class="card-body">
+                <div
+                  *ngIf="
+                    (_messagesService.messagesThread$ | async)?.length === 0
+                  "
+                >
+                  No messages yet...
+                </div>
+                <ul
+                  *ngIf="
+                    (_messagesService.messagesThread$ | async)?.length !== 0
+                  "
+                  class="chat pb-4"
+                >
+                  <li
+                    *ngFor="
+                      let item of _messagesService.messagesThread$ | async
+                    "
+                  >
+                    <div>
+                      <span class="chat-img float-right">
+                        <img
+                          class="img-circle"
+                          src="{{ item.senderPhotoUrl || './assets/user.png' }}"
+                          alt="{{ item.senderUserName }}"
+                        />
+                      </span>
+                      <div class="chat-body">
+                        <div class="header">
+                          <small class="text-muted">
+                            <span class="bi bi-clock">
+                              {{ item.messageSent | timeago }}
+                            </span>
+                            <span
+                              class="text-danger"
+                              *ngIf="
+                                !item.dateRead &&
+                                item.senderId !== selectedInterlocutor?.id
+                              "
+                            >
+                              (unread)
+                            </span>
+                            <span
+                              class="text-success"
+                              *ngIf="
+                                item.dateRead &&
+                                item.senderId !== selectedInterlocutor?.id
+                              "
+                            >
+                              (read {{ item.dateRead | timeago }})
+                            </span>
+                          </small>
+                        </div>
+                        <p class="fw-bold">
+                          {{ item.content }}
+                        </p>
+                      </div>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+
+              <div class="card-footer">
+                <form name="form" (ngSubmit)="f.valid && save()" #f="ngForm">
+                  <div class="input-group">
+                    <input
+                      [(ngModel)]="model.content"
+                      [ngClass]="{
+                        'is-invalid': f.submitted && !contentValidation()
+                      }"
+                      id="content"
+                      name="content"
+                      autocomplete="off"
+                      type="text"
+                      class="form-control input-sm"
+                      placeholder="Send a message"
+                    />
+                    <div class="input-group-append">
+                      <button class="btn btn-default" type="submit">
+                        Send
+                      </button>
+                    </div>
+                  </div>
+                  <div class="form-outline">
+                    <small
+                      *ngIf="f.submitted && !contentValidation()"
+                      class="text-danger"
+                    >
+                      Any content is required
+                    </small>
+                  </div>
+                </form>
               </div>
             </div>
           </div>
