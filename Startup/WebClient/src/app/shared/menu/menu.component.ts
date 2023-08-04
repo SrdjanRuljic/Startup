@@ -23,6 +23,7 @@ export class MenuComponent implements OnInit, OnDestroy {
   PERMISSION: typeof PERMISSION = PERMISSION;
   displayName: string = '';
   subscription: Subscription;
+  navbarOpen = false;
 
   constructor(
     private _router: Router,
@@ -82,5 +83,9 @@ export class MenuComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
+  }
+
+  toggleNavbar() {
+    this.navbarOpen = !this.navbarOpen;
   }
 }

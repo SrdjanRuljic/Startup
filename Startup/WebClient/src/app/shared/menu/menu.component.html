@@ -1,18 +1,8 @@
-<nav ngxNavbarDynamicExpand class="navbar-dark bg-dark">
-  <button
-    class="navbar-toggler"
-    type="button"
-    (click)="collapse.toggle()"
-    aria-controls="main-nav"
-    aria-expanded="false"
-    aria-label="Navigáció kapcsoló"
-  >
-    <span
-      class="navbar-toggler-icon d-flex align-items-center justify-content-center"
-    >
-    </span>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <button class="navbar-toggler" type="button" (click)="toggleNavbar()">
+    <span class="navbar-toggler-icon"></span>
   </button>
-  <ngx-navbar-collapse id="main-nav" #collapse="ngxNavbarCollapse">
+  <div class="collapse navbar-collapse" [ngClass]="{ show: navbarOpen }">
     <ul class="navbar-nav me-auto">
       <li class="nav-item">
         <a class="nav-link" (click)="goToHome()">Home</a>
@@ -58,5 +48,5 @@
         </li>
       </ul>
     </ul>
-  </ngx-navbar-collapse>
+  </div>
 </nav>
