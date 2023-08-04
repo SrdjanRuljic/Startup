@@ -11,9 +11,6 @@
         <a class="nav-link" (click)="goToUsers()">Users</a>
       </li>
       <li class="nav-item" *ngIf="isAuthorized$ | async">
-        <a class="nav-link" (click)="goToInterlocutors()">Interlocutors</a>
-      </li>
-      <li class="nav-item" *ngIf="isAuthorized$ | async">
         <a class="nav-link" (click)="goToConversations()">Conversations</a>
       </li>
       <li class="nav-item" *ngIf="isAuthorized$ | async">

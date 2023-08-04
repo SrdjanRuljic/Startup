@@ -7,18 +7,10 @@ import { TimeAgoExtPipe } from 'src/app/shared/pipes/time-ago-ext.pipe';
 import { MessagesRoutingModule } from './messages-routing.module';
 
 import { MessagesListComponent } from './messages-list/messages-list.component';
-import { InterlocutorsListComponent } from './interlocutors-list/interlocutors-list.component';
-import { ConversationComponent } from './conversation/conversation.component';
 import { ConversationsComponent } from './conversations/conversations.component';
 
 @NgModule({
   imports: [CommonModule, MessagesRoutingModule, PaginationModule, FormsModule],
-  declarations: [
-    MessagesListComponent,
-    InterlocutorsListComponent,
-    ConversationComponent,
-    TimeAgoExtPipe,
-    ConversationsComponent,
-  ],
+  declarations: [MessagesListComponent, TimeAgoExtPipe, ConversationsComponent],
 })
 export class MessagesModule {}

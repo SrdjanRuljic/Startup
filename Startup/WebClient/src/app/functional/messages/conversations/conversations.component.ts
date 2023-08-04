@@ -93,4 +93,9 @@ export class ConversationsComponent implements OnInit {
   contentValidation() {
     return !!!(this.model.content === '');
   }
+
+  pageChanged(event: any) {
+    this.searchModel.pageNumber = event.page;
+    this.search();
+  }
 }

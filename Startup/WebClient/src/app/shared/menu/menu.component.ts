@@ -85,10 +85,6 @@ export class MenuComponent implements OnInit, OnDestroy {
     this._router.navigate(['/messages']);
   }
 
-  goToInterlocutors() {
-    this._router.navigate(['/interlocutors']);
-  }
-
   goToConversations() {
     this._router.navigate(['/conversations']);
   }
