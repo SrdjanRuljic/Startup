@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { InterlocutorSearchModel } from 'src/app/shared/models/interlocutor-search';
 import { IMessage } from 'src/app/shared/models/message';
@@ -13,6 +13,7 @@ import { TokenService } from 'src/app/shared/services/token.service';
 })
 export class ConversationsComponent implements OnInit {
   @ViewChild('f', { static: false }) form!: NgForm;
+  @ViewChild('scrollMe') scrollContainer!: ElementRef;
   model: IMessage;
   interlocutors: any[];
   searchModel: InterlocutorSearchModel;
@@ -25,7 +26,7 @@ export class ConversationsComponent implements OnInit {
   ) {
     this.selectedInterlocutor = null;
     this.interlocutors = [];
-    this.searchModel = new InterlocutorSearchModel(1, 10, '');
+    this.searchModel = new InterlocutorSearchModel(1, 5, '');
     this.pagination = {
       pageNumber: 0,
       totalCount: 0,
@@ -50,10 +51,14 @@ export class ConversationsComponent implements OnInit {
   initSearchModel() {
     this.searchModel.term = '';
     this.searchModel.pageNumber = 1;
-    this.searchModel.pageSize = 10;
+    this.searchModel.pageSize = 5;
   }
 
   search() {
+    if (this.searchModel.term == '') {
+      this.searchModel.pageNumber = 1;
+    }
+
     this._messagesService
       .searchInterlocutors(this.searchModel)
       .subscribe((response) => {
@@ -94,8 +99,21 @@ export class ConversationsComponent implements OnInit {
     return !!!(this.model.content === '');
   }
 
-  pageChanged(event: any) {
-    this.searchModel.pageNumber = event.page;
-    this.search();
+  onScroll() {
+    let element = this.scrollContainer.nativeElement;
+
+    if (element.scrollTop === 0) {
+      if (this.searchModel.pageNumber > 1) {
+        this.searchModel.pageNumber--;
+        this.search();
+      }
+    }
+
+    if (element.offsetHeight + element.scrollTop + 1 >= element.scrollHeight) {
+      if (this.searchModel.pageNumber < this.pagination.totalPages) {
+        this.searchModel.pageNumber++;
+        this.search();
+      }
+    }
   }
 }

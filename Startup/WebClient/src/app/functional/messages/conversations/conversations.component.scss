@@ -29,3 +29,12 @@
     border-bottom: 1px dotted;
   }
 }
+
+.interlocutors-list {
+  height: 200px;
+  overflow: hidden;
+}
+
+.interlocutors-list:hover {
+  overflow-y: scroll;
+}
