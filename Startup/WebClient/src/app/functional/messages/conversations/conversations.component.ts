@@ -54,11 +54,12 @@ export class ConversationsComponent implements OnInit {
     this.searchModel.pageSize = 5;
   }
 
-  search() {
-    if (this.searchModel.term == '') {
-      this.searchModel.pageNumber = 1;
-    }
+  onSearchTermChange() {
+    this.searchModel.pageNumber = 1;
+    this.search();
+  }
 
+  search() {
     this._messagesService
       .searchInterlocutors(this.searchModel)
       .subscribe((response) => {
