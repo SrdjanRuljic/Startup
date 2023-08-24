@@ -25,9 +25,10 @@
           <ul
             *ngIf="interlocutors?.length !== 0"
             infiniteScroll
-            class="list-unstyled mb-0 search-results"
-            [infiniteScrollDistance]="2"
-            [infiniteScrollThrottle]="500"
+            class="list-unstyled mb-0"
+            [ngClass]="{
+              'search-results': interlocutors.length >= searchModel.pageSize
+            }"
             (scrolled)="onScroll()"
             [scrollWindow]="false"
           >

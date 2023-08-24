@@ -25,7 +25,7 @@ export class ConversationsComponent implements OnInit {
   ) {
     this.selectedInterlocutor = null;
     this.interlocutors = [];
-    this.searchModel = new InterlocutorSearchModel(1, 5, '');
+    this.searchModel = new InterlocutorSearchModel(1, 10, '');
     this.pagination = {
       pageNumber: 0,
       totalCount: 0,
@@ -50,7 +50,7 @@ export class ConversationsComponent implements OnInit {
   initSearchModel() {
     this.searchModel.term = '';
     this.searchModel.pageNumber = 1;
-    this.searchModel.pageSize = 5;
+    this.searchModel.pageSize = 10;
   }
 
   onSearchTermChange() {
