@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { PaginationModule } from 'ngx-bootstrap/pagination';
 import { TimeAgoExtPipe } from 'src/app/shared/pipes/time-ago-ext.pipe';
-import { ScrollingModule } from '@angular/cdk/scrolling';
+import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 
 import { MessagesRoutingModule } from './messages-routing.module';
 
@@ -16,7 +16,7 @@ import { ConversationsComponent } from './conversations/conversations.component'
     MessagesRoutingModule,
     PaginationModule,
     FormsModule,
-    ScrollingModule,
+    InfiniteScrollModule,
   ],
   declarations: [MessagesListComponent, TimeAgoExtPipe, ConversationsComponent],
 })

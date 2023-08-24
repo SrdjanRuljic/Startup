@@ -22,11 +22,14 @@
           </div>
 
           <div *ngIf="interlocutors?.length === 0">No conversation yet...</div>
-          <div
-            #scrollMe
+          <ul
             *ngIf="interlocutors?.length !== 0"
-            class="list-unstyled mb-0 interlocutors-list"
-            (scroll)="onScroll()"
+            infiniteScroll
+            class="list-unstyled mb-0 search-results"
+            [infiniteScrollDistance]="2"
+            [infiniteScrollThrottle]="500"
+            (scrolled)="onScroll()"
+            [scrollWindow]="false"
           >
             <li
               *ngFor="let item of interlocutors; let i = index"
@@ -49,7 +52,7 @@
                 </div>
               </div>
             </li>
-          </div>
+          </ul>
         </div>
 
         <div class="col-12 col-lg-7 col-xl-9">

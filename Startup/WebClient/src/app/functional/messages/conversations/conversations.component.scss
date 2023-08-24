@@ -30,11 +30,13 @@
   }
 }
 
-.interlocutors-list {
+.search-results {
   height: 200px;
   overflow: hidden;
+  display: flex;
+  flex-direction: column;
 }
 
-.interlocutors-list:hover {
+.search-results:hover {
   overflow-y: scroll;
 }

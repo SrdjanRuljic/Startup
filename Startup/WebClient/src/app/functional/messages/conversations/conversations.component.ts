@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { InterlocutorSearchModel } from 'src/app/shared/models/interlocutor-search';
 import { IMessage } from 'src/app/shared/models/message';
@@ -13,7 +13,6 @@ import { TokenService } from 'src/app/shared/services/token.service';
 })
 export class ConversationsComponent implements OnInit {
   @ViewChild('f', { static: false }) form!: NgForm;
-  @ViewChild('scrollMe') scrollContainer!: ElementRef;
   model: IMessage;
   interlocutors: any[];
   searchModel: InterlocutorSearchModel;
@@ -101,20 +100,21 @@ export class ConversationsComponent implements OnInit {
   }
 
   onScroll() {
-    let element = this.scrollContainer.nativeElement;
-
-    if (element.scrollTop === 0) {
-      if (this.searchModel.pageNumber > 1) {
-        this.searchModel.pageNumber--;
-        this.search();
-      }
+    if (this.searchModel.pageNumber < this.pagination.totalPages) {
+      this.searchModel.pageNumber++;
+      this.appendData();
     }
+  }
 
-    if (element.offsetHeight + element.scrollTop + 1 >= element.scrollHeight) {
-      if (this.searchModel.pageNumber < this.pagination.totalPages) {
-        this.searchModel.pageNumber++;
-        this.search();
-      }
-    }
+  appendData() {
+    this._messagesService
+      .searchInterlocutors(this.searchModel)
+      .subscribe((response) => {
+        this.interlocutors = [...this.interlocutors, ...response.list];
+
+        this.pagination.pageNumber = response.pageNumber;
+        this.pagination.totalCount = response.totalCount;
+        this.pagination.totalPages = response.totalPages;
+      });
   }
 }
