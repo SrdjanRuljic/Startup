@@ -6,7 +6,7 @@
       </h2>
 
       <div class="row">
-        <div class="col-12 col-lg-5 col-xl-3 border-right">
+        <div class="col-12 col-lg-5 col-xl-3">
           <div class="input-group rounded mb-3">
             <input
               type="text"
@@ -87,7 +87,9 @@
                   *ngIf="
                     (_messagesService.messagesThread$ | async)?.length !== 0
                   "
-                  class="chat pb-4"
+                  class="chat pb-4 search-results"
+                  infiniteScroll
+                  [scrollWindow]="false"
                 >
                   <li
                     *ngFor="
